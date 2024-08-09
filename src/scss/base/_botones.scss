@@ -1,0 +1,57 @@
+.boton-amarillo {
+    @include boton($amarillo, inline-block);
+}
+
+.boton-amarillo-block {
+    @include boton($amarillo, block);
+}
+
+.boton-verde {
+    @include boton($verde, inline-block);
+}
+
+.custom-btn {
+    background-color: $verdeOscuro; 
+    color: $blanco;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $rojoclaro; 
+    }
+}
+
+.custom-btn-secondary {
+    background-color: $blanco;
+    color: $verdeOscuro; 
+    border: 1px solid $verdeOscuro;
+    
+    &:hover {
+        background-color: $rojoclaro; 
+        color: $blanco;
+        border-color:  $rojoclaro;
+    }
+}
+
+.custom-link-group {
+    margin-top: 15px;
+}
+
+.custom-link {
+    color: $plomo;
+    text-decoration: none;
+
+    &:hover {
+        color: $plomo;
+    }
+}
+
+.custom-text {
+    margin-bottom: 20px;
+    text-align: center;
+}

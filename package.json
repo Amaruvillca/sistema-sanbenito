@@ -1,0 +1,22 @@
+{
+  "name": "sanbenito",
+  "version": "1.0.0",
+  "description": "San-Benito control de consultas",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp"
+  },
+  "author": "amaru lino villca 76595194amaru@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0",
+    "glob": "^10.3.12",
+    "gulp": "^5.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-terser": "^2.1.0",
+    "sass": "^1.75.0",
+    "sharp": "^0.33.3"
+  }
+}
