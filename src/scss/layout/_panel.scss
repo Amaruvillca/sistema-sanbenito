@@ -1,8 +1,4 @@
-:root {
-    --font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
+
 
 *, *::before, *::after {
     -webkit-box-sizing: border-box;
@@ -22,15 +18,13 @@ nav {
 
 body {
     margin: 0;
-    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family:$fontfamili;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #515151;
+    color: $plomoh;
     text-align: left;
-    background-color: #e9edf4;
+    background-color: $blanco;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -44,7 +38,7 @@ p {
 }
 
 a {
-    color: #3f84fc;
+    
     text-decoration: none;
     background-color: transparent;
 }
@@ -79,7 +73,7 @@ h1, .h1 {
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #fff;
+    background-color: $blanco;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0;
@@ -143,7 +137,7 @@ h1, .h1 {
     top: 0;
     bottom: 0;
     overflow: auto;
-    background-color: #005C43;
+    background-color:$verdefondo;
 }
 
 .dashboard-compact .dashboard-nav {
@@ -181,11 +175,11 @@ h1, .h1 {
 }
 
 .dashboard-nav {
-    background-color: #005C43;
+    background-color: $verdefondo
 }
 
 .dashboard-nav a {
-    color: #fff;
+    color: $blanco;
 }
 
 .brand-logo {
