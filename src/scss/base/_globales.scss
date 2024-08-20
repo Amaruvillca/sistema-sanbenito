@@ -12,5 +12,14 @@ ul {
 .separacion{
     margin-top: 1rem;
 }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
 
 

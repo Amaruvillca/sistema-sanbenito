@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     eventListeners();
     darkMode();
+    
 });
 
 function darkMode() {
@@ -38,3 +39,4 @@ function navegacionResponsive() {
 
     navegacion.classList.toggle('mostrar')
 }
+
