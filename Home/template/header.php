@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>hola</title>
+    <title><?php echo $titulo;?></title>
+    <link rel="icon" type="image/png" href="/sistema-sanbenito/build/img/logoblanco.webp">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/sistema-sanbenito/build/css/app.css">  
     <link rel="stylesheet" href="/sistema-sanbenito/build/bootstrap/css/bootstrap.min.css">
@@ -24,11 +25,11 @@
             </header>
             <div class="nav-item-divider"></div>
             <nav class="dashboard-nav-list">
-                <a href="#" class="dashboard-nav-item active"><i class="fas fa-tachometer-alt"></i>
+                <a href="/sistema-sanbenito/Home/index.php" class="dashboard-nav-item <?php if ($currentPage == 'Dashboard') echo 'active'; ?>  "><i class="fas fa-tachometer-alt"></i>
                     dashboard
                 </a>
 
-                <a href="#" class="dashboard-nav-item "><i class="bi bi-person-vcard-fill"></i></i>
+                <a href="/sistema-sanbenito/Home/index2.php" class="dashboard-nav-item <?php if ($currentPage == 'hola') echo 'active'; ?>"><i class="bi bi-person-vcard-fill"></i></i>
                     usuarios
                 </a>
 
@@ -48,7 +49,7 @@
 
                         <a href="#" class="dashboard-nav-dropdown-item">Castraciones</a>
                         <a href="#" class="dashboard-nav-dropdown-item">Esterilisacion</a>
-                        <a href="#" class="dashboard-nav-dropdown-item">Añadir nueva cirugia</a>
+                        <a href="#" class="dashboard-nav-dropdown-item"> nueva cirugia</a>
                     </div>
                 </div>
                 <div class='dashboard-nav-dropdown'><a href="#!"

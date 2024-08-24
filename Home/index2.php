@@ -1,6 +1,6 @@
 <?php
-$titulo = "dasboar";
-$currentPage = 'Dashboard';
+$titulo = "usuarios";
+$currentPage = 'hola';
 require 'template/header.php';
 
 ?>
@@ -9,7 +9,7 @@ require 'template/header.php';
 <div class='dashboard-content'>
     <div class='container'>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class='card'>
                     <div class='card-header'>
                         <h1>hola juan</h1>
@@ -24,7 +24,7 @@ require 'template/header.php';
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-12">
                 <div class='card'>
                     <div class='card-header'>
                         <h1>hola juan</h1>

@@ -1,42 +1,60 @@
-document.addEventListener('DOMContentLoaded', function() {
-    eventListeners();
-    darkMode();
-    
-});
 
-function darkMode() {
-    const prefiereDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
-    console.log(prefiereDarkMode)
-    // console.log(prefiereDarkMode.matches);
-    if(prefiereDarkMode.matches) {
-        document.body.classList.add('dark-mode');
+
+document.getElementById('customCheck1').addEventListener('change', function () {
+    const passwordInput = document.getElementById('inputPassword');
+    if (this.checked) {
+        passwordInput.type = 'text';
     } else {
-        document.body.classList.remove('dark-mode');
+        passwordInput.type = 'password';
+    }
+});
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    const email = document.getElementById('inputEmail').value.trim();
+    const password = document.getElementById('inputPassword').value.trim();
+    const emailErrorDiv = document.getElementById('emailError');
+    const passwordErrorDiv = document.getElementById('passwordError');
+    let isValid = true;
+
+    // Limpia los mensajes de error anteriores
+    emailErrorDiv.textContent = '';
+    passwordErrorDiv.textContent = '';
+
+    // Validación del email
+    if (!email) {
+        emailErrorDiv.textContent = 'El email es obligatorio';
+        isValid = false;
+    } else {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            emailErrorDiv.textContent = 'El formato del email no es válido';
+            isValid = false;
+        }
     }
 
-    prefiereDarkMode.addEventListener('change', function() {
-        if(prefiereDarkMode.matches) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
+    // Validación de la contraseña
+    if (!password) {
+        passwordErrorDiv.textContent = 'La contraseña debe ser llenada';
+        isValid = false;
+    } else if (password.length < 5) {
+        passwordErrorDiv.textContent = 'La contraseña debe tener al menos 5 caracteres';
+        isValid = false;
+    }
+
+    // Evitar que se envíe el formulario si hay errores
+    if (!isValid) {
+        event.preventDefault();
+    }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtiene todos los elementos que tienen el ID que comienza con "error-"
+    document.querySelectorAll('[id^="error-"]').forEach(function(element) {
+        setTimeout(function() {
+            element.style.transition = 'opacity 1s'; // Transición suave
+            element.style.opacity = '0'; // Desaparecer el mensaje
+            setTimeout(function() {
+                //element.style.display = 'none'; // Eliminar el mensaje del flujo del documento
+                element.remove(); // Eliminar el mensaje del DOM
+            }/*, 500*/); // Tiempo para coincidir con la duración de la transición
+        }, 8000); // Tiempo en milisegundos (5 segundos)
     });
-
-    const botonDarkMode = document.querySelector('.dark-mode-boton');
-    botonDarkMode.addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-    });
-}
-
-function eventListeners() {
-    const mobileMenu = document.querySelector('.mobile-menu');
-
-    mobileMenu.addEventListener('click', navegacionResponsive);
-}
-
-function navegacionResponsive() {
-    const navegacion = document.querySelector('.navegacion');
-
-    navegacion.classList.toggle('mostrar')
-}
-
+});

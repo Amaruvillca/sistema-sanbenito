@@ -1,6 +1,6 @@
 <?php
 function conectarDb():mysqli{
-    $db= new mysqli("localhost","root","root","ventas");
+    $db= new mysqli("localhost","root","root","sanbenito");
     if(!$db){
         echo "error no se pudo conectar";
         exit;
