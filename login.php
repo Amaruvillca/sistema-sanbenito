@@ -25,15 +25,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario = mysqli_fetch_assoc($result);
             //verificar si el passwor es correcto
             $auto = password_verify($password, $usuario['password']);
-
+            $estado = $usuario['estado'];
             if (!$auto) {
                 $errores[] = 'contaseña no valida';
             } else {
-                // session_start();
-                // $_SESSION['usuario'] = $usuario['email'];
-                // $_SESSION['login'] = true;
-                // header('Location:admin/index.php');
-                echo 'inicio secion correcta';
+                if ($estado === "0") {
+                    header('Location:error/inactivo.php');
+                } else {
+                    session_start();
+                    $_SESSION['id_usuario'] = $usuario['id_usuario'];
+                    $_SESSION['email'] = $usuario['email'];
+                    $_SESSION['estado'] = $usuario['estado'];
+                    $_SESSION['rol'] = $usuario['rol'];
+                    $_SESSION['login'] = true;
+                     header('Location:Home/index.php');
+
+                }
             }
         } else {
             $errores[] = "el usuario no exixte";
@@ -96,12 +103,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group mb-3">
                         <input id="inputEmail" name="email" type="email" placeholder="Correo electrónico" autofocus
                             class="form-control shadow-sm px-4" value="<?php echo $email ?>">
-                            <div id="emailError" class="text-danger"></div>
+                        <div id="emailError" class="text-danger"></div>
                     </div>
                     <div class="form-group mb-3">
                         <input id="inputPassword" name="password" type="password" placeholder="Contraseña"
                             class="form-control shadow-sm px-4" value="<?php echo $password ?>">
-                            <div id="passwordError" class="text-danger"></div>
+                        <div id="passwordError" class="text-danger"></div>
                     </div>
                     <div class="custom-control custom-checkbox mb-3 text-center">
                         <input id="customCheck1" type="checkbox" class="custom-control-input">

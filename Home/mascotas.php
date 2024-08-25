@@ -1,6 +1,5 @@
 <?php
-$titulo = "usuarios";
-$currentPage = 'hola';
+$titulo = "Mascotas";
 require 'template/header.php';
 
 ?>

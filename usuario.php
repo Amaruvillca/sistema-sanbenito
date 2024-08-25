@@ -3,8 +3,8 @@
 require 'includes/config/db.php';
 $db = conectarDb();
 //crear un usuario y password
-$email = "villcaamaru@itabolivia.net";
-$password = "987456321";
+$email = "amaru@gmail.com";
+$password = "12345678910";
 $rol="Veterinario";
 $passwordhash= password_hash($password, PASSWORD_BCRYPT);
 var_dump($passwordhash);
