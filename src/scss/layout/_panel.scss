@@ -1,6 +1,6 @@
-
-
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
@@ -18,7 +18,7 @@ nav {
 
 body {
     margin: 0;
-    font-family:$fontfamili;
+    font-family: $fontfamili;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -27,7 +27,12 @@ body {
     background-color: $blanco;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin-top: 0;
     margin-bottom: 0.5rem;
 }
@@ -38,7 +43,7 @@ p {
 }
 
 a {
-    
+
     text-decoration: none;
     background-color: transparent;
 }
@@ -48,14 +53,26 @@ a:hover {
     text-decoration: underline;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
     font-family: "Nunito", sans-serif;
     margin-bottom: 0.5rem;
     font-weight: 500;
     line-height: 1.2;
 }
 
-h1, .h1 {
+h1,
+.h1 {
     font-size: 2.5rem;
     font-weight: normal;
 }
@@ -77,7 +94,7 @@ h1, .h1 {
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0;
-    
+
 }
 
 .card-body {
@@ -127,6 +144,8 @@ h1, .h1 {
     -ms-flex-positive: 2;
     flex-grow: 2;
     padding: 25px;
+    
+    
 }
 
 
@@ -137,12 +156,21 @@ h1, .h1 {
     top: 0;
     bottom: 0;
     overflow: auto;
-    background-color:$verdefondo;
+    background-color: $verdefondo;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0); // Menú visible
 }
 
 .dashboard-compact .dashboard-nav {
-    display: none;
+   
+    transform: translateX(-100%); // Menú oculto
+    //display: none;
 }
+
+
+
+
+
 
 .dashboard-nav header {
     min-height: 80px;
@@ -198,7 +226,9 @@ h1, .h1 {
     margin-top: 1rem;
 }
 
-.brand-logo:focus, .brand-logo:active, .brand-logo:hover {
+.brand-logo:focus,
+.brand-logo:active,
+.brand-logo:hover {
     color: #dbdbdb;
     text-decoration: none;
 }
@@ -236,7 +266,8 @@ h1, .h1 {
     letter-spacing: 0.02em;
     transition: ease-out 0.5s;
 }
-.tama{
+
+.tama {
     min-height: 10px;
     padding: 8px 5px 8px 70px !important;
 }
@@ -272,17 +303,17 @@ h1, .h1 {
     background: rgba(255, 255, 255, 0.04);
 }
 
-.dashboard-nav-dropdown.show > .dashboard-nav-dropdown-toggle {
+.dashboard-nav-dropdown.show>.dashboard-nav-dropdown-toggle {
     font-weight: bold;
 }
 
-.dashboard-nav-dropdown.show > .dashboard-nav-dropdown-toggle:after {
+.dashboard-nav-dropdown.show>.dashboard-nav-dropdown-toggle:after {
     -webkit-transform: none;
     -o-transform: none;
     transform: none;
 }
 
-.dashboard-nav-dropdown.show > .dashboard-nav-dropdown-menu {
+.dashboard-nav-dropdown.show>.dashboard-nav-dropdown-menu {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -353,26 +384,32 @@ h1, .h1 {
     color: #005C43;
 }
 
-.menu-toggle:hover, .menu-toggle:active, .menu-toggle:focus {
+.menu-toggle:hover,
+.menu-toggle:active,
+.menu-toggle:focus {
     text-decoration: none;
     color: #037254;
 }
-.perfil{
+
+.perfil {
     display: flex;
     flex-direction: row;
     text-align: center;
     justify-content: flex-end;
-    margin-left: auto; 
+    margin-left: auto;
     padding-right: 0.5rem;
-    
+
 }
-.logss{
+
+.logss {
     display: flex;
     flex-direction: row;
     text-align: center;
-    justify-content: center; /* Alinea el contenido a la derecha */
-    margin-left: auto; /* Empuja el menú a la derecha */
-    
+    justify-content: center;
+    /* Alinea el contenido a la derecha */
+    margin-left: auto;
+    /* Empuja el menú a la derecha */
+
 }
 
 .menu-toggle i {
@@ -381,7 +418,7 @@ h1, .h1 {
 
 .dashboard-toolbar {
     min-height: 60px;
-    
+
     background-color: #dfdfdf;
     display: -webkit-box;
     display: -webkit-flex;
@@ -416,6 +453,7 @@ h1, .h1 {
         margin-left: 0;
     }
 }
+
 @media (max-width: 768px) {
     .dashboard-content {
         padding: 15px 0px;
@@ -432,12 +470,15 @@ h1, .h1 {
         left: 0;
         bottom: 0;
         z-index: 1070;
+        
     }
 
     .dashboard-nav.mobile-show {
         display: block;
+       
     }
-    .mobile-show{
+
+    .mobile-show {
         width: 70% !important;
     }
 }
@@ -460,13 +501,114 @@ h1, .h1 {
         left: 0;
     }
 }
-a{
+
+a {
     text-decoration: none !important;
 }
-li,ul{
+
+li,
+ul {
     list-style: none !important;
 }
 
-.no-mostrar{
+.no-mostrar {
     display: none !important;
+}
+
+.perfil {
+    padding: 0 5px;
+}
+
+.perfil-boton {
+    display: flex;
+    align-items: center;
+    background-color: $verdefondo !important;
+    /* Color azul para resaltar */
+    color: $blanco !important;
+    /* Texto blanco */
+    border: 1px solid $verdefondo !important;
+    /* Borde más oscuro para el efecto de botón */
+    padding: 7px 15px;
+    /* Un poco más de padding para hacerlo más clickeable */
+    border-radius: 25px;
+    /* Botón más redondeado */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra para efecto de elevación */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    /* Animaciones */
+    cursor: pointer;
+    /* Indicador de que es clickeable */
+}
+
+.perfil-boton:hover {
+    background-color: $verdefondo !important;
+    /* Cambia a un azul más oscuro */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    /* Sombra más profunda */
+    transform: scale(1.05);
+    /* Ligero aumento de tamaño */
+    color: $blanco !important;
+}
+
+.offcanvas-body {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    padding: 20px;
+    height: 100%;
+    /* Para ocupar toda la altura */
+}
+
+.centar-perfil {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.datos-usuario {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.nombre-usuario {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.rol-usuario,
+.email-usuario,
+.telefono-usuario,
+.direccion-usuario {
+    margin: 5px 0;
+    color: #555;
+}
+
+.botonesUsuario {
+    display: flex;
+
+    text-align: center;
+
+    form {
+        display: flex;
+
+        text-align: center;
+    }
+
+    a,
+    button {
+        border-radius: 10px;
+        margin-left: 0.5rem;
+    }
+
+    .btn-editar {
+
+        @include botonLogin($verdefondo, inline-block);
+
+    }
+
+    .btn-salir {
+
+        @include botonLogin($rojoclaro, inline-block);
+    }
 }

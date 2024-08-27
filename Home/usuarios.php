@@ -1,9 +1,8 @@
 <?php
 $titulo = "usuarios";
 require 'template/header.php';
-
+verificaAcceso();
 ?>
-
 
 <div class='dashboard-content'>
     <div class='container'>

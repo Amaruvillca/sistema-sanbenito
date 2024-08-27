@@ -1,6 +1,9 @@
 <?php
+
 $titulo = "Mascotas";
 require 'template/header.php';
+
+
 
 ?>
 

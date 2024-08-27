@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errores[] = 'contaseña no valida';
             } else {
                 if ($estado === "0") {
-                    header('Location:error/inactivo.php');
+                    header('Location:error/403.php?mensaje=1');
                 } else {
                     session_start();
                     $_SESSION['id_usuario'] = $usuario['id_usuario'];

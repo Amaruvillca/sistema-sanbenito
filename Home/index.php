@@ -1,7 +1,8 @@
 <?php
 $titulo = "Dashboard";
 require 'template/header.php';
-
+use App\User;
+$usuario = new User();
 ?>
 
 

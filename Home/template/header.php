@@ -7,9 +7,10 @@ require REQUIRE_URL . "/app.php";
 
 estadoAutenticado(conectarDb());
 $nombretabla = "personal";
-$personal = mostrarTabla(conectarDb(),$_SESSION['id_usuario'],$nombretabla);
-if(empty($personal)){
-    header('Location:/sistema-sanbenito/error/perfil.php');
+$personal = mostrarTabla(conectarDb(), $_SESSION['id_usuario'], $nombretabla);
+if (empty($personal)) {
+    header('Location:/sistema-sanbenito/error/403.php?mensaje=2');
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -43,7 +44,7 @@ if(empty($personal)){
                     dashboard
                 </a>
 
-                <a href="/sistema-sanbenito/Home/usuarios.php" class="<?php noMostrar();?> dashboard-nav-item <?php if ($titulo == 'usuarios') echo 'active'; ?>"><i class="bi bi-person-vcard-fill"></i>
+                <a href="/sistema-sanbenito/Home/usuarios.php" class="<?php noMostrar(); ?> dashboard-nav-item <?php if ($titulo == 'usuarios') echo 'active'; ?>"><i class="bi bi-person-vcard-fill"></i>
                     usuarios
                 </a>
 
@@ -53,11 +54,11 @@ if(empty($personal)){
 
                 <a href="/sistema-sanbenito/Home/mascotas.php" class="dashboard-nav-item <?php if ($titulo == 'Mascotas') echo 'active'; ?>"><i class="fas fa-paw"></i>
                     Mascotas
-                 </a>
+                </a>
 
                 <a href="/sistema-sanbenito/Home/calendar.php" class="dashboard-nav-item <?php if ($titulo == 'Calendario') echo 'active'; ?>"><i class="bi bi-calendar"></i>
                     Calendario
-                 </a>
+                </a>
                 <div class='dashboard-nav-dropdown'>
                     <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                             class="bi bi-hospital-fill"></i>
@@ -80,8 +81,7 @@ if(empty($personal)){
                             class="dashboard-nav-dropdown-item">añadir servicio</a>
                     </div>
                 </div>
-
-                <div class='<?php noMostrar();?> dashboard-nav-dropdown'><a href="#!"
+                <div class="<?php noMostrar(); ?> dashboard-nav-dropdown"><a href="#!"
                         class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i>
                         Ingresos </a>
                     <div class='dashboard-nav-dropdown-menu'><a href="#" class="dashboard-nav-dropdown-item">All</a><a
@@ -96,26 +96,51 @@ if(empty($personal)){
             </nav>
         </div>
         <div class='dashboard-app'>
-            <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-                <div class="perfil">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <img width="40" height="40" style="border-radius: 50%; left: 2rem;"
-                                src="https://www.shutterstock.com/image-photo/portrait-smiling-young-caucasian-woman-600nw-1769848013.jpg"
-                                alt=""> 
-                                <?php
-                                echo $personal['nombres'];
-                                ?>
-                        </a>
-                        <ul class="dropdown-menu">
+            <header class='dashboard-toolbar'>
+                <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+                <div class="perfil d-flex align-items-center">
 
-                            <li><a href="#" class=" tama dashboard-nav-item "><i class="fas fa-cogs"></i> Ajustes </a>
-                            </li>
 
-                            <li><a href="#" class="tama dashboard-nav-item"><i class="fas fa-sign-out-alt"></i>Salir</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <button class="perfil-boton btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                        <img width="30" height="30" class="rounded-circle me-2"
+                            src="https://www.shutterstock.com/image-photo/portrait-smiling-young-caucasian-woman-600nw-1769848013.jpg"
+                            alt="imagen perfil">
+
+                        <?php echo $personal['nombres']; ?>
+                    </button>
                 </div>
             </header>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasRightLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="offcanvas-body">
+                        <div class="centar-perfil position-relative">
+                            <img width="180" height="180" class="rounded-circle perfil-imagen"
+                                src="https://www.shutterstock.com/image-photo/portrait-smiling-young-caucasian-woman-600nw-1769848013.jpg"
+                                alt="imagen perfil">
+
+                        </div>
+
+                        <div class="datos-usuario">
+                            <h4 class="nombre-usuario"><?php echo $personal['nombres']; ?></h4>
+                            <h4 class="nombre-usuario"><?php echo $personal['apellido_paterno'] . ' ' . $personal['apellido_materno']; ?></h4>
+                            <p class="rol-usuario"><?php echo $_SESSION['rol']; ?></p>
+                            <p class="email-usuario"><?php echo $_SESSION['email']; ?></p>
+                            <p class="telefono-usuario">+591 <?php echo $personal['num_celular']; ?></p>
+                            <p class="direccion-usuario"><?php echo $personal['direccion']; ?></p>
+                        </div>
+
+                        <div class="botonesUsuario">
+                        <a href="#" class="btn-editar"><i class="bi bi-pen-fill"></i> Editar Perfil</a>
+                        <form action="/sistema-sanbenito/includes/salir.php" method="post">
+                        <button type="submit" class="btn-salir">Salir <i class="bi bi-box-arrow-right"></i></button>
+                        </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
