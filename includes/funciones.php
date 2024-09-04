@@ -1,5 +1,4 @@
 <?php
-
 define('TEMPLATES_URL', __DIR__ . '/templates');
 define('FUNCIONES_URL', __DIR__ . 'funciones.php');
 function incluirTemplate(string $nombre, bool $inicio = false)
@@ -32,11 +31,9 @@ function verificaAcceso()
 {
     $acceso = $_SESSION['rol'] === 'Veterinario' ? false : true;
     if (!$acceso):
-        echo "<script>location.href = '/sistema-sanbenito/error/403.php?mensaje=3';</script>";
-        exit;
+        header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
     endif;
 }
-
 //verificar si el usuario esta activo
 function verSiEstaActivo(mysqli $db, $email): bool
 {
@@ -58,7 +55,6 @@ function mostrarTabla(mysqli $db, $id_usuario, $tabla): array
 {
     // Verifica si el valor de $tabla es seguro para usar en la consulta
     $tabla = mysqli_real_escape_string($db, $tabla);
-
     // Consulta SQL usando un parámetro para evitar inyecciones SQL
     $query = "SELECT * FROM `$tabla` WHERE id_usuario = ?";
     if ($stmt = $db->prepare($query))
@@ -69,14 +65,16 @@ function mostrarTabla(mysqli $db, $id_usuario, $tabla): array
     $perfil = $result->fetch_assoc() ?: [];
     // Cierra la sentencia
     $stmt->close();
-
     return $perfil;
 }
-
 function debuguear($variable)
 {
     echo '<pre>';
     var_dump($variable);
     echo '</pre>';
     exit;
+}
+function s($html):String{
+$s=htmlspecialchars($html);
+return $s;
 }

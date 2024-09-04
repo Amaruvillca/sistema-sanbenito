@@ -146,6 +146,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <img src="../build/img/vete5.png" alt="Perrito">
             <div class="question-mark">?</div>
         </div>
+        <center>
+        <button type="button" class="btn btn-secondary" onclick="window.history.back();">
+                            <i class="bi bi-arrow-left"></i>
+                            Volver
+                        </button>
+        </center>
 
     </div>
 

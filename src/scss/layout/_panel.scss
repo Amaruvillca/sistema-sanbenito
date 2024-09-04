@@ -144,6 +144,8 @@ h1,
     -ms-flex-positive: 2;
     flex-grow: 2;
     padding: 25px;
+    padding-top: 0;
+    
     
     
 }
@@ -164,7 +166,7 @@ h1,
 .dashboard-compact .dashboard-nav {
    
     transform: translateX(-100%); // Menú oculto
-    //display: none;
+    display: none;
 }
 
 

@@ -1,4 +1,5 @@
 <?php
+ob_start(); 
 define('REQUIRE_URL', __DIR__ . '/../../includes');
 // define('ERROR_URL', __DIR__ . '/../../error');
 
@@ -32,10 +33,10 @@ if (empty($personal)) {
 <body>
     <!-- partial:index.partial.html -->
     <div class='dashboard'>
-        <div class="dashboard-nav">
+        <div class="dashboard-nav" >
             <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
                 <a href="#" class="brand-logo">
-                    <img class="logss" src="../build/img/log.jpg" alt="" height="50">
+                    <img class="logss" src="/sistema-sanbenito/build/img/log.jpg" alt="" height="50">
                 </a>
             </header>
             <div class="nav-item-divider"></div>
@@ -135,12 +136,14 @@ if (empty($personal)) {
                         </div>
 
                         <div class="botonesUsuario">
-                        <a href="#" class="btn-editar"><i class="bi bi-pen-fill"></i> Editar Perfil</a>
+                        <a href="/sistema-sanbenito/home/perfil/editar.php" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Perfil</a>
+                        <a href="#" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Usuario</a>
                         <form action="/sistema-sanbenito/includes/salir.php" method="post">
-                        <button type="submit" class="btn-salir">Salir <i class="bi bi-box-arrow-right"></i></button>
+                        <button type="submit" class="btn-salir">Salir <br> <i class="bi bi-box-arrow-right"></i></button>
                         </form>
                         </div>
                         
                     </div>
                 </div>
             </div>
+           
