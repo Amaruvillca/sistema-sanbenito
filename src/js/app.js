@@ -1,5 +1,4 @@
 
-
 document.getElementById('customCheck1').addEventListener('change', function () {
     const passwordInput = document.getElementById('inputPassword');
     if (this.checked) {
@@ -8,6 +7,7 @@ document.getElementById('customCheck1').addEventListener('change', function () {
         passwordInput.type = 'password';
     }
 });
+
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     const email = document.getElementById('inputEmail').value.trim();
     const password = document.getElementById('inputPassword').value.trim();

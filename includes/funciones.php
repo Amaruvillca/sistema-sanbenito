@@ -78,3 +78,25 @@ function s($html):String{
 $s=htmlspecialchars($html);
 return $s;
 }
+function encryptData($data) {
+    $encryption_key = "clave_secreta"; // Asegúrate de usar una clave segura
+    $cipher = "AES-128-CTR";
+    $iv_length = openssl_cipher_iv_length($cipher);
+    $iv = openssl_random_pseudo_bytes($iv_length);
+
+    // Encriptar los datos
+    $encrypted = openssl_encrypt($data, $cipher, $encryption_key, 0, $iv);
+    
+    // Combina el texto encriptado con el IV para luego desencriptarlo
+    return urlencode(base64_encode($encrypted . "::" . $iv));
+}
+function decryptData($encrypted_data) {
+    $encryption_key = "clave_secreta";  // Debe ser la misma clave que usaste para encriptar
+    $cipher = "AES-128-CTR";
+
+    // Separar el texto encriptado del IV
+    list($encrypted, $iv) = explode("::", base64_decode($encrypted_data), 2);
+    
+    // Desencriptar los datos
+    return openssl_decrypt($encrypted, $cipher, $encryption_key, 0, $iv);
+}

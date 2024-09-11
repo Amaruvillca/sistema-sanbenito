@@ -3,7 +3,7 @@
         'name' => '76595/sistema-sanbenito',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6b96e8d76f1789da2b07a55d7ab5e0ca80ccf99e',
+        'reference' => '4d867002f2738361211b508eb8511e6689ee1b7f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '76595/sistema-sanbenito' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6b96e8d76f1789da2b07a55d7ab5e0ca80ccf99e',
+            'reference' => '4d867002f2738361211b508eb8511e6689ee1b7f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

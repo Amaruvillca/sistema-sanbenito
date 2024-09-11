@@ -29,3 +29,23 @@ function mesajeError(String $error, $index)
     </div>
 <?php
 }
+
+function messageError2($mensaje){?>
+<div class="alert alert-danger" role="alert">
+<?php echo $mensaje;?>
+</div>
+
+<?php }
+
+function mensajeExitoso() {
+    ?>
+    <script>
+        Swal.fire({
+            title: 'Registrado con éxito', // Agregar comillas alrededor del texto
+            icon: 'success'
+        });
+    </script>
+    <?php 
+}
+
+    

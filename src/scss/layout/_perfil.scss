@@ -1,0 +1,15 @@
+.formulario--perfil{
+    border: rgb(138, 136, 136) solid 1px !important;
+    border-radius: 5px;
+    .bg-primary{
+        background-color: $verdefondo !important;
+        
+    }
+}
+.card-header-custom {
+    background-color: #005C43;
+    color: white;
+}
+.table-striped th, .table-striped td {
+    text-align: center;
+}

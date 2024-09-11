@@ -19,15 +19,20 @@ if (empty($personal)) {
 
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $titulo; ?></title>
+    <title><?php echo $nombrepagina; ?></title>
     <link rel="icon" type="image/png" href="/sistema-sanbenito/build/img/logoblanco.webp">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/sistema-sanbenito/build/css/app.css">
+    
     <link rel="stylesheet" href="/sistema-sanbenito/build/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css" />
 
-
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/sistema-sanbenito/build/css/app.css">
 </head>
 
 <body>
@@ -53,9 +58,9 @@ if (empty($personal)) {
                     propietarios
                 </a>
 
-                <a href="/sistema-sanbenito/Home/mascotas.php" class="dashboard-nav-item <?php if ($titulo == 'Mascotas') echo 'active'; ?>"><i class="fas fa-paw"></i>
+                <!-- <a href="/sistema-sanbenito/Home/mascotas.php" class="dashboard-nav-item <?php if ($titulo == 'Mascotas') echo 'active'; ?>"><i class="fas fa-paw"></i>
                     Mascotas
-                </a>
+                </a> -->
 
                 <a href="/sistema-sanbenito/Home/calendar.php" class="dashboard-nav-item <?php if ($titulo == 'Calendario') echo 'active'; ?>"><i class="bi bi-calendar"></i>
                     Calendario
@@ -107,7 +112,7 @@ if (empty($personal)) {
                             src="https://www.shutterstock.com/image-photo/portrait-smiling-young-caucasian-woman-600nw-1769848013.jpg"
                             alt="imagen perfil">
 
-                        <?php echo $personal['nombres']; ?>
+                        <?php echo $personal['nombres'].' '.$personal['apellido_paterno'].' '.$personal['apellido_materno']; ?>
                     </button>
                 </div>
             </header>
@@ -136,8 +141,21 @@ if (empty($personal)) {
                         </div>
 
                         <div class="botonesUsuario">
-                        <a href="/sistema-sanbenito/home/perfil/editar.php" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Perfil</a>
-                        <a href="#" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Usuario</a>
+                        <?php 
+                        $id_personal = $personal['id_personal'];
+                        $data1 = "id_personal=$id_personal";
+                        // Encripta los parámetros
+                        $encryptedData1 = encryptData($data1);
+                        ?>
+                        <a href="/sistema-sanbenito/home/perfil/editar.php?data=<?php echo $encryptedData1; ?>" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br>Perfil</a>
+                        <?php 
+                         $id_usuario = $_SESSION['id_usuario'];
+                         $data2 = "id_usuario=$id_usuario";
+                         
+                         // Encripta los parámetros
+                         $encryptedData2 = encryptData($data2);
+                        ?>
+                        <a href="/sistema-sanbenito/home/perfil/editar.php?data=<?php echo $encryptedData2; ?>" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Usuario</a>
                         <form action="/sistema-sanbenito/includes/salir.php" method="post">
                         <button type="submit" class="btn-salir">Salir <br> <i class="bi bi-box-arrow-right"></i></button>
                         </form>

@@ -24,7 +24,7 @@ body {
     line-height: 1.5;
     color: $plomoh;
     text-align: left;
-    background-color: $blanco;
+    background-color: #f9f9f9;
 }
 
 h1,
@@ -539,11 +539,13 @@ ul {
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     /* Animaciones */
     cursor: pointer;
+    border-radius: 10px !important;
     /* Indicador de que es clickeable */
 }
 
 .perfil-boton:hover {
     background-color: $verdefondo !important;
+    border-radius: none !important;
     /* Cambia a un azul más oscuro */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     /* Sombra más profunda */
