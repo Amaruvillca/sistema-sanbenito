@@ -3,7 +3,7 @@ $titulo = "usuarios";
 $nombrepagina = "crer perfil";
 require '../template/header.php';
 verificaAcceso();
-$email ='';
+$email = '';
 if (isset($_GET['data'])) {
     $encrypted_data = $_GET['data'];
     $decrypted_data = decryptData($encrypted_data);
@@ -12,10 +12,10 @@ if (isset($_GET['data'])) {
 
     // Ahora tienes acceso a los parámetros
     $email = $params['email'];
-    if(!$email ){
+    if (!$email) {
         header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
     }
-}else{
+} else {
     header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
 }
 
@@ -38,27 +38,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $perfil = new Perfil($_POST['perfil']);
     //validar campos
     $errores = $perfil->validar();
-
-    // Verificar si se ha subido un archivo de imagen
-    if ($_FILES['imagen']['tmp_name']) {
-        // Generar un nombre único para la imagen
-        $nombreimagen = md5(uniqid(rand(), true)) . ".jpg";
-        // Ruta donde se guardará la imagen redimensionada
-        $rutaImagen = '../../imagepersonal/' . $nombreimagen;
-        // Leer la imagen desde el archivo subido
-        $imagen = $manager->read($_FILES['imagen']['tmp_name']);  // Correcto en la versión ^3.7
-        // Redimensionar la imagen a 500x500 píxeles
-        $imagen->resize(500, 500, function ($constraint) {
-            $constraint->aspectRatio();  // Mantener la proporción
-            $constraint->upsize();  // Evitar agrandar imágenes pequeñas
-        });
-        // Guardar la imagen redimensionada en el servidor
-        $imagen->save($rutaImagen);
-        // Asignar la imagen al perfil
-        $perfil->setImagen($nombreimagen);
-    }
-
     if (empty($errores)) {
+        // Verificar si se ha subido un archivo de imagen
+        if ($_FILES['imagen']['tmp_name']) {
+            // Generar un nombre único para la imagen
+            $nombreimagen = md5(uniqid(rand(), true)) . ".jpg";
+            // Ruta donde se guardará la imagen redimensionada
+            $rutaImagen = '../../imagepersonal/' . $nombreimagen;
+            // Leer la imagen desde el archivo subido
+            $imagen = $manager->read($_FILES['imagen']['tmp_name']);  // Correcto en la versión ^3.7
+            // Redimensionar la imagen a 500x500 píxeles
+            $imagen->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();  // Mantener la proporción
+                $constraint->upsize();  // Evitar agrandar imágenes pequeñas
+            });
+            // Guardar la imagen redimensionada en el servidor
+            $imagen->save($rutaImagen);
+            // Asignar la imagen al perfil
+            $perfil->setImagen($nombreimagen);
+        }
         $resultado = $perfil->guardar();
         if ($resultado) {
             // Si el usuario se guarda correctamente, establecemos el mensaje
@@ -169,12 +167,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Botones -->
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="/sistema-sanbenito/home/usuarios.php" class="btn btn-secondary" >
-                        <i class="bi bi-x-circle"></i> Cancelar
+                        <a href="/sistema-sanbenito/home/usuarios.php" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancelar
                         </a>
 
 
-                        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Registrar Perfil</button>
+                        
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-floppy"></i> Registrar Perfil</button>
                     </div>
                 </form>
                 <div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>
@@ -241,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'use strict';
 
         history.pushState(null, null, location.href);
-        window.onpopstate = function () {
+        window.onpopstate = function() {
             history.go(1);
         };
     })();

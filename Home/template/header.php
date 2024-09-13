@@ -33,6 +33,7 @@ if (empty($personal)) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/sistema-sanbenito/build/css/app.css">
+    
 </head>
 
 <body>
@@ -109,7 +110,7 @@ if (empty($personal)) {
 
                     <button class="perfil-boton btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <img width="30" height="30" class="rounded-circle me-2"
-                            src="https://www.shutterstock.com/image-photo/portrait-smiling-young-caucasian-woman-600nw-1769848013.jpg"
+                           src="/sistema-sanbenito/imagepersonal/<?php echo $personal['imagen_personal']; ?>"
                             alt="imagen perfil">
 
                         <?php echo $personal['nombres'].' '.$personal['apellido_paterno'].' '.$personal['apellido_materno']; ?>
@@ -126,7 +127,7 @@ if (empty($personal)) {
                     <div class="offcanvas-body">
                         <div class="centar-perfil position-relative">
                             <img width="180" height="180" class="rounded-circle perfil-imagen"
-                                src="https://www.shutterstock.com/image-photo/portrait-smiling-young-caucasian-woman-600nw-1769848013.jpg"
+                                src="/sistema-sanbenito/imagepersonal/<?php echo $personal['imagen_personal']; ?>"
                                 alt="imagen perfil">
 
                         </div>
@@ -155,7 +156,7 @@ if (empty($personal)) {
                          // Encripta los parámetros
                          $encryptedData2 = encryptData($data2);
                         ?>
-                        <a href="/sistema-sanbenito/home/perfil/editar.php?data=<?php echo $encryptedData2; ?>" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Usuario</a>
+                        <a href="/sistema-sanbenito/home/user/editar.php?data=<?php echo $encryptedData2; ?>" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Usuario</a>
                         <form action="/sistema-sanbenito/includes/salir.php" method="post">
                         <button type="submit" class="btn-salir">Salir <br> <i class="bi bi-box-arrow-right"></i></button>
                         </form>

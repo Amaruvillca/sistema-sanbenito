@@ -1,7 +1,9 @@
 <?php
 // Inicia el búfer de salida
 $titulo = "Dashboard";
+$nombrepagina = "Dashboart";
 require 'template/header.php';
+
 use App\User;
 //$usuario = new User();
 //$usuario->Mandar();
@@ -15,13 +17,13 @@ use App\User;
                 <div class='card'>
                     <div class='card-header'>
                         <h1>hola <?php
-                                echo $personal['nombres'];
-                                ?></h1>
+                                    echo $personal['nombres'];
+                                    ?></h1>
                     </div>
                     <div class='card-body'>
                         <p><?php
-                                echo $personal['nombres'];
-                                ?> : veterinario</p>
+                            echo $personal['nombres'];
+                            ?> : veterinario</p>
                         <p>ni sint autem.</p>
                     </div>
                 </div>
@@ -42,14 +44,9 @@ use App\User;
                 </div>
             </div>
         </div>
-        <button onclick="Swal.fire({
-  title: 'Macota registrado correctamente',
-  
-  icon: 'success'
-});">hola</button>
-        
-    
-   
+
+    </div>
+
 </div>
 
 

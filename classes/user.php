@@ -49,7 +49,7 @@ class User extends ActiveRecord
                   ON 
                     u.id_usuario = p.id_usuario
                   ORDER BY 
-                    p.fecha_registro DESC';
+                    u.id_usuario DESC';
 
         // Ejecutamos la consulta
         $result = self::$db->query($query);

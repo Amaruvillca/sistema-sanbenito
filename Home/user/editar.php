@@ -1,12 +1,35 @@
 <?php
 // Inicia el búfer de salida
 $titulo = "usuarios";
+$nombrepagina = "Etitar usuario";
 require '../template/header.php';
-verificaAcceso();
+
 
 use App\User;
+$id_personal = '';
+if (isset($_GET['data'])) {
+    $encrypted_data = $_GET['data'];
+    $decrypted_data = decryptData($encrypted_data);
 
-$usuario = new User;
+    parse_str($decrypted_data, $params);
+
+    // Ahora tienes acceso a los parámetros
+    $id_usuario = $params['id_usuario'];
+    
+    if (!$id_usuario) {
+        header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+    }
+
+    // Ahora puedes usar los parámetros para lo que necesites
+
+    $usuario = User::find($id_usuario);
+    //debuguear($datosUsuario);
+    
+    // debuguear($datosPerfil);
+} else {
+    header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+}
+//$usuario = new User;
 $errores = User::getErrores();
 $mensajeEstado = "";
 $estado = false;
@@ -14,7 +37,7 @@ $estado = false;
 //$usuario->Mandar();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $usuario = new User($_POST['usuario']);
+    //$usuario = new User($_POST['usuario']);
 
 
     $errores = $usuario->validar();
@@ -37,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="login-container d-flex align-items-center justify-content-center">
         <div class="login-box">
-            <h2 class="text-center mb-4">Crear Usuario</h2>
+            <h2 class="text-center mb-4">Editar Usuario</h2>
             <?php
 
             foreach ($errores as $error) :
@@ -55,6 +78,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
                 </div>
                 <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" name="usuario[email]" class="form-control" id="email" placeholder="2122defhol" required value="<?php echo s($usuario->email) ?>">
+                    <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Nueva contraseña</label>
+                    <input type="password" name="usuario[email]" class="form-control" id="email" placeholder="2122defhol" required value="<?php echo s($usuario->email) ?>">
+                    <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
+                </div>
+                <div class=" <?php noMostrar(); ?> mb-3">
                     <label for="rol" class="form-label">Rol</label>
 
                     <select name="usuario[rol]" class="form-control form-select">
@@ -66,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="invalid-feedback">seleccione una opcion</div>
                 </div>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
 
 
                 </div>

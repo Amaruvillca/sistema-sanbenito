@@ -3,168 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Usuario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Propietario y Mascotas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Personalización de las cartas y elementos */
-        .dashboard-content {
+        .card-propietario {
+            background-color: #005C43;
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .card-mascota {
+            border: 1px solid #005C43;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .card-body {
             padding: 20px;
         }
-        .card-header {
-            background-color: #005C43;
-            color: white;
+        .mascota-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
         }
-        .rounded-circle {
-            border: 5px solid #005C43;
-        }
-        .tab-content {
-            margin-top: 20px;
-        }
-        /* Ajustes para el estilo del historial */
-        table thead {
-            background-color: #005C43;
-            color: white;
-        }
-        table tbody tr:nth-child(odd) {
-            background-color: #f8f9fa;
-        }
-        table tbody tr:nth-child(even) {
-            background-color: #e9ecef;
-        }
-        /* Estilo de botones */
-        .btn-outline-success {
+        .title {
             color: #005C43;
-            border-color: #005C43;
+            font-weight: bold;
         }
-        .btn-outline-success:hover {
+        /* Estilo del botón flotante */
+        .btn-flotante {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             background-color: #005C43;
             color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
         }
-        /* Ajustes para móviles */
-        @media (max-width: 768px) {
-            .card-body p {
-                font-size: 0.9rem;
-            }
-            .btn {
-                font-size: 0.8rem;
-                padding: 5px 10px;
-            }
-            .tab-content {
-                font-size: 0.9rem;
-            }
+        .btn-flotante:hover {
+            background-color: #004031;
         }
     </style>
 </head>
 <body>
 
-<div class="container-fluid dashboard-content">
+<div class="container mt-5">
+    <!-- Datos del propietario -->
+    <div class="card card-propietario">
+        <div class="card-body">
+            <h5 class="card-title">Datos del Propietario</h5>
+            <p class="card-text"><strong>Nombre:</strong> Juan Pérez</p>
+            <p class="card-text"><strong>Teléfono:</strong> +123 456 789</p>
+            <p class="card-text"><strong>Email:</strong> juan.perez@example.com</p>
+        </div>
+    </div>
+
+    <!-- Datos de las mascotas -->
+    <h5 class="title mb-4">Mascotas Asociadas</h5>
+
     <div class="row">
-        <!-- Sección de detalles del Usuario y Perfil -->
-        <div class="col-lg-4 col-md-12 mb-4">
-            <div class="card shadow-sm border-0 rounded-lg">
-                <div class="card-header">
-                    <h5 class="mb-0 text-center">Detalles del Personal</h5>
-                </div>
-                <div class="card-body text-center">
-                    <img src="/sistema-sanbenito/imagepersonal/imagen_veterinario.jpg" alt="imagen veterinario" class="rounded-circle mb-3" width="200px" height="200px">
-                    <p><strong>Nombre:</strong> Juan Pérez</p>
-                    <p><strong>Apellidos:</strong> Rodríguez García</p>
-                    <p><strong>Rol:</strong> Veterinario</p>
-                    <p><strong>Correo:</strong> juan.perez@ejemplo.com</p>
-                    <p><strong>Celular:</strong> +591 72222222</p>
-                    <p><strong>Carnet:</strong> 12345678</p>
-                    <p><strong>Dirección:</strong> Calle Principal #123</p>
-                    <div class="d-flex justify-content-around">
-                        <a href="/sistema-sanbenito/home/user/editar.php" class="btn btn-outline-success">Editar usuario</a>
-                        <a href="/sistema-sanbenito/home/perfil/editar.php?data=encryptedData1" class="btn btn-outline-success">Editar Perfil</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección de Historial de Atenciones -->
-        <div class="col-lg-8 col-md-12">
-            <div class="card shadow-sm border-0 rounded-lg">
-                <div class="card-header">
-                    <h5 class="mb-0 text-center">Historial de Atenciones</h5>
-                </div>
+        <!-- Mascota 1 -->
+        <div class="col-md-4">
+            <div class="card card-mascota">
+                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
                 <div class="card-body">
-                    <ul class="nav nav-tabs" id="historialTabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="consultas-tab" data-bs-toggle="tab" href="#consultas" role="tab" aria-controls="consultas" aria-selected="true">Consultas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="cirugias-tab" data-bs-toggle="tab" href="#cirugias" role="tab" aria-controls="cirugias" aria-selected="false">Cirugías</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="vacunas-tab" data-bs-toggle="tab" href="#vacunas" role="tab" aria-controls="vacunas" aria-selected="false">Vacunas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="desparacitaciones-tab" data-bs-toggle="tab" href="#desparacitaciones" role="tab" aria-controls="desparacitaciones" aria-selected="false">Desparasitaciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="servicios-tab" data-bs-toggle="tab" href="#servicios" role="tab" aria-controls="servicios" aria-selected="false">Servicios</a>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content mt-3" id="historialTabsContent">
-                        <!-- Consultas -->
-                        <div class="tab-pane fade show active" id="consultas" role="tabpanel" aria-labelledby="consultas-tab">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Fecha</th>
-                                        <th>Motivo</th>
-                                        <th>Observaciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2024-08-01</td>
-                                        <td>Consulta general</td>
-                                        <td>Ninguna observación</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>2024-08-15</td>
-                                        <td>Revisión de herida</td>
-                                        <td>Herida en proceso de cicatrización</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Otros tabs -->
-                        <div class="tab-pane fade" id="cirugias" role="tabpanel" aria-labelledby="cirugias-tab">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Fecha</th>
-                                        <th>Procedimiento</th>
-                                        <th>Observaciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2024-09-01</td>
-                                        <td>Cirugía de rodilla</td>
-                                        <td>Recuperación exitosa</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Continúa con los demás tabs de la misma forma -->
-                    </div>
+                    <h5 class="card-title">Firulais</h5>
+                    <p class="card-text"><strong>Especie:</strong> Perro</p>
+                    <p class="card-text"><strong>Edad:</strong> 3 años</p>
                 </div>
             </div>
         </div>
+
+        <!-- Mascota 2 -->
+        <div class="col-md-4">
+            <div class="card card-mascota">
+                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
+                <div class="card-body">
+                    <h5 class="card-title">Michi</h5>
+                    <p class="card-text"><strong>Especie:</strong> Gato</p>
+                    <p class="card-text"><strong>Edad:</strong> 2 años</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mascota 3 -->
+        <div class="col-md-4">
+            <div class="card card-mascota">
+                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
+                <div class="card-body">
+                    <h5 class="card-title">Toby</h5>
+                    <p class="card-text"><strong>Especie:</strong> Perro</p>
+                    <p class="card-text"><strong>Edad:</strong> 5 años</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-mascota">
+                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
+                <div class="card-body">
+                    <h5 class="card-title">Toby</h5>
+                    <p class="card-text"><strong>Especie:</strong> Perro</p>
+                    <p class="card-text"><strong>Edad:</strong> 5 años</p>
+                </div>
+            </div>
+        </div>
+        
+        
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Botón flotante -->
+<a href="#" class="btn-flotante">+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

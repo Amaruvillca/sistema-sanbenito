@@ -1,11 +1,13 @@
 <?php
 $titulo = "usuarios";
+$nombrepagina = "usuarios";
 require 'template/header.php';
 verificaAcceso();
 
 use App\User;
 
 $usuarios = User::mostrar();
+
 
 
 ?>
@@ -72,7 +74,7 @@ $usuarios = User::mostrar();
                                             $encryptedData = encryptData($data);
                                             ?>
                                             <a href="/sistema-sanbenito/home/vermas/personal.php?data=<?php echo $encryptedData; ?>" class="btn btn-info">
-                                                <i class="bi bi-eye-fill"></i> Mas Detalles
+                                                <i class="bi bi-eye-fill"></i> Detalles
                                             </a>
 
 

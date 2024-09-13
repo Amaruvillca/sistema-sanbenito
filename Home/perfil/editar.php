@@ -7,6 +7,7 @@ use App\Perfil;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+
 $mensajeEstado = '';
 $errores = Perfil::getErrores();
 
@@ -17,7 +18,7 @@ try {
     $manager = new ImageManager(new GdDriver());  // Fallback a GD si Imagick no está disponible
 }
 
-$b ='';
+$b = '';
 $perfil = null;
 
 if (isset($_GET['data'])) {
@@ -27,45 +28,43 @@ if (isset($_GET['data'])) {
 
     // Ahora tienes acceso a los parámetros
     $b = $params['id_personal'];
-    if(!$b){
+    if (!$b) {
         header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
     }
-    
-   
-    
-}else{
+} else {
     header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
-   
 }
 $perfil = Perfil::find($b);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //crear objeto
     $perfil = new Perfil($_POST['perfil']);
+    $perfil->sincronizar($_POST['perfil']);
+    //debuguear($perfil);
     //validar campos
     $errores = $perfil->validar();
-
-    // Verificar si se ha subido un archivo de imagen
-    if ($_FILES['imagen']['tmp_name']) {
-        // Generar un nombre único para la imagen
-        $nombreimagen = md5(uniqid(rand(), true)) . ".jpg";
-        // Ruta donde se guardará la imagen redimensionada
-        $rutaImagen = '../../imagepersonal/' . $nombreimagen;
-        // Leer la imagen desde el archivo subido
-        $imagen = $manager->read($_FILES['imagen']['tmp_name']);  // Correcto en la versión ^3.7
-        // Redimensionar la imagen a 500x500 píxeles
-        $imagen->resize(500, 500, function ($constraint) {
-            $constraint->aspectRatio();  // Mantener la proporción
-            $constraint->upsize();  // Evitar agrandar imágenes pequeñas
-        });
-        // Guardar la imagen redimensionada en el servidor
-        $imagen->save($rutaImagen);
-        // Asignar la imagen al perfil
-        $perfil->setImagen($nombreimagen);
-    }
-
     if (empty($errores)) {
-        $resultado = $perfil->guardar();
+        if ($_FILES['imagen']['tmp_name']) {
+            $nombreimagen = md5(uniqid(rand(), true)) . ".jpg";
+            $rutaImagen = '../../imagepersonal/';
+            if ($perfil->imagen_personal != "veterinario.jpg") {
+                //borrar imagen
+                unlink($rutaImagen . $perfil->imagen_personal);
+            }
+            $rutaImagen = '../../imagepersonal/' . $nombreimagen;
+            $imagen = $manager->read($_FILES['imagen']['tmp_name']);  // Correcto en la versión ^3.7
+            // Redimensionar la imagen a 500x500 píxeles
+            $imagen->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();  // Mantener la proporción
+                $constraint->upsize();  // Evitar agrandar imágenes pequeñas
+            });
+            // Guardar la imagen redimensionada en el servidor
+            $imagen->save($rutaImagen);
+            // Asignar la imagen al perfil
+            $perfil->setImagen($nombreimagen);
+        }
+
+        $resultado = $perfil->actualizar($perfil->id_personal);
         if ($resultado) {
             // Si el usuario se guarda correctamente, establecemos el mensaje
             $mensajeEstado = "success";
@@ -87,12 +86,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class=" formulario--perfil card">
             <div class="card-header bg-primary text-white d-flex align-items-center">
                 <span class="me-2"><i class="bi bi-person-fill"></i></span>
-                <h4 class="mb-0">Crear Perfil</h4>
+                <h4 class="mb-0">Editar Perfil</h4>
             </div>
             <div class="card-body">
 
                 <form id="personalForm" class="needs-validation" method="post" novalidate enctype="multipart/form-data">
                     <div class="row">
+                        <input class="no-mostrar" type="text" name="perfil[id_personal]" id="perfil" value="<?php echo s($perfil->id_personal) ?>">
+                        <input class="no-mostrar" type="text" name="perfil[imagen_personal]" id="perfil" value="<?php echo s($perfil->imagen_personal) ?>">
+
                         <!-- Imagen del personal -->
                         <div class="col-md-3">
                             <div class="text-center mb-3">
@@ -167,7 +169,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <input type="text" class="form-control" id="matricula" name="perfil[matricula_profesional]" required value="<?php echo s($perfil->matricula_profesional); ?>">
                                     <div class="invalid-feedback">Por favor, ingrese la Matrícula profecional.</div>
                                 </div>
-                                <input type="hidden" name="perfil[id_usuario]" value="<?php echo $buscaUsuario; ?>">
+                                <input type="date" class="no-mostrar" name="perfil[fecha_registro]" value="<?php echo s($perfil->fecha_registro); ?>">
+                                <input type="hidden" class="no-mostrar" name="perfil[id_usuario]" value="<?php echo s($perfil->id_usuario); ?>">
+
 
                             </div>
                         </div>
@@ -175,11 +179,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Botones -->
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="/sistema-sanbenito/home/index.php" class="btn btn-secondary" >
-                        <i class="bi bi-x-circle"></i> Cancelar
+                        <a href="javascript:void(0);" class="btn btn-secondary" onclick="window.history.back();">
+                            <i class="bi bi-arrow-left"></i> Volver
                         </a>
-
-
                         <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Guardar Cambios</button>
                     </div>
                 </form>
@@ -233,16 +235,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (estadoProceso === "success") {
             Swal.fire({
-                title: "¡Personal creado con éxito!",
-                text: "Presiona el botón para regresar.",
+                title: "¡Datos Actualizados con Éxito!",
+                text: "Presiona el botón para ver cambios.",
                 icon: "success",
                 confirmButtonText: "De acuerdo",
             }).then(function() {
-                window.location.href = '/sistema-sanbenito/home/usuarios.php';
+                window.history.back();
             });
         }
     });
 </script>
+
 
 
 <?php

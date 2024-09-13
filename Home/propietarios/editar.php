@@ -1,12 +1,31 @@
 <?php
 $titulo = "Propietarios";
-$nombrepagina = "registrar propietario";
+$nombrepagina = "Editar propietario";
 require '../template/header.php';
 
 use App\Propietarios;
 $mensajeEstado = '';
 $errores = Propietarios::getErrores();
-$propietarios = new Propietarios();
+
+
+if (isset($_GET['data'])) {
+    $encrypted_data = $_GET['data'];
+    $decrypted_data = decryptData($encrypted_data);
+    parse_str($decrypted_data, $params);
+
+    // Ahora tienes acceso a los parámetros
+    $b = $params['id_propietario'];
+    if (!$b) {
+        header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+    }
+} else {
+    header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+}
+$propietarios=Propietarios::find($b);
+
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // crear objeto
     $propietarios = new Propietarios($_POST['propietario']);
@@ -14,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errores = $propietarios->validar();
     //si no hay errores
     if (empty($errores)) {
-        $resultado = $propietarios->guardar();
+        $resultado = $propietarios->actualizar($b);
         if ($resultado) {
             // Si el usuario se guarda correctamente, establecemos el mensaje
             $mensajeEstado = "success";
@@ -39,13 +58,14 @@ endforeach;
         <div class="card">
             <div class="card-header btn-primary text-white d-flex align-items-center">
                 <span class="me-2"><i class="bi bi-person-fill"></i></span>
-                <h4 class="mb-0">Nuevo Propietario</h4>
+                <h4 class="mb-0">Editar Propietario</h4>
             </div>
             <div class="card-body">
                 <form method="post" class="needs-validation" novalidate>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
+                                <input type="hidden" name="propietario[id_propietario]" value="<?php echo s($propietarios->id_propietario) ?>" >
                                 <div class="col-md-4 mb-3">
                                     <label for="nombre" class="form-label">Nombre(s):</label>
                                     <input type="text" class="form-control" name="propietario[nombres]" id="nombre" value="<?php echo s($propietarios->nombres) ?>" required>
@@ -93,15 +113,16 @@ endforeach;
                                         Por favor, ingrese su dirección.
                                     </div>
                                 </div>
+                                <input type="hidden" name="propietario[fecha_registro]" value="<?php echo $propietarios->fecha_registro ?>">
                                 <input type="hidden" name="propietario[id_personal]" value="<?php echo $personal['id_personal']; ?>">
                             </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="javascript:void(0);" class="btn btn-secondary" onclick="window.history.back();">
+                        <a href="/sistema-sanbenito/home/propietarios.php" class="btn btn-secondary">
                             <i class="bi bi-arrow-left"></i> Volver
                         </a>
-                        <button type="submit" class="btn btn-primary">Guardar Propietario</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     </div>
                 </form>
                 <div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>
@@ -139,8 +160,8 @@ endforeach;
 
         if (estadoProceso === "success") {
             Swal.fire({
-                title: "¡Propietario creado con éxito!",
-                text: "Presiona el botón para registrar una mascota.",
+                title: "¡Datos Actualizados con Éxito!",
+                text: "Presiona el botón para ver volver",
                 icon: "success",
                 confirmButtonText: "De acuerdo",
             }).then(function() {

@@ -5,6 +5,7 @@ namespace App;
 class ActiveRecord
 {
     protected static $db;
+    
     protected static $nombreId = '';
     protected static $columnas_db = [];
     protected static $tabla = '';
@@ -16,7 +17,7 @@ class ActiveRecord
     }
     public static function all()
     {
-        $query = 'SELECT * FROM ' . static::$tabla;
+        $query = 'SELECT * FROM '.static::$tabla.' ORDER BY '.static::$nombreId.' DESC';
         $resultado = self::consultarSql($query);
         return $resultado;
     }
@@ -60,6 +61,28 @@ class ActiveRecord
 
 
         $resultado = self::$db->query($query);
+        return $resultado;
+    }
+    public  function actualizar($id){
+        $atributos = $this->sanitizarAtributos();
+        $valores = [];
+        foreach ($atributos as $key => $value) {
+            $valores[]="{$key}='{$value}'";
+
+        }
+        $query = "UPDATE ".static::$tabla." SET ";
+        $query.= join(', ',$valores);
+        $query.=" WHERE ".static::$nombreId." = '".self::$db->escape_string($id)."' ";
+        $query.=" LIMIT 1 ";
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
+    //borrar datos
+    public static function borrar($id){
+        $query="DELETE FROM ".static::$tabla." WHERE ".static::$nombreId." = '".$id."' ";
+        
+        $resultado = self::$db->query($query);
+
         return $resultado;
     }
     public function atributos(): array
