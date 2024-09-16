@@ -98,7 +98,7 @@ endforeach;
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="javascript:void(0);" class="btn btn-secondary" onclick="window.history.back();">
+                        <a href="/sistema-sanbenito/home/propietarios.php" class="btn btn-secondary" >
                             <i class="bi bi-arrow-left"></i> Volver
                         </a>
                         <button type="submit" class="btn btn-primary">Guardar Propietario</button>

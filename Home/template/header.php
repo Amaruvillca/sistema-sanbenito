@@ -140,25 +140,24 @@ if (empty($personal)) {
                             <p class="telefono-usuario">+591 <?php echo $personal['num_celular']; ?></p>
                             <p class="direccion-usuario"><?php echo $personal['direccion']; ?></p>
                         </div>
-
+<hr>
                         <div class="botonesUsuario">
                         <?php 
+                        $id_usuario = $_SESSION['id_usuario'];
                         $id_personal = $personal['id_personal'];
-                        $data1 = "id_personal=$id_personal";
+                        
+                        
+                                            $data1 = "id_usuario=$id_usuario&id_personal=$id_personal";
                         // Encripta los parámetros
                         $encryptedData1 = encryptData($data1);
                         ?>
-                        <a href="/sistema-sanbenito/home/perfil/editar.php?data=<?php echo $encryptedData1; ?>" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br>Perfil</a>
-                        <?php 
-                         $id_usuario = $_SESSION['id_usuario'];
-                         $data2 = "id_usuario=$id_usuario";
-                         
-                         // Encripta los parámetros
-                         $encryptedData2 = encryptData($data2);
-                        ?>
-                        <a href="/sistema-sanbenito/home/user/editar.php?data=<?php echo $encryptedData2; ?>" class="btn-editar"><i class="bi bi-pen-fill"></i><br> Editar<br> Usuario</a>
+                        
+                        <a href="/sistema-sanbenito/home/vermas/personal.php?data=<?php echo $encryptedData1; ?>" type="button" class="btn btn-info"><i class="bi bi-eye-fill"></i> Ver Perfil</a>
+
                         <form action="/sistema-sanbenito/includes/salir.php" method="post">
-                        <button type="submit" class="btn-salir">Salir <br> <i class="bi bi-box-arrow-right"></i></button>
+                        
+                        <button type="submit" class="btn btn-danger">Salir  <i class="bi bi-box-arrow-right"></i></button>
+
                         </form>
                         </div>
                         

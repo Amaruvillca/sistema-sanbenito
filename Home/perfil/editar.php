@@ -182,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <a href="javascript:void(0);" class="btn btn-secondary" onclick="window.history.back();">
                             <i class="bi bi-arrow-left"></i> Volver
                         </a>
-                        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Guardar Cambios</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Guardar Cambios</button>
                     </div>
                 </form>
                 <div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>

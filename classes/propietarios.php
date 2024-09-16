@@ -41,7 +41,7 @@ class Propietarios extends ActiveRecord{
         $this->num_celular_secundario= $args['num_celular_secundario'] ?? '';     
         $this->email= $args['email'] ?? '';
         $this->direccion= $args['direccion'] ?? '';
-        $this->fecha_registro= date('Y-m-d');
+        $this->fecha_registro= $args['fecha_registro'] ?? date('Y-m-d');
         $this->id_personal= $args['id_personal'] ?? '';
     }
     public function validar()

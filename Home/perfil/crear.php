@@ -13,10 +13,12 @@ if (isset($_GET['data'])) {
     // Ahora tienes acceso a los parámetros
     $email = $params['email'];
     if (!$email) {
-        header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+        echo "<script>window.history.back();</script>";
+        exit;
     }
 } else {
-    header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+    echo "<script>window.history.back();</script>";
+        exit;
 }
 
 use App\Perfil;

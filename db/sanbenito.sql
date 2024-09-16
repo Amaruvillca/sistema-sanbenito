@@ -39,6 +39,9 @@ fecha_registro date not null,
 id_personal int,
 FOREIGN KEY (id_personal) REFERENCES personal(id_personal)
 );
+ALTER TABLE propietario
+ADD COLUMN num_celular_secundario varchar(20) AFTER num_celular;
+
 CREATE TABLE mascota(
 id_mascota int auto_increment primary key not null,
 codigo_mascota varchar(30) not null unique, 
@@ -50,6 +53,7 @@ color varchar(60) not null,
 raza varchar(60) not null,
 fecha_nacimiento date not null,
 fecha_registro date not null,
-id_propietario int,
-FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario)
+id_propietario int ,
+FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario) ON DELETE SET NULL
 );
+drop table mascota;

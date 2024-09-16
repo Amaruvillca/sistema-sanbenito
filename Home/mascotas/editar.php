@@ -21,8 +21,9 @@ if (isset($_GET['data'])) {
     parse_str($decrypted_data, $params);
 
     // Verifica si 'id_propietario' está definido en $params
-    if (isset($params['id_propietario']) && $params['id_propietario']) {
-        $b = $params['id_propietario'];
+    if (isset($params['id_propietario']) && $params['id_propietario'] && isset($params['id_mascota']) && $params['id_mascota']) {
+        $id_propietario = $params['id_propietario'];
+        $id_mascota = $params['id_mascota'];
     } else {
         // Si no hay 'id_propietario', ir a la página anterior
         echo "<script>window.history.back();</script>";
@@ -34,11 +35,14 @@ if (isset($_GET['data'])) {
     exit;
 }
 $errores = Mascotas::getErrores();
-$propietario = Propietarios::find($b);
-$mascotas = new Mascotas();
+$propietario = Propietarios::find($id_propietario);
+$mascotas = Mascotas::find($id_mascota);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //crar objeto mascota
     $mascotas = new Mascotas($_POST['mascota']);
+    $mascotas->sincronizar($_POST['mascota']);
+
+
     // validar errores
     $errores = $mascotas->validar();
 
@@ -46,11 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
         // Verificar si se ha subido un archivo de imagen
         if ($_FILES['imagen']['tmp_name']) {
-            // Generar un nombre único para la imagen
             $nombreimagen = md5(uniqid(rand(), true)) . ".jpg";
-            // Ruta donde se guardará la imagen redimensionada
+            $rutaImagen = '../../imagemascota/';
+            if ($mascotas->imagen_mascota != "mascota.png") {
+                //borrar imagen
+                unlink($rutaImagen . $mascotas->imagen_mascota);
+            }
             $rutaImagen = '../../imagemascota/' . $nombreimagen;
-            // Leer la imagen desde el archivo subido
             $imagen = $manager->read($_FILES['imagen']['tmp_name']);  // Correcto en la versión ^3.7
             // Redimensionar la imagen a 500x500 píxeles
             $imagen->resize(500, 500, function ($constraint) {
@@ -64,7 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $codigo = $mascotas->generarCodigoMascota($propietario->num_carnet, $propietario->nombres, $propietario->num_celular, $propietario->id_propietario);
         $mascotas->setCodigoMascota($codigo);
-        $resultado = $mascotas->guardar();
+
+        $resultado = $mascotas->actualizar($id_mascota);
         if ($resultado) {
             // Si el usuario se guarda correctamente, establecemos el mensaje
             $mensajeEstado = "success";
@@ -89,14 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="card-body">
                 <form id="mascotaForm" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                    <input type="hidden" name="mascota[id_mascota]" value="<?php echo $mascotas->id_mascota ?>">
+
                     <div class="row">
                         <div class="col-md-3">
                             <div class="text-center mb-3">
-                                <img id="clienteFoto" src="/sistema-sanbenito/imagemascota/mascota.png" class="img-thumbnail mb-2" alt="Foto del mascota" width="200px" height="200px">
+                                <img id="clienteFoto" src="/sistema-sanbenito/imagemascota/<?php echo $mascotas->imagen_mascota ?>" class="img-thumbnail mb-2" alt="Foto del mascota" width="200px" height="200px">
                                 <input type="file" id="fotoInput" name="imagen" style="display:none; " accept="image/jpeg, image/png">
                                 <button type="button" class="btn btn-primary btn-sm w-100" id="btnSubirFoto">Añadir foto</button>
                             </div>
                         </div>
+                        <input type="hidden" name="mascota[imagen_mascota]" value="<?php echo $mascotas->imagen_mascota ?>">
                         <div class="col-md-9">
                             <div class="row">
                                 <div class="col-md-4 mb-3">
@@ -155,14 +165,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         Por favor ingrese la fecha de nacimiento.
                                     </div>
                                 </div>
-                                <input type="hidden" name="mascota[id_propietario]" value="<?php echo $b ?>">
+                                <input type="hidden" name="mascota[id_propietario]" value="<?php echo $mascotas->fecha_registro ?>">
+                                <input type="hidden" name="mascota[id_propietario]" value="<?php echo $id_propietario ?>">
 
 
                             </div>
                         </div>
                     </div>
                     <?php
-                    $id_propietario = $b;
+
+
                     $data = "id_propietario=$id_propietario";
                     $encryptedData = encryptData($data);
                     ?>
@@ -171,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <i class="bi bi-arrow-left"></i>
                             Volver
                         </a>
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Registrar Mascota </button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Guardar cambios </button>
                     </div>
                 </form>
                 <div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>
@@ -223,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (estadoProceso === "success") {
             Swal.fire({
-                title: "¡Mascota Registrada con éxito!",
+                title: "¡Datos actualizados con exito!",
                 text: "Presiona el botón para regresar.",
                 icon: "success",
                 confirmButtonText: "De acuerdo",

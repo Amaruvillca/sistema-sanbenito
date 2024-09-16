@@ -72,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <a href="/sistema-sanbenito/home/propietarios/editar.php?data=<?php echo $encryptedData; ?>" class="btn btn-primary">
                                             <i class="bi bi-pencil-square"></i> Editar
                                         </a>
-                                        <a href="/sistema-sanbenito/home/vermas/propietarios.php" class="btn btn-info">
+                                        
+                                        <a href="/sistema-sanbenito/home/vermas/propietarios.php?data=<?php echo $encryptedData; ?>" class="btn btn-info">
                                             <i class="bi bi-eye-fill"></i> Mascotas
                                         </a>
                                     </div>
@@ -156,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
 
             swalWithBootstrapButtons.fire({
-                title: "¿Estás seguro?",
+                title: "¿Estás seguro de eliminar al propietario?",
                 text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
@@ -169,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire({
                         title: "Cancelado",
-                        text: "El registro está a salvo.",
+                        text: "El propietario no fue eliminado",
                         icon: "error"
                     });
                 }
