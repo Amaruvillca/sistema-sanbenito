@@ -3,49 +3,83 @@
 $titulo = "Dashboard";
 $nombrepagina = "Dashboart";
 require 'template/header.php';
-
 use App\User;
-//$usuario = new User();
-//$usuario->Mandar();
+use App\Mascotas;
+use App\Perfil;
+use App\Propietarios;
+$usuario=User::contarDatos();
+$perfil=Perfil::contarDatos();
+$mascotas=Mascotas::contarDatos();
+$propietario=Propietarios::contarDatos();
 ?>
 
 
 <div class='dashboard-content'>
     <div class='container'>
         <div class="row">
-            <div class="col-3">
-                <div class='card'>
-                    <div class='card-header'>
-                        <h1>hola <?php
-                                    echo $personal['nombres'];
-                                    ?></h1>
-                    </div>
-                    <div class='card-body'>
-                        <p><?php
-                            echo $personal['nombres'];
-                            ?> : veterinario</p>
-                        <p>ni sint autem.</p>
+
+            <!-- Tarjeta de Usuarios -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="unique-card unique-card-usuarios">
+                    <div class="card-body">
+                        <h5>Usuarios</h5>
+                        <p><?php echo $usuario ?></p>
+                        <a href="/sistema-sanbenito/home/usuarios.php">Ver más</a>
+                        <!-- Icono de usuarios -->
+                        <i class="bi bi-person-vcard-fill icono-fondo"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-9">
-                <div class='card'>
-                    <div class='card-header'>
-                        <h1>hola juan</h1>
+
+            <!-- Tarjeta de Perfiles -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="unique-card unique-card-perfiles">
+                    <div class="card-body">
+                        <h5>Perfiles</h5>
+                        <p><?php echo $perfil ?></p>
+                        <a href="/sistema-sanbenito/home/perfiles.php">Ver más</a>
+                        <!-- Icono de perfil de usuario -->
+                        <i class="bi bi-person-circle icono-fondo"></i>
                     </div>
-                    <div class='card-body'>
-                        <p>hola juan: veterinario</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium eos at voluptate dolores vel. Velit, facilis deserunt iure explicabo soluta blanditiis, porro saepe alias, maiores ducimus nam dolores odio a.
-                            Repudiandae a sapiente sit eveniet quisquam ea magni voluptatem nobis dolore doloremque? Quo eos ipsum nisi ad blanditiis temporibus et mollitia, distinctio, fugiat veritatis aut, vitae voluptates odit? Eveniet, minus!
-                            Debitis voluptate quo adipisci nemo maxime quibusdam maiores fugiat aliquam, rem impedit eligendi vero tempore atque voluptates vel amet velit, nulla laboriosam animi officiis non? Ut minima fugiat deserunt quas?
-                            Ipsam eaque hic aut similique incidunt qui, voluptas ullam doloremque expedita eligendi pariatur veritatis magnam iusto ea placeat cupiditate sint labore beatae quasi quia repellendus totam. Minus nobis nihil explicabo.
-                            Saepe officia repellat modi, id, dolores sed sit libero nesciunt provident officiis voluptatibus eligendi soluta molestiae sunt. Atque numquam laborum corrupti rerum, officiis temporibus maiores adipisci voluptatum, magni sint autem.</p>
+                </div>
+            </div>
+
+            <!-- Tarjeta de Propietarios -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="unique-card unique-card-propietarios">
+                    <div class="card-body">
+                        <h5>Propietarios</h5>
+                        <p><?php echo $propietario ?></p>
+                        <a href="/sistema-sanbenito/home/propietarios.php">Ver más</a>
+                        <!-- Icono de casa -->
+                        <i class="bi bi-person-fill icono-fondo"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta de Servicios -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="unique-card unique-card-servicios">
+                    <div class="card-body">
+                        <h5>Mascotas</h5>
+                        <p><?php echo $mascotas ?></p>
+                        <a href="/sistema-sanbenito/home/servicios.php">Ver más</a>
+                        <!-- Icono de herramientas -->
+                        <i class="fas fa-paw icono-fondo"></i>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-12">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur eligendi officia, totam provident obcaecati mollitia fuga voluptatibus? Fuga ab possimus sequi, magnam totam, tempore modi minus, labore nam quam rem.
+            Totam nostrum rem tenetur voluptas est, enim commodi, molestiae laborum ipsam debitis incidunt dolores necessitatibus, deleniti sequi aperiam ad corporis ipsa pariatur nulla libero architecto expedita eveniet. Quod, enim commodi.
+            Ullam delectus id excepturi eaque vero tempora eos maiores nesciunt quod fugit? Est officia quos totam cumque delectus laudantium soluta alias corrupti quam distinctio harum reiciendis dolor, iste unde labore.
+        </div>
+
 
     </div>
+
+</div>
 
 </div>
 

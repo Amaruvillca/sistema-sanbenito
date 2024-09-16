@@ -1,0 +1,125 @@
+// Variables de colores
+$color-verde: #005C43;
+$color-verde-claro: #007B55;
+$color-rojo: #FF6F61;
+$color-rojo-claro: #FF7E7E;
+$color-azul: #29B6F6;
+$color-azul-claro: #42A5F5;
+$color-naranja: #FFB74D;
+$color-naranja-claro: #FFA726;
+$color-blanco: #fff;
+$color-gris-claro: #f4f6f9;
+$color-gris-oscuro: #333;
+
+// Configuraciones globales
+body {
+    background-color: $color-gris-claro;
+    font-family: 'Arial', sans-serif;
+}
+
+.stats-title {
+    text-align: center;
+    font-size: 28px;
+    color: $color-gris-oscuro;
+    margin-bottom: 40px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+// Tarjetas
+.unique-card {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 15px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: $color-blanco;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        width: 80px;
+        height: 80px;
+        background: rgba($color-blanco, 0.15);
+        border-radius: 50%;
+    }
+
+    h5 {
+        color: $color-blanco;
+        font-size: 18px;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    p {
+        font-size: 36px;
+        font-weight: bold;
+        color: $color-blanco;
+        margin-bottom: 0;
+    }
+
+    a {
+        display: inline-block;
+        padding: 8px 15px;
+        border-radius: 25px;
+        background-color: rgba($color-blanco, 0.3);
+        color: $color-blanco;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-size: 14px;
+
+        &:hover {
+            background-color: rgba($color-blanco, 0.6);
+            color: $color-gris-oscuro;
+        }
+    }
+
+    .icono-fondo {
+        font-size: 70px;
+        color: rgba($color-blanco, 0.1);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+}
+
+// Colores y estilos de tarjetas
+.unique-card-usuarios {
+    background: linear-gradient(135deg, $color-verde, $color-verde-claro);
+}
+
+.unique-card-perfiles {
+    background: linear-gradient(135deg, $color-rojo, $color-rojo-claro);
+}
+
+.unique-card-propietarios {
+    background: linear-gradient(135deg, $color-azul, $color-azul-claro);
+}
+
+.unique-card-servicios {
+    background: linear-gradient(135deg, $color-naranja, $color-naranja-claro);
+}
+
+// Diseño responsivo
+@media (max-width: 768px) {
+    .unique-card {
+        min-height: 140px;
+    }
+}

@@ -3,125 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propietario y Mascotas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Estadísticas - San Benito</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Estilos personalizados -->
     <style>
-        .card-propietario {
-            background-color: #005C43;
-            color: white;
-            margin-bottom: 20px;
-            border-radius: 10px;
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
         }
-        .card-mascota {
-            border: 1px solid #005C43;
-            border-radius: 10px;
-            margin-bottom: 20px;
+
+        .stats-title {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
-        .card-body {
-            padding: 20px;
-        }
-        .mascota-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-        }
-        .title {
-            color: #005C43;
-            font-weight: bold;
-        }
-        /* Estilo del botón flotante */
-        .btn-flotante {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #005C43;
-            color: white;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            padding: 15px;
+            min-height: 160px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #fff;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        .btn-flotante:hover {
-            background-color: #004031;
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+        }
+
+        /* Adaptación al estilo de San Benito */
+        .card.usuarios {
+            background: linear-gradient(135deg, #005C43, #007B55);
+        }
+
+        .card.perfiles {
+            background: linear-gradient(135deg, #FF6F61, #FF7E7E);
+        }
+
+        .card.propietarios {
+            background: linear-gradient(135deg, #29B6F6, #42A5F5);
+        }
+
+        .card.servicios {
+            background: linear-gradient(135deg, #FFB74D, #FFA726);
+        }
+
+        .card h5 {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .card p {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 0;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 25px;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .card a:hover {
+            background-color: rgba(255, 255, 255, 0.6);
+            color: #333;
+        }
+
+        .icono-fondo {
+            font-size: 70px;
+            color: rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Diseño responsivo */
+        @media (max-width: 768px) {
+            .card {
+                min-height: 140px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container mt-5">
+        <h2 class="stats-title">Estadísticas del Sistema San Benito</h2>
+        <div class="row g-4">
+            <!-- Tarjeta de Usuarios -->
+            <div class="col-md-3 col-sm-6">
+                <div class="card usuarios">
+                    <div class="card-body">
+                        <h5>Usuarios</h5>
+                        <p>120</p>
+                        <a href="/sistema-sanbenito/home/usuarios.php">Ver más</a>
+                        <!-- Icono de usuarios -->
+                        <i class="bi bi-people-fill icono-fondo"></i>
+                    </div>
+                </div>
+            </div>
 
-<div class="container mt-5">
-    <!-- Datos del propietario -->
-    <div class="card card-propietario">
-        <div class="card-body">
-            <h5 class="card-title">Datos del Propietario</h5>
-            <p class="card-text"><strong>Nombre:</strong> Juan Pérez</p>
-            <p class="card-text"><strong>Teléfono:</strong> +123 456 789</p>
-            <p class="card-text"><strong>Email:</strong> juan.perez@example.com</p>
+            <!-- Tarjeta de Perfiles -->
+            <div class="col-md-3 col-sm-6">
+                <div class="card perfiles">
+                    <div class="card-body">
+                        <h5>Perfiles</h5>
+                        <p>85</p>
+                        <a href="/sistema-sanbenito/home/perfiles.php">Ver más</a>
+                        <!-- Icono de perfil de usuario -->
+                        <i class="bi bi-person-circle icono-fondo"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta de Propietarios -->
+            <div class="col-md-3 col-sm-6">
+                <div class="card propietarios">
+                    <div class="card-body">
+                        <h5>Propietarios</h5>
+                        <p>30</p>
+                        <a href="/sistema-sanbenito/home/propietarios.php">Ver más</a>
+                        <!-- Icono de casa -->
+                        <i class="bi bi-house-door-fill icono-fondo"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta de Servicios -->
+            <div class="col-md-3 col-sm-6">
+                <div class="card servicios">
+                    <div class="card-body">
+                        <h5>Servicios</h5>
+                        <p>50</p>
+                        <a href="/sistema-sanbenito/home/servicios.php">Ver más</a>
+                        <!-- Icono de herramientas -->
+                        <i class="bi bi-tools icono-fondo"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Datos de las mascotas -->
-    <h5 class="title mb-4">Mascotas Asociadas</h5>
-
-    <div class="row">
-        <!-- Mascota 1 -->
-        <div class="col-md-4">
-            <div class="card card-mascota">
-                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
-                <div class="card-body">
-                    <h5 class="card-title">Firulais</h5>
-                    <p class="card-text"><strong>Especie:</strong> Perro</p>
-                    <p class="card-text"><strong>Edad:</strong> 3 años</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mascota 2 -->
-        <div class="col-md-4">
-            <div class="card card-mascota">
-                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
-                <div class="card-body">
-                    <h5 class="card-title">Michi</h5>
-                    <p class="card-text"><strong>Especie:</strong> Gato</p>
-                    <p class="card-text"><strong>Edad:</strong> 2 años</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mascota 3 -->
-        <div class="col-md-4">
-            <div class="card card-mascota">
-                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
-                <div class="card-body">
-                    <h5 class="card-title">Toby</h5>
-                    <p class="card-text"><strong>Especie:</strong> Perro</p>
-                    <p class="card-text"><strong>Edad:</strong> 5 años</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card card-mascota">
-                <img src="https://placekitten.com/400/300" class="mascota-image" alt="Mascota">
-                <div class="card-body">
-                    <h5 class="card-title">Toby</h5>
-                    <p class="card-text"><strong>Especie:</strong> Perro</p>
-                    <p class="card-text"><strong>Edad:</strong> 5 años</p>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-<!-- Botón flotante -->
-<a href="#" class="btn-flotante">+</a>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

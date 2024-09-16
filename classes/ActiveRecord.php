@@ -5,7 +5,7 @@ namespace App;
 class ActiveRecord
 {
     protected static $db;
-    
+
     protected static $nombreId = '';
     protected static $columnas_db = [];
     protected static $tabla = '';
@@ -17,7 +17,7 @@ class ActiveRecord
     }
     public static function all()
     {
-        $query = 'SELECT * FROM '.static::$tabla.' ORDER BY '.static::$nombreId.' DESC';
+        $query = 'SELECT * FROM ' . static::$tabla . ' ORDER BY ' . static::$nombreId . ' DESC';
         $resultado = self::consultarSql($query);
         return $resultado;
     }
@@ -63,24 +63,25 @@ class ActiveRecord
         $resultado = self::$db->query($query);
         return $resultado;
     }
-    public  function actualizar($id){
+    public  function actualizar($id)
+    {
         $atributos = $this->sanitizarAtributos();
         $valores = [];
         foreach ($atributos as $key => $value) {
-            $valores[]="{$key}='{$value}'";
-
+            $valores[] = "{$key}='{$value}'";
         }
-        $query = "UPDATE ".static::$tabla." SET ";
-        $query.= join(', ',$valores);
-        $query.=" WHERE ".static::$nombreId." = '".self::$db->escape_string($id)."' ";
-        $query.=" LIMIT 1 ";
+        $query = "UPDATE " . static::$tabla . " SET ";
+        $query .= join(', ', $valores);
+        $query .= " WHERE " . static::$nombreId . " = '" . self::$db->escape_string($id) . "' ";
+        $query .= " LIMIT 1 ";
         $resultado = self::$db->query($query);
         return $resultado;
     }
     //borrar datos
-    public static function borrar($id){
-        $query="DELETE FROM ".static::$tabla." WHERE ".static::$nombreId." = '".$id."' ";
-        
+    public static function borrar($id)
+    {
+        $query = "DELETE FROM " . static::$tabla . " WHERE " . static::$nombreId . " = '" . $id . "' ";
+
         $resultado = self::$db->query($query);
 
         return $resultado;
@@ -165,10 +166,34 @@ class ActiveRecord
     public function sincronizar($arg = [])
     {
         foreach ($arg as $key => $value) {
-            if(property_exists($this,$key) && !is_null(($value))){
-                $this->$key=$value;
-
+            if (property_exists($this, $key) && !is_null(($value))) {
+                $this->$key = $value;
             }
         }
     }
+    public static function contarDatos()
+{
+    // Prepara la consulta SQL
+    $query = "SELECT COUNT(*) FROM " . static::$tabla;
+
+    // Ejecuta la consulta
+    $resultado = self::$db->query($query);
+
+    // Verifica si la consulta fue exitosa
+    if ($resultado) {
+        // Obtiene el resultado
+        $fila = $resultado->fetch_array(MYSQLI_NUM);
+        $cantidad = $fila[0];
+        
+        // Libera el resultado
+        $resultado->free();
+
+        // Retorna el resultado
+        return $cantidad;
+    } else {
+        // Maneja el error en caso de fallo en la consulta
+        return false;
+    }
+}
+
 }

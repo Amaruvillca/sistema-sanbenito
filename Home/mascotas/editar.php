@@ -1,8 +1,8 @@
 <?php
 $titulo = "Propietarios";
-$nombrepagina = "Registrar mascota";
+$nombrepagina = "Editar mascota";
 require '../template/header.php';
-
+error_reporting(0);
 use App\Mascotas;
 use App\Propietarios;
 use Intervention\Image\ImageManager;
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="card">
             <div class="btn-primary card-header  text-white d-flex align-items-center">
                 <span class="me-2"><i class="fas fa-paw"></i></i></span>
-                <h4 class="mb-0">Nueva mascota</h4>
+                <h4 class="mb-0">Editar mascota</h4>
             </div>
             <div class="card-body">
                 <form id="mascotaForm" method="post" class="needs-validation" novalidate enctype="multipart/form-data">

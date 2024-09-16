@@ -28,10 +28,29 @@ if (isset($_GET['data'])) {
     echo "<script>window.history.back();</script>";
     exit;
 }
+
 $propietarios = Propietarios::find($b);
 $perfil = Perfil::find($propietarios->id_personal);
 $mascotas = Mascotas::all();
 $mascotas_encontradas = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id_mascota'];
+    $mascota = Mascotas::find($id);
+    $rutaImagen = '../../imagemascota/';
+    $resultado = Mascotas::borrar($id);
+
+    if ($resultado) {
+        // Si el usuario se guarda correctamente, establecemos el mensaje
+
+        if ($mascota->imagen_mascota != "mascota.png") {
+            //borrar imagen
+            unlink($rutaImagen . $mascota->imagen_mascota);
+        }
+        $mensajeEstado = "success";
+    } else {
+        $mensajeEstado = "nosuccess";
+    }
+}
 ?>
 
 <div class='dashboard-content'>
@@ -74,9 +93,12 @@ $mascotas_encontradas = false;
         </div>
 
         <div class="row">
-            <center>
-                <h3 class="card-title">Mascotas Asociadas</h3>
-            </center>
+            <div class="col-12">
+                <center>
+                    <h3 class="card-title">Mascotas Asociadas</h3>
+                </center>
+            </div>
+
             <div class="col-12 d-flex justify-content-end mb-4">
                 <div class="d-flex align-items-center">
                     <label for="busqueda-mascotas" class="mb-0 me-2">Buscar:</label>
@@ -102,33 +124,34 @@ $mascotas_encontradas = false;
                                 <center>
                                     <p><?php echo $mascota->codigo_mascota; ?></p>
                                 </center>
-                                <p><strong>Especie:</strong> <?php echo $mascota->especie; ?></p>
-                                <p><strong>Edad:</strong> <?php
-                                                            $fecha_nacimiento = new DateTime($mascota->fecha_nacimiento);
-                                                            $hoy = new DateTime();
-                                                            $edad = $hoy->diff($fecha_nacimiento);
-                                                            echo $edad->y . ' años y ';
-                                                            echo $edad->m . ' meses ';
-                                                            ?></p>
+                                <center>
+                                    <p><strong>Edad:</strong> <?php
+                                                                $fecha_nacimiento = new DateTime($mascota->fecha_nacimiento);
+                                                                $hoy = new DateTime();
+                                                                $edad = $hoy->diff($fecha_nacimiento);
+                                                                echo $edad->y . ' años y ';
+                                                                echo $edad->m . ' meses ';
+                                                                ?></p>
+                                </center>
                                 <div class="row">
-                                <?php
-                                        $id_propietario = $propietarios->id_propietario;
-                                        $id_mascota = $mascota->id_mascota;
-                                        $data = "id_propietario=$id_propietario&id_mascota=$id_mascota";
-                                        $encryptedData = encryptData($data);
-                                        ?>
+                                    <?php
+                                    $id_propietario = $propietarios->id_propietario;
+                                    $id_mascota = $mascota->id_mascota;
+                                    $data = "id_propietario=$id_propietario&id_mascota=$id_mascota";
+                                    $encryptedData = encryptData($data);
+                                    ?>
                                     <div class="col-6 mb-2">
                                         <a href="/sistema-sanbenito/home/mascotas/editar.php?data=<?php echo $encryptedData; ?>" class="btn btn-success btn-sm w-100"> <i class="bi bi-pencil-square"></i> Editar</a>
                                     </div>
                                     <div class="col-6 mb-2">
                                         <form method="post">
                                             <input type="hidden" name="id_mascota" value="<?php echo $mascota->id_mascota; ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm w-100 delete-btn" ><i class="bi bi-trash-fill"></i> Eliminar</button>
+                                            <button type="submit" class="btn btn-danger btn-sm w-100 delete-btn"><i class="bi bi-trash-fill"></i> Eliminar</button>
                                         </form>
-                                       
+
                                     </div>
                                     <div class="col-12 mb-2">
-                                        <a href="/sistema-sanbenito/mascotas/ver.php?id_mascota=<?php echo $mascota->id_mascota; ?>" class="btn btn-info btn-sm w-100"><i class="bi bi-eye-fill"></i> Ver más</a>
+                                        <a href="/sistema-sanbenito/home/vermas/mascotas.php?data=<?php echo $encryptedData; ?>" class="btn btn-info btn-sm w-100"><i class="bi bi-eye-fill"></i> Ver más</a>
                                     </div>
                                 </div>
                             </div>
@@ -153,6 +176,7 @@ $mascotas_encontradas = false;
             }
             ?>
         </div>
+        <div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>
         <script>
             document.getElementById('busqueda-mascotas').addEventListener('keyup', function() {
                 //Obtener el valor de búsqueda
@@ -177,44 +201,69 @@ $mascotas_encontradas = false;
             });
         </script>
         <script>
-     document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevenir el envío inmediato del formulario
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevenir el envío inmediato del formulario
 
-        const form = this.closest('form'); // Encuentra el formulario más cercano
+                    const form = this.closest('form'); // Encuentra el formulario más cercano
 
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: "btn btn-success mx-2",
-                cancelButton: "btn btn-danger mx-2"
-            },
-            buttonsStyling: false
-        });
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "btn btn-success mx-2",
+                            cancelButton: "btn btn-danger mx-2"
+                        },
+                        buttonsStyling: false
+                    });
 
-        swalWithBootstrapButtons.fire({
-            title: "¿Estás seguro de eliminar esta mascota?",
-            text: "Esta acción no se puede deshacer.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "No, cancelar",
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit(); // Envía el formulario si el usuario confirma
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                swalWithBootstrapButtons.fire({
-                    title: "Cancelado",
-                    text: "La mascota no fue eliminada.",
-                    icon: "error"
+                    swalWithBootstrapButtons.fire({
+                        title: "¿Estás seguro de eliminar esta mascota?",
+                        text: "Esta acción no se puede deshacer.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Sí, eliminar",
+                        cancelButtonText: "No, cancelar",
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit(); // Envía el formulario si el usuario confirma
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire({
+                                title: "Cancelado",
+                                text: "La mascota no fue eliminada.",
+                                icon: "error",
+                                confirmButtonText: "De acuerdo",
+                            });
+                        }
+                    });
                 });
-            }
-        });
-    });
-});
-
+            });
         </script>
+        <script>
+            // JavaScript para leer el estado del proceso y ejecutar la lógica correspondiente
+            document.addEventListener("DOMContentLoaded", function() {
+                var estadoProceso = document.getElementById("estadoProceso").textContent.trim();
 
+                if (estadoProceso === "success") {
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "La mascota ha sido eliminado exitosamente.",
+                        icon: "success",
+                        confirmButtonText: "De acuerdo",
+                    }).then(function() {
+                        window.location.href = '/sistema-sanbenito/home/vermas/propietarios.php?data=<?php echo $encryptedData; ?>';
+                    });
+                } else {
+                    if (estadoProceso === "nosuccess") {
+                        Swal.fire({
+                            title: "¡Ups algo salio mal!",
+                            text: "No se pudo eliminar a la mascota",
+                            icon: "error",
+                            confirmButtonText: "De acuerdo",
+                        });
+                    }
+                }
+            });
+        </script>
 
     </div>
     <?php

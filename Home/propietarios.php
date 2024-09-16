@@ -10,13 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $resultado = Propietarios::borrar($id);
     if ($resultado) {
-        // Si el registro se elimina correctamente, redirige con data=1
-        header('Location:/sistema-sanbenito/home/propietarios.php?data=1');
-        exit;
-    } else {
-        // Si hay un error, redirige con data=2
-        header('Location:/sistema-sanbenito/home/propietarios.php?data=2');
-        exit;
+       // Si el usuario se guarda correctamente, establecemos el mensaje
+       $mensajeEstado = "success";
+    } else{
+        $mensajeEstado = "nosuccess";
     }
 }
 ?>
@@ -86,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+<div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -122,26 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     });
 
-    // Mostrar mensaje de confirmación si se ha eliminado un registro
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const data = urlParams.get('data');
-
-    if (data === '1') {
-        Swal.fire({
-            title: "¡Eliminado!",
-            text: "El registro ha sido eliminado exitosamente.",
-            icon: "success",
-            confirmButtonText: "OK"
-        });
-    } else if (data === '2') {
-        Swal.fire({
-            title: "Error",
-            text: "Hubo un error al intentar eliminar el registro.",
-            icon: "error",
-            confirmButtonText: "OK"
-        });
-    }
+    
 
     // Manejo de eliminación con confirmación
     document.querySelectorAll('.delete-btn').forEach(button => {
@@ -171,11 +150,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     swalWithBootstrapButtons.fire({
                         title: "Cancelado",
                         text: "El propietario no fue eliminado",
-                        icon: "error"
+                        icon: "error",
+                        confirmButtonText: "De acuerdo",
                     });
                 }
             });
         });
+    });
+</script>
+<script>
+    // JavaScript para leer el estado del proceso y ejecutar la lógica correspondiente
+    document.addEventListener("DOMContentLoaded", function() {
+        var estadoProceso = document.getElementById("estadoProceso").textContent.trim();
+
+        if (estadoProceso === "success") {
+            Swal.fire({
+                title: "¡Eliminado!",
+                text: "propietario ha sido eliminado exitosamente.",
+                icon: "success",
+                confirmButtonText: "De acuerdo",
+            }).then(function() {
+                window.location.href = '/sistema-sanbenito/home/propietarios.php';
+            });
+        }else{
+            if (estadoProceso === "nosuccess"){
+                Swal.fire({
+                title: "¡Ups algo salio mal!",
+                text: "No se pudo eliminar al propietario",
+                icon: "error",
+                confirmButtonText: "De acuerdo",
+            });
+            }
+        }
     });
 </script>
 
