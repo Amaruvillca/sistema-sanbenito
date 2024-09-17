@@ -3,188 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estadísticas - San Benito</title>
-    <!-- Bootstrap CSS -->
+    <title>Registro de Vacunas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <!-- Estilos personalizados -->
     <style>
+        /* Colores personalizados */
+        :root {
+            --verde-sistema: #005C43;
+            --verde-claro: #007B55;
+            --gris-claro: #f4f6f9;
+            --blanco: #ffffff;
+            --gris-oscuro: #333;
+        }
+
         body {
-            background-color: #f4f6f9;
+            background-color: var(--gris-claro);
             font-family: 'Arial', sans-serif;
         }
 
-        .stats-title {
-            text-align: center;
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 40px;
-            font-weight: 700;
-            letter-spacing: 1px;
+        .card-registro {
+            background-color: var(--blanco);
+            border: 1px solid var(--gris-claro);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 50px auto;
+            max-width: 800px;
         }
 
-        .card {
-            border: none;
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        .card-header {
+            background-color: var(--verde-sistema);
+            color: var(--blanco);
             padding: 15px;
-            min-height: 160px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: #fff;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px 10px 0 0;
+            text-align: center;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        .form-control {
+            border: 1px solid var(--verde-sistema);
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-        }
-
-        /* Adaptación al estilo de San Benito */
-        .card.usuarios {
-            background: linear-gradient(135deg, #005C43, #007B55);
-        }
-
-        .card.perfiles {
-            background: linear-gradient(135deg, #FF6F61, #FF7E7E);
-        }
-
-        .card.propietarios {
-            background: linear-gradient(135deg, #29B6F6, #42A5F5);
-        }
-
-        .card.servicios {
-            background: linear-gradient(135deg, #FFB74D, #FFA726);
-        }
-
-        .card h5 {
-            color: #fff;
-            font-size: 18px;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .card p {
-            font-size: 36px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 0;
-        }
-
-        .card a {
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 25px;
-            background-color: rgba(255, 255, 255, 0.3);
-            color: #fff;
-            font-weight: bold;
-            text-decoration: none;
+        .btn-custom {
+            background-color: var(--verde-sistema);
+            color: var(--blanco);
             transition: background-color 0.3s ease;
-            font-size: 14px;
         }
 
-        .card a:hover {
-            background-color: rgba(255, 255, 255, 0.6);
-            color: #333;
+        .btn-custom:hover {
+            background-color: var(--verde-claro);
         }
 
-        .icono-fondo {
-            font-size: 70px;
-            color: rgba(255, 255, 255, 0.1);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
+        label {
+            font-weight: bold;
+            color: var(--gris-oscuro);
         }
 
-        .container {
-            max-width: 1200px;
-        }
-
-        /* Diseño responsivo */
         @media (max-width: 768px) {
-            .card {
-                min-height: 140px;
+            .card-registro {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="stats-title">Estadísticas del Sistema San Benito</h2>
-        <div class="row g-4">
-            <!-- Tarjeta de Usuarios -->
-            <div class="col-md-3 col-sm-6">
-                <div class="card usuarios">
-                    <div class="card-body">
-                        <h5>Usuarios</h5>
-                        <p>120</p>
-                        <a href="/sistema-sanbenito/home/usuarios.php">Ver más</a>
-                        <!-- Icono de usuarios -->
-                        <i class="bi bi-people-fill icono-fondo"></i>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Tarjeta de Perfiles -->
-            <div class="col-md-3 col-sm-6">
-                <div class="card perfiles">
-                    <div class="card-body">
-                        <h5>Perfiles</h5>
-                        <p>85</p>
-                        <a href="/sistema-sanbenito/home/perfiles.php">Ver más</a>
-                        <!-- Icono de perfil de usuario -->
-                        <i class="bi bi-person-circle icono-fondo"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarjeta de Propietarios -->
-            <div class="col-md-3 col-sm-6">
-                <div class="card propietarios">
-                    <div class="card-body">
-                        <h5>Propietarios</h5>
-                        <p>30</p>
-                        <a href="/sistema-sanbenito/home/propietarios.php">Ver más</a>
-                        <!-- Icono de casa -->
-                        <i class="bi bi-house-door-fill icono-fondo"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarjeta de Servicios -->
-            <div class="col-md-3 col-sm-6">
-                <div class="card servicios">
-                    <div class="card-body">
-                        <h5>Servicios</h5>
-                        <p>50</p>
-                        <a href="/sistema-sanbenito/home/servicios.php">Ver más</a>
-                        <!-- Icono de herramientas -->
-                        <i class="bi bi-tools icono-fondo"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="card card-registro">
+    <div class="card-header">
+        <h4>Registro de Vacunas</h4>
     </div>
+    <div class="card-body">
+        <form action="procesar_vacuna.php" method="POST">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="contra" class="form-label">Contra</label>
+                    <input type="text" class="form-control" id="contra" name="contra" placeholder="Enfermedad" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="nom_vac" class="form-label">Nombre de la Vacuna</label>
+                    <input type="text" class="form-control" id="nom_vac" name="nom_vac" placeholder="Nombre" required>
+                </div>
+            </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="laboratorio" class="form-label">Laboratorio</label>
+                    <input type="text" class="form-control" id="laboratorio" name="laboratorio" placeholder="Laboratorio" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="costo" class="form-label">Costo</label>
+                    <input type="number" step="0.001" class="form-control" id="costo" name="costo" placeholder="0.000" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="fecha_vacuna" class="form-label">Fecha de Vacunación</label>
+                    <input type="date" class="form-control" id="fecha_vacuna" name="fecha_vacuna" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="proxima_vacuna" class="form-label">Próxima Vacunación</label>
+                    <input type="date" class="form-control" id="proxima_vacuna" name="proxima_vacuna" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="id_mascota" class="form-label">ID Mascota</label>
+                    <input type="number" class="form-control" id="id_mascota" name="id_mascota" placeholder="ID Mascota" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="id_personal" class="form-label">ID Personal</label>
+                    <input type="number" class="form-control" id="id_personal" name="id_personal" placeholder="ID Personal" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-custom w-100">Registrar Vacuna</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -7,9 +7,9 @@ error_reporting(0);
 
 use App\Mascotas;
 use App\Propietarios;
+use App\Vacunas;
 
-$id_usuario = '';
-$id_personal = '';
+
 if (isset($_GET['data'])) {
     $encrypted_data = $_GET['data'];
     $decrypted_data = decryptData($encrypted_data);
@@ -31,6 +31,8 @@ if (isset($_GET['data'])) {
 }
 $mascota = Mascotas::find($id_mascota);
 $propietario = Propietarios::find($mascota->id_propietario);
+$vacunas = Vacunas::all();
+$mascotas_encontradas = false;
 ?>
 
 <div class="dashboard-content">
@@ -39,6 +41,16 @@ $propietario = Propietarios::find($mascota->id_propietario);
             <div class="col-12">
                 <div class='card shadow-lg p-4' style="border-radius: 10px; background-color: #ffffff;">
                     <div class='card-body'>
+                        <?php
+
+                        $data = "id_propietario=$id_propietario";
+                        $encryptedData = encryptData($data);
+                        ?>
+                        <a href="/sistema-sanbenito/home/vermas/propietarios.php?data=<?php echo $encryptedData ?>" class="btn btn-secondary" style="border-radius: 25px;">
+                            <i class="bi bi-arrow-left"></i> Volver
+                        </a>
+
+
                         <!-- Distribuir el contenido en tres columnas centradas vertical y horizontalmente -->
                         <div class="row text-center justify-content-center align-items-center">
                             <!-- Columna de la imagen -->
@@ -73,8 +85,14 @@ $propietario = Propietarios::find($mascota->id_propietario);
                                 <h5 class="mb-3" style="color: #005C43; font-weight: bold; letter-spacing: 1px;">Servicios</h5>
 
                                 <div class="d-flex flex-column gap-3">
+                                    <?php
+                                    $id_propietario = $propietario->id_propietario;
+                                    $id_mascota = $mascota->id_mascota;
+                                    $data = "id_propietario=$id_propietario&id_mascota=$id_mascota";
+                                    $encryptedData = encryptData($data);
+                                    ?>
                                     <!-- Botón de Vacunas -->
-                                    <a href="/sistema-sanbenito/home/servicios/vacunas.php" class="btn btn-outline-success px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #28a745; border-color: #28a745; color: white; font-weight: 600;">
+                                    <a href="/sistema-sanbenito/home/vacunas/crear.php?data=<?php echo $encryptedData ?>" class="btn btn-outline-success px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #28a745; border-color: #28a745; color: white; font-weight: 600;">
                                         <i class="bi bi-shield-check"></i> Vacunas
                                     </a>
 
@@ -246,37 +264,53 @@ $propietario = Propietarios::find($mascota->id_propietario);
                                         <tr>
                                             <th>#</th>
                                             <th>Fecha</th>
-                                            <th>Vacuna</th>
-                                            <th>Observaciones</th>
+                                            <th>Proxima vacuna</th>
+                                            <th>Contra</th>
+                                            <th>Nombre vacuna</th>
+                                            <th>costo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <!-- 10 filas de ejemplo -->
-                                        <tr>
-                                            <td>7</td>
-                                            <td>2024-03-25</td>
-                                            <td>Parvovirus</td>
-                                            <td>Sin complicaciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>2024-02-28</td>
-                                            <td>Distemper</td>
-                                            <td>Todo en orden</td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>2024-01-15</td>
-                                            <td>Hepatitis</td>
-                                            <td>Sin problemas</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>2023-12-10</td>
-                                            <td>Leptospirosis</td>
-                                            <td>Vacunación exitosa</td>
-                                        </tr>
+                                        <?php
+                                        $c = 1;
+                                        $contador_registros = 0;  // Iniciar un contador para los registros
+
+                                        foreach ($vacunas as $key => $vacuna) {
+
+                                            if ($vacuna->id_mascota == $id_mascota) {
+                                                $mascotas_encontradas = true;
+
+                                                // Solo mostrar los primeros 30 registros
+                                                if ($contador_registros < 30) {
+                                        ?>
+
+                                                    <tr>
+                                                        <td><?php echo $c++ ?></td>
+                                                        <td><?php echo $vacuna->fecha_vacuna ?></td>
+                                                        <td><?php echo $vacuna->proxima_vacuna ?></td>
+                                                        <td><?php echo $vacuna->contra ?></td>
+                                                        <td><?php echo $vacuna->nom_vac ?></td>
+                                                        <td><?php echo $vacuna->costo. " Bs."; ?></td>
+                                                    </tr>
+
+                                        <?php
+                                                    $contador_registros++;  // Incrementar el contador después de mostrar un registro
+                                                } else {
+                                                    break;  // Detener el bucle cuando se han mostrado 30 registros
+                                                }
+                                            }
+                                        }
+                                        ?>
+
+                                        <?php
+                                        if (!$mascotas_encontradas) {
+                                            $mensaje = '<tr><th colspan="6"><center>No se encontraron vacunas </center></th></tr>';
+                                            echo $mensaje;
+                                        }
+                                        ?>
                                     </tbody>
+
                                 </table>
                             </div>
 

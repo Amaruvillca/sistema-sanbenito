@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         Por favor ingrese la fecha de nacimiento.
                                     </div>
                                 </div>
-                                <input type="hidden" name="mascota[id_propietario]" value="<?php echo $mascotas->fecha_registro ?>">
+                                <input type="hidden" name="mascota[fecha_registro]" value="<?php echo $mascotas->fecha_registro ?>">
                                 <input type="hidden" name="mascota[id_propietario]" value="<?php echo $id_propietario ?>">
 
 

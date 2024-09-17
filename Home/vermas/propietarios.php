@@ -56,9 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class='dashboard-content'>
     <div class='container'>
         <div class="row">
+            
+        
+
+            
+                <div class="col-12">
+            <a href="/sistema-sanbenito/home/propietarios.php" class="btn btn-secondary" style="border-radius: 25px;"> <i class="bi bi-arrow-left"></i> Volver</a>
             <center>
                 <h3 class="card-title">Datos del Propietario</h3>
-            </center>
+                </center>
+                </div>
+            
             <div class="col-12">
                 <div class="card-propietarios card">
                     <div class="card-body">
