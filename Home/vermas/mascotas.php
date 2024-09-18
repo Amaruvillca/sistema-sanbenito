@@ -97,7 +97,7 @@ $mascotas_encontradas = false;
                                     </a>
 
                                     <!-- Botón de Desparasitaciones -->
-                                    <a href="/sistema-sanbenito/home/servicios/desparasitaciones.php" class="btn btn-outline-warning px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #ffc107; border-color: #ffc107; color: white; font-weight: 600;">
+                                    <a href="/sistema-sanbenito/home/desparasitaciones/crear.php?data=<?php echo $encryptedData ?>" class="btn btn-outline-warning px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #ffc107; border-color: #ffc107; color: white; font-weight: 600;">
                                         <i class="bi bi-bug"></i> Desparasitaciones
                                     </a>
 

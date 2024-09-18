@@ -57,3 +57,18 @@ id_propietario int ,
 FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario) ON DELETE SET NULL
 );
 drop table mascota;
+create table vacuna(
+id_vacuna int auto_increment primary key not null,
+contra varchar(30) not null,
+nom_vac varchar(30) not null,
+costo decimal(3,3) not null,
+fecha_vacuna date not null,
+proxima_vacuna date not null,
+id_mascota int,
+id_personal int,
+FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota) ON DELETE SET NULL,
+FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL
+);
+ALTER TABLE vacuna MODIFY COLUMN costo DECIMAL(10,2);
+
+drop table vacuna;
