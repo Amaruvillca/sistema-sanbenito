@@ -5,8 +5,8 @@ require '../template/header.php';
 verificaAcceso();
 
 use App\Servicios;
-
-$servicios = Servicios::all(); // Método que obtiene todos los servicios como objetos
+// Método que obtiene todos los servicios como objetos
+$servicios = Servicios::all(); 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_servicio=$_POST['id_servicio'];
     $resultado = Servicios::borrar($id_servicio);

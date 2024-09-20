@@ -110,8 +110,8 @@ CREATE TABLE servicios (
     FOREIGN KEY (id_personal) REFERENCES personal(id_personal) 
 );
 INSERT INTO servicios (nombre_servicio, descripcion, estado, fecha_registro, id_personal)
-VALUES ('Peluquería', 'Servicio de corte y aseo para mascotas', TRUE, '2024-09-19', 1);
+VALUES ('Limpieza dental', 'Servicio de limpieza dental', TRUE, '2024-09-19', 1);
 
-INSERT INTO cirugias (nombre_cirugia, descripcion, estado, fecha_creacion, id_personal)
-VALUES ('Esterilización', 'Cirugía para esterilizar a mascotas', TRUE, '2024-09-19 10:30:00', 1);
+INSERT INTO cirugias (nombre_cirugia, descripcion, estado, fecha_registro, id_personal)
+VALUES ('Esterilización', 'Cirugía para esterilizar a mascotas', TRUE, '2024-09-19', 1);
 
