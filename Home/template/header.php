@@ -1,5 +1,5 @@
 <?php
-ob_start(); 
+ob_start();
 define('REQUIRE_URL', __DIR__ . '/../../includes');
 // define('ERROR_URL', __DIR__ . '/../../error');
 
@@ -25,24 +25,24 @@ header('Pragma: no-cache');
     <title><?php echo $nombrepagina; ?></title>
     <link rel="icon" type="image/png" href="/sistema-sanbenito/build/img/logoblanco.webp">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link rel="stylesheet" href="/sistema-sanbenito/build/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   
+
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css" />
 
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/sistema-sanbenito/build/css/app.css">
-    
+
 </head>
 
 <body>
     <!-- partial:index.partial.html -->
     <div class='dashboard'>
-        <div class="dashboard-nav" >
+        <div class="dashboard-nav">
             <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
                 <a href="#" class="brand-logo">
                     <img class="logss" src="/sistema-sanbenito/build/img/log.jpg" alt="" height="50">
@@ -69,18 +69,19 @@ header('Pragma: no-cache');
                 <a href="/sistema-sanbenito/Home/calendar.php" class="dashboard-nav-item <?php if ($titulo == 'Calendario') echo 'active'; ?>"><i class="bi bi-calendar"></i>
                     Calendario
                 </a>
+
                 <div class='dashboard-nav-dropdown'>
                     <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                             class="bi bi-hospital-fill"></i>
                         Cirugias </a>
                     <div class='dashboard-nav-dropdown-menu'>
 
-                        <a href="#" class="dashboard-nav-dropdown-item active">Castraciones</a>
+                        <a href="/sistema-sanbenito/home/setting/" class="dashboard-nav-dropdown-item active">Castraciones</a>
                         <a href="#" class="dashboard-nav-dropdown-item">Esterilisacion</a>
                         <a href="#" class="dashboard-nav-dropdown-item"> nueva cirugia</a>
                     </div>
                 </div>
-                <div class='dashboard-nav-dropdown'><a href="#!"
+                <!-- <div class='dashboard-nav-dropdown'><a href="#!"
                         class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                             class="bi bi-clipboard2-plus-fill"></i></i>
                         Servicios</a>
@@ -90,7 +91,16 @@ header('Pragma: no-cache');
                             class="dashboard-nav-dropdown-item">peluqueria</a><a href="#"
                             class="dashboard-nav-dropdown-item">añadir servicio</a>
                     </div>
+                </div> -->
+                <div class="<?php noMostrar(); ?> dashboard-nav-dropdown <?php if ($titulo == 'Servicios' || $titulo == 'Cirugias') echo 'show'; ?>"><a href="#!"
+                        class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="bi bi-gear"></i>
+                        Ajustes </a>
+                    <div class='dashboard-nav-dropdown-menu'>
+                        <a href="/sistema-sanbenito/home/setting/servicios.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'Servicios') echo 'active'; ?>">Servicios</a>
+                        <a href="/sistema-sanbenito/home/setting/cirugias.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'Cirugias') echo 'active'; ?>"> Cirugias </a>
+                    </div>
                 </div>
+
                 <div class="<?php noMostrar(); ?> dashboard-nav-dropdown"><a href="#!"
                         class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i>
                         Ingresos </a>
@@ -99,6 +109,7 @@ header('Pragma: no-cache');
                             class="dashboard-nav-dropdown-item"> Projections</a>
                     </div>
                 </div>
+
 
 
 
@@ -113,10 +124,10 @@ header('Pragma: no-cache');
 
                     <button class="perfil-boton btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <img width="30" height="30" class="rounded-circle me-2"
-                           src="/sistema-sanbenito/imagepersonal/<?php echo $personal['imagen_personal']; ?>"
+                            src="/sistema-sanbenito/imagepersonal/<?php echo $personal['imagen_personal']; ?>"
                             alt="imagen perfil">
 
-                        <?php echo $personal['nombres'].' '.$personal['apellido_paterno'].' '.$personal['apellido_materno']; ?>
+                        <?php echo $personal['nombres'] . ' ' . $personal['apellido_paterno'] . ' ' . $personal['apellido_materno']; ?>
                     </button>
                 </div>
             </header>
@@ -143,28 +154,27 @@ header('Pragma: no-cache');
                             <p class="telefono-usuario">+591 <?php echo $personal['num_celular']; ?></p>
                             <p class="direccion-usuario"><?php echo $personal['direccion']; ?></p>
                         </div>
-<hr>
+                        <hr>
                         <div class="botonesUsuario">
-                        <?php 
-                        $id_usuario = $_SESSION['id_usuario'];
-                        $id_personal = $personal['id_personal'];
-                        
-                        
-                                            $data1 = "id_usuario=$id_usuario&id_personal=$id_personal";
-                        // Encripta los parámetros
-                        $encryptedData1 = encryptData($data1);
-                        ?>
-                        
-                        <a href="/sistema-sanbenito/home/vermas/personal.php?data=<?php echo $encryptedData1; ?>" type="button" class="btn btn-info"><i class="bi bi-eye-fill"></i> Ver Perfil</a>
+                            <?php
+                            $id_usuario = $_SESSION['id_usuario'];
+                            $id_personal = $personal['id_personal'];
 
-                        <form action="/sistema-sanbenito/includes/salir.php" method="post">
-                        
-                        <button type="submit" class="btn btn-danger">Salir  <i class="bi bi-box-arrow-right"></i></button>
 
-                        </form>
+                            $data1 = "id_usuario=$id_usuario&id_personal=$id_personal";
+                            // Encripta los parámetros
+                            $encryptedData1 = encryptData($data1);
+                            ?>
+
+                            <a href="/sistema-sanbenito/home/vermas/personal.php?data=<?php echo $encryptedData1; ?>" type="button" class="btn btn-info"><i class="bi bi-eye-fill"></i> Ver Perfil</a>
+
+                            <form action="/sistema-sanbenito/includes/salir.php" method="post">
+
+                                <button type="submit" class="btn btn-danger">Salir <i class="bi bi-box-arrow-right"></i></button>
+
+                            </form>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
-           

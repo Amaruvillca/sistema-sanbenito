@@ -1,31 +1,33 @@
 <?php
-$titulo = "Propietarios";
-$nombrepagina = "Propietarios";
-require 'template/header.php';
+$titulo = "Servicios";
+$nombrepagina = "Servicios";
+require '../template/header.php';
+verificaAcceso();
 
-use App\Propietarios;
+use App\Servicios;
 
-$propietarios = Propietarios::all();
+$servicios = Servicios::all(); // Método que obtiene todos los servicios como objetos
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'];
-    $resultado = Propietarios::borrar($id);
+    $id_servicio=$_POST['id_servicio'];
+    $resultado = Servicios::borrar($id_servicio);
     if ($resultado) {
-       // Si el usuario se guarda correctamente, establecemos el mensaje
-       $mensajeEstado = "success";
-    } else{
-        $mensajeEstado = "nosuccess";
-    }
+        // Si el usuario se guarda correctamente, establecemos el mensaje
+        $mensajeEstado = "success";
+     } else{
+         $mensajeEstado = "nosuccess";
+     }
 }
+
 ?>
 
 <div class='dashboard-content'>
     <div class="container">
         <div class="row">
-            <h1><i class="bi bi-person-fill"></i> Propietarios</h1>
+            <h1><i class="bi bi-gear-fill"></i> Servicios</h1>
             <div class="row mb-3">
                 <div class="col-md-12 text-end">
-                    <a href="/sistema-sanbenito/home/propietarios/crear.php" class="btn btn-primary">
-                        <i class="bi bi-person-plus-fill"></i> Añadir nuevo Propietario
+                    <a href="/sistema-sanbenito/home/setting/servicios/crear.php" class="btn btn-primary">
+                        <i class="bi bi-plus-circle-fill"></i> Añadir nuevo servicio
                     </a>
                 </div>
             </div>
@@ -34,50 +36,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombres y Apellidos</th>
-                            <th>Celular</th>
-                            <th>Cel.Sec.</th>
-                            <th>Carnet</th>
+                            <th>Nombre del Servicio</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Filas de datos -->
-                        <?php $c = 1;
-                        if (!empty($propietarios)) {
-                        foreach ($propietarios as $key => $propietario): ?>
-                            <tr>
-                                <td><?php echo $c++ ?></td>
-                                <td><?php echo $propietario->nombres . " " . $propietario->apellido_paterno . " " . $propietario->apellido_materno ?></td>
-                                <td><?php echo $propietario->num_celular ?></td>
-                                <td><?php echo ($propietario->num_celular_secundario == '') ? 'S/N' : $propietario->num_celular_secundario; ?></td>
-                                <td><?php echo $propietario->num_carnet ?></td>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-2">
-                                        <form method="post" class="delete-form">
-                                            <input type="hidden" name="id" value="<?php echo $propietario->id_propietario ?>">
-                                            <button type="button" class="btn btn-danger delete-btn">
-                                                <i class="bi bi-trash-fill"></i> Eliminar
-                                            </button>
-                                        </form>
+                        <?php
+                        $contador = 1;
+                        if (!empty($servicios)) {
+                            foreach ($servicios as $servicio) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $contador++; ?></td>
+                                    <td><?php echo $servicio->nombre_servicio; ?></td>
+                                    <td><?php echo $servicio->descripcion; ?></td>
 
+                                    <td class="text-center">
+                                        <label class="switch">
+                                            <input type="checkbox" id="estadoSwitch<?php echo $servicio->id_servicio; ?>" <?php echo $servicio->estado ? 'checked' : ''; ?>>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </td>
+                                    <td>
                                         <?php
-                                        $id_propietario = $propietario->id_propietario;
-                                        $data = "id_propietario=$id_propietario";
+                                        $id_servicio = $servicio->id_servicio;
+                                        $data = "id_servicio=$id_servicio";
                                         $encryptedData = encryptData($data);
                                         ?>
+                                        <div class="d-flex justify-content-center align-items-center gap-2">
+                                            <a href="/sistema-sanbenito/home/setting/servicios/editar.php?data=<?php echo $encryptedData ?>" class="btn btn-info">
+                                                <i class="bi bi-pencil-fill"></i> Editar
+                                            </a>
+                                            <form method="post" class="delete-form">
+                                                <input type="hidden" name="id_servicio" value="<?php echo $servicio->id_servicio ?>">
+                                                <button type="button" class="btn btn-danger delete-btn">
+                                                    <i class="bi bi-trash-fill"></i> Eliminar
+                                                </button>
+                                            </form>
+                                        </div>
 
-                                        <a href="/sistema-sanbenito/home/propietarios/editar.php?data=<?php echo $encryptedData; ?>" class="btn btn-primary">
-                                            <i class="bi bi-pencil-square"></i> Editar
-                                        </a>
-                                        
-                                        <a href="/sistema-sanbenito/home/vermas/propietarios.php?data=<?php echo $encryptedData; ?>" class="btn btn-info">
-                                            <i class="bi bi-eye-fill"></i> Mascotas
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; }else{echo "No se encontraron usuarios.";}?>
+
+
+                                    </td>
+                                </tr>
+                        <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>No se encontraron servicios.</td></tr>";
+                        }
+                        ?>
+
                     </tbody>
                 </table>
             </div>
@@ -96,14 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <!-- Inicialización de DataTables -->
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
-            "pageLength": 100,
+            "pageLength": 10,
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros por página",
                 "zeroRecords": "No se encontraron resultados",
@@ -120,9 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
     });
-
-    
-
     // Manejo de eliminación con confirmación
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
@@ -137,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
 
             swalWithBootstrapButtons.fire({
-                title: "¿Estás seguro de eliminar al propietario?",
+                title: "¿Estás seguro de eliminar al servicio?",
                 text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
@@ -150,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire({
                         title: "Cancelado",
-                        text: "El propietario no fue eliminado",
+                        text: "El servicio no fue eliminado",
                         icon: "error",
                         confirmButtonText: "De acuerdo",
                     });
@@ -167,11 +172,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (estadoProceso === "success") {
             Swal.fire({
                 title: "¡Eliminado!",
-                text: "propietario ha sido eliminado exitosamente.",
+                text: "servicio ha sido eliminado exitosamente.",
                 icon: "success",
                 confirmButtonText: "De acuerdo",
             }).then(function() {
-                window.location.href = '/sistema-sanbenito/home/propietarios.php';
+                window.location.href = '/sistema-sanbenito/home/setting/servicios.php';
             });
         }else{
             if (estadoProceso === "nosuccess"){
@@ -185,7 +190,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     });
 </script>
-
 <?php
-require 'template/footer.php';
+require '../template/footer.php';
 ?>

@@ -4,10 +4,10 @@ $titulo = "Propietarios";
 $nombrepagina = "Vacuna";
 require '../template/header.php';
 
-use App\Vacunas;
+use App\Desparacitaciones;
 use App\Mascotas;
 
-$errores = Vacunas::getErrores();
+$errores = Desparacitaciones::getErrores();
 if (isset($_GET['data'])) {
     $encrypted_data = $_GET['data'];
     $decrypted_data = decryptData($encrypted_data);
@@ -27,13 +27,14 @@ if (isset($_GET['data'])) {
     echo "<script>window.history.back();</script>";
     exit;
 }
-$vacuna = new Vacunas();
+$desparasitacion = new Desparacitaciones();
 $mascota = Mascotas::find($id_mascota);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $vacuna = new Vacunas($_POST['vacuna']);
-    $errores = $vacuna->validar();
+    $desparasitacion = new Desparacitaciones($_POST['desparasitacion']);
+    $errores = $desparasitacion->validar();
+    //debuguear($desparasitacion);
     if (empty($errores)) {
-        $resultado = $vacuna->guardar();
+        $resultado = $desparasitacion->guardar();
         if ($resultado) {
             // Si el usuario se guarda correctamente, establecemos el mensaje
             $mensajeEstado = "success";
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class='dashboard-content'>
-    <br><br><br>
+    <br><br>
     <center> <?php
 
                 foreach ($errores as $error) :
@@ -63,34 +64,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <form method="POST" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="contra" class="form-label">Contra:</label>
-                                    <input type="text" class="form-control" id="contra" name="vacuna[contra]" placeholder="Enfermedad" required value="<?php echo s($vacuna->contra) ?>">
-                                    <div class="invalid-feedback">Por favor, ingrese la enfermedad contra la que es la vacuna.</div>
+                                    <label for="contra" class="form-label">Producto:</label>
+                                    <input type="text" class="form-control" id="contra" name="desparasitacion[producto]" placeholder="Producto" required value="<?php echo s($desparasitacion->producto) ?>">
+                                    <div class="invalid-feedback">Por favor, ingrese el producto.</div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="nom_vac" class="form-label">Nombre de la Vacuna:</label>
-                                    <input type="text" class="form-control" id="nom_vac" name="vacuna[nom_vac]" placeholder="Nombre" required value="<?php echo s($vacuna->nom_vac) ?>">
-                                    <div class="invalid-feedback">Por favor, ingrese el nombre de la vacuna.</div>
+                                    <label for="nom_vac" class="form-label">tipo desparasitacion:</label>
+                                    <select name="desparasitacion[tipo_desparasitacion]" class="form-control"  class="form-control form-select" required>
+                                        <option selected disabled value="">-- Seleccione --</option>
+                                        <option <?php echo $desparasitacion->tipo_desparasitacion == 'Interna' ? 'selected' : '' ?> value="Interna">Interna</option>
+                                        <option <?php echo $desparasitacion->tipo_desparasitacion == 'Externa' ? 'selected' : '' ?> value="Externa">Externa</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, selccione el tipo de desparasitación.</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="costo" class="form-label">Principio activo:</label>
+                                    <input type="text" class="form-control" id="costo" name="desparasitacion[principio_activo]" placeholder="principio activo" required value="<?php echo s($desparasitacion->principio_activo) ?>">
+                                    <div class="invalid-feedback">Por favor, ingrese principio activo.</div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <label for="proxima_vacuna" class="form-label">Via:</label>
+                                    
+                                    <select name="desparasitacion[via]" class="form-control" id="nom_vac" class="form-control form-select" required>
+                                        <option selected disabled value="">-- Seleccione --</option>
+                                        <option <?php echo $desparasitacion->via == 'Oral' ? 'selected' : '' ?> value="Oral">Oral</option>
+                                        <option <?php echo $desparasitacion->via == 'Inyectable' ? 'selected' : '' ?> value="Inyectable">Inyectable</option>
+                                        <option <?php echo $desparasitacion->via == 'Producto medicado' ? 'selected' : '' ?> value="Producto medicado">Producto medicado</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, seleccione la via.</div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="costo" class="form-label">Costo:</label>
-                                    <input type="number" step="0.001" class="form-control" id="costo" name="vacuna[costo]" placeholder="0.000" required value="<?php echo s($vacuna->costo) ?>">
+                                    <input type="number" step="0.001" class="form-control" id="costo" name="desparasitacion[costo]" placeholder="0.000" required value="<?php echo s($desparasitacion->costo) ?>">
                                     <div class="invalid-feedback">Por favor, ingrese el costo de la vacuna.</div>
                                 </div>
-                                <div class="col-md-6 ">
-                                    <label for="proxima_vacuna" class="form-label">Próxima Vacunación:</label>
-                                    <input type="date" class="form-control" id="proxima_vacuna" name="vacuna[proxima_vacuna]" required value="<?php echo s($vacuna->proxima_vacuna) ?>">
+                                <div class="col-md-6 mb-3">
+                                    <label for="proxima_vacuna" class="form-label">Próxima Desparasitación:</label>
+                                    <input type="date" class="form-control" id="proxima_vacuna" name="desparasitacion[proxima_desparasitacion]" required value="<?php echo s($desparasitacion->proxima_desparasitacion) ?>">
                                     <div class="invalid-feedback">Por favor, ingrese la próxima fecha de vacunación.</div>
                                 </div>
                             </div>
-                            <input type="hidden" name="vacuna[id_mascota]" value="<?php echo $id_mascota ?>">
-                            <input type="hidden" name="vacuna[id_personal]" value="<?php echo $personal['id_personal']; ?>">
+                            <input type="hidden" name="desparasitacion[id_mascota]" value="<?php echo $id_mascota ?>">
+                            <input type="hidden" name="desparasitacion[id_personal]" value="<?php echo $personal['id_personal'] ?>">
 
 
-                            <button type="submit" class="btn btn-primary w-100">Registrar Vacuna</button>
+                            <button type="submit" class="btn btn-primary w-100">Registrar Desparasitacín</button>
                         </form>
                         <div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>
                     </div>
@@ -127,7 +150,7 @@ $encryptedData = encryptData($data);
 
         if (estadoProceso === "success") {
             Swal.fire({
-                title: "¡Vacuna resgistrada con exito!",
+                title: "¡Desparasitación resgistrada con exito!",
                 text: "Presiona el botón para regresar.",
                 icon: "success",
                 confirmButtonText: "De acuerdo",

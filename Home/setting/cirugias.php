@@ -1,31 +1,33 @@
 <?php
-$titulo = "Propietarios";
-$nombrepagina = "Propietarios";
-require 'template/header.php';
+$titulo = "Cirugias";
+$nombrepagina = "Cirugias";
+require '../template/header.php';
+verificaAcceso();
 
-use App\Propietarios;
+use App\Ciruguas;
 
-$propietarios = Propietarios::all();
+$cirugias = Ciruguas::all();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'];
-    $resultado = Propietarios::borrar($id);
+    $id_cirugia=$_POST['id_cirugia'];
+    $resultado = Ciruguas::borrar($id_cirugia);
     if ($resultado) {
-       // Si el usuario se guarda correctamente, establecemos el mensaje
-       $mensajeEstado = "success";
-    } else{
-        $mensajeEstado = "nosuccess";
-    }
+        // Si el usuario se guarda correctamente, establecemos el mensaje
+        $mensajeEstado = "success";
+     } else{
+         $mensajeEstado = "nosuccess";
+     }
 }
+
 ?>
 
 <div class='dashboard-content'>
     <div class="container">
         <div class="row">
-            <h1><i class="bi bi-person-fill"></i> Propietarios</h1>
+            <h1><i class="bi bi-heart-pulse-fill"></i> Cirugías</h1>
             <div class="row mb-3">
                 <div class="col-md-12 text-end">
-                    <a href="/sistema-sanbenito/home/propietarios/crear.php" class="btn btn-primary">
-                        <i class="bi bi-person-plus-fill"></i> Añadir nuevo Propietario
+                    <a href="/sistema-sanbenito/home/setting/cirugias/crear.php" class="btn btn-primary">
+                        <i class="bi bi-plus-circle-fill"></i> Añadir nueva cirugía
                     </a>
                 </div>
             </div>
@@ -34,50 +36,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombres y Apellidos</th>
-                            <th>Celular</th>
-                            <th>Cel.Sec.</th>
-                            <th>Carnet</th>
+                            <th>Nombre de la Cirugía</th>
+                            <th>Descripción</th>
+                            <th>Fecha de Registro</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Filas de datos -->
-                        <?php $c = 1;
-                        if (!empty($propietarios)) {
-                        foreach ($propietarios as $key => $propietario): ?>
-                            <tr>
-                                <td><?php echo $c++ ?></td>
-                                <td><?php echo $propietario->nombres . " " . $propietario->apellido_paterno . " " . $propietario->apellido_materno ?></td>
-                                <td><?php echo $propietario->num_celular ?></td>
-                                <td><?php echo ($propietario->num_celular_secundario == '') ? 'S/N' : $propietario->num_celular_secundario; ?></td>
-                                <td><?php echo $propietario->num_carnet ?></td>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-2">
-                                        <form method="post" class="delete-form">
-                                            <input type="hidden" name="id" value="<?php echo $propietario->id_propietario ?>">
+                        <?php
+                        $contador = 1;
+                        if (!empty($cirugias)) {
+                            foreach ($cirugias as $cirugia) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $contador++; ?></td>
+                                    <td><?php echo $cirugia->nombre_cirugia; ?></td>
+                                    <td><?php echo $cirugia->descripcion; ?></td>
+                                    <td><?php echo $cirugia->fecha_registro; ?></td>
+
+
+                                    <td class="text-center">
+                                        <label class="switch">
+                                            <input type="checkbox" id="estadoSwitch<?php echo $cirugia->id_cirugia; ?>" <?php echo $cirugia->estado ? 'checked' : ''; ?>>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $id_cirugia = $cirugia->id_cirugia;
+                                        $data = "id_cirugia=$id_cirugia";
+                                        $encryptedData = encryptData($data);
+                                        ?>
+                                       
+                                        <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <a href="/sistema-sanbenito/home/setting/cirugias/editar.php?data=<?php echo $encryptedData; ?>" class="btn btn-info">
+                                            <i class="bi bi-pencil-fill"></i> Editar
+                                        </a>
+                                            
+                                            <form method="post" class="delete-form">
+                                            <input type="hidden" name="id_cirugia" value="<?php echo $cirugia->id_cirugia ?>">
                                             <button type="button" class="btn btn-danger delete-btn">
                                                 <i class="bi bi-trash-fill"></i> Eliminar
                                             </button>
                                         </form>
+                                        </div>
 
-                                        <?php
-                                        $id_propietario = $propietario->id_propietario;
-                                        $data = "id_propietario=$id_propietario";
-                                        $encryptedData = encryptData($data);
-                                        ?>
-
-                                        <a href="/sistema-sanbenito/home/propietarios/editar.php?data=<?php echo $encryptedData; ?>" class="btn btn-primary">
-                                            <i class="bi bi-pencil-square"></i> Editar
-                                        </a>
-                                        
-                                        <a href="/sistema-sanbenito/home/vermas/propietarios.php?data=<?php echo $encryptedData; ?>" class="btn btn-info">
-                                            <i class="bi bi-eye-fill"></i> Mascotas
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; }else{echo "No se encontraron usuarios.";}?>
+                                    </td>
+                                </tr>
+                        <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='7'>No se encontraron cirugías.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -96,14 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <!-- Inicialización de DataTables -->
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
-            "pageLength": 100,
+            "pageLength": 10,
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros por página",
                 "zeroRecords": "No se encontraron resultados",
@@ -120,9 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
     });
-
-    
-
     // Manejo de eliminación con confirmación
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
@@ -137,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
 
             swalWithBootstrapButtons.fire({
-                title: "¿Estás seguro de eliminar al propietario?",
+                title: "¿Estás seguro de eliminar al cirugia?",
                 text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
@@ -150,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire({
                         title: "Cancelado",
-                        text: "El propietario no fue eliminado",
+                        text: "El cirugia no fue eliminado",
                         icon: "error",
                         confirmButtonText: "De acuerdo",
                     });
@@ -171,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 icon: "success",
                 confirmButtonText: "De acuerdo",
             }).then(function() {
-                window.location.href = '/sistema-sanbenito/home/propietarios.php';
+                window.location.href = '/sistema-sanbenito/home/setting/cirugias.php';
             });
         }else{
             if (estadoProceso === "nosuccess"){
@@ -185,7 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     });
 </script>
-
 <?php
-require 'template/footer.php';
+require '../template/footer.php';
 ?>

@@ -32,7 +32,9 @@ if (isset($_GET['data'])) {
 $mascota = Mascotas::find($id_mascota);
 $propietario = Propietarios::find($mascota->id_propietario);
 $vacunas = Vacunas::all();
-$mascotas_encontradas = false;
+$vacunas_encontradas = false;
+$desparasityacion_encontradas = false;
+$cirugia_encontradas = false;
 ?>
 
 <div class="dashboard-content">
@@ -264,7 +266,7 @@ $mascotas_encontradas = false;
                                         <tr>
                                             <th>#</th>
                                             <th>Fecha</th>
-                                            <th>Proxima vacuna</th>
+                                            <th>Proxima dosis</th>
                                             <th>Contra</th>
                                             <th>Nombre vacuna</th>
                                             <th>costo</th>
@@ -279,7 +281,7 @@ $mascotas_encontradas = false;
                                         foreach ($vacunas as $key => $vacuna) {
 
                                             if ($vacuna->id_mascota == $id_mascota) {
-                                                $mascotas_encontradas = true;
+                                                $vacunas_encontradas = true;
 
                                                 // Solo mostrar los primeros 30 registros
                                                 if ($contador_registros < 30) {
@@ -304,7 +306,7 @@ $mascotas_encontradas = false;
                                         ?>
 
                                         <?php
-                                        if (!$mascotas_encontradas) {
+                                        if (!$vacunas_encontradas) {
                                             $mensaje = '<tr><th colspan="6"><center>No se encontraron vacunas </center></th></tr>';
                                             echo $mensaje;
                                         }
@@ -321,7 +323,9 @@ $mascotas_encontradas = false;
                                         <tr>
                                             <th>#</th>
                                             <th>Fecha</th>
-                                            <th>Desparasitación</th>
+                                            <th>Proxima dosis</th>
+                                            <th>via</th>
+                                            <th>producto</th>
                                             <th>Observaciones</th>
                                         </tr>
                                     </thead>
@@ -333,18 +337,7 @@ $mascotas_encontradas = false;
                                             <td>Externa</td>
                                             <td>Recuperación completa</td>
                                         </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>2024-02-10</td>
-                                            <td>Interna</td>
-                                            <td>Todo normal</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>2023-12-01</td>
-                                            <td>Mixta</td>
-                                            <td>Observación finalizada</td>
-                                        </tr>
+                                      
                                     </tbody>
                                 </table>
                             </div>
@@ -356,7 +349,7 @@ $mascotas_encontradas = false;
                                         <tr>
                                             <th>#</th>
                                             <th>Fecha</th>
-                                            <th>Servicio</th>
+                                            <th>Proxima dosis</th>
                                             <th>Observaciones</th>
                                         </tr>
                                     </thead>
