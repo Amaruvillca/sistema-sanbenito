@@ -1,5 +1,5 @@
 <?php
-// Inicia el búfer de salida
+
 $titulo = "Dashboard";
 $nombrepagina = "Dashboart";
 require 'template/header.php';

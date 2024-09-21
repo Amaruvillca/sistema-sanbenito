@@ -79,9 +79,9 @@ class ActiveRecord
     }
     //borrar datos
     public static function borrar($id)
-    {
+    { //query de borrar datos por id
         $query = "DELETE FROM " . static::$tabla . " WHERE " . static::$nombreId . " = '" . $id . "' ";
-
+        //ejecutar query
         $resultado = self::$db->query($query);
 
         return $resultado;
@@ -172,28 +172,27 @@ class ActiveRecord
         }
     }
     public static function contarDatos()
-{
-    // Prepara la consulta SQL
-    $query = "SELECT COUNT(*) FROM " . static::$tabla;
+    {
+        // Prepara la consulta SQL
+        $query = "SELECT COUNT(*) FROM " . static::$tabla;
 
-    // Ejecuta la consulta
-    $resultado = self::$db->query($query);
+        // Ejecuta la consulta
+        $resultado = self::$db->query($query);
 
-    // Verifica si la consulta fue exitosa
-    if ($resultado) {
-        // Obtiene el resultado
-        $fila = $resultado->fetch_array(MYSQLI_NUM);
-        $cantidad = $fila[0];
-        
-        // Libera el resultado
-        $resultado->free();
+        // Verifica si la consulta fue exitosa
+        if ($resultado) {
+            // Obtiene el resultado
+            $fila = $resultado->fetch_array(MYSQLI_NUM);
+            $cantidad = $fila[0];
 
-        // Retorna el resultado
-        return $cantidad;
-    } else {
-        // Maneja el error en caso de fallo en la consulta
-        return false;
+            // Libera el resultado
+            $resultado->free();
+
+            // Retorna el resultado
+            return $cantidad;
+        } else {
+            // Maneja el error en caso de fallo en la consulta
+            return false;
+        }
     }
-}
-
 }

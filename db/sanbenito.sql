@@ -115,3 +115,15 @@ VALUES ('Limpieza dental', 'Servicio de limpieza dental', TRUE, '2024-09-19', 1)
 INSERT INTO cirugias (nombre_cirugia, descripcion, estado, fecha_registro, id_personal)
 VALUES ('Esterilización', 'Cirugía para esterilizar a mascotas', TRUE, '2024-09-19', 1);
 
+create table atiende_servicio(
+id_atencion int auto_increment primary key not null,
+observaciones varchar(255) not null,
+costo decimal(10,2) not null,
+fecha_servicio date not null,
+id_mascota int,
+id_personal int,
+id_servicio int,
+FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota) ON DELETE SET NULL,
+FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL,
+FOREIGN KEY (id_servicio) REFERENCES servicios(id_servicio) ON DELETE SET NULL
+);

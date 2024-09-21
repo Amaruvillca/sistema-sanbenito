@@ -37,23 +37,18 @@ $estado = false;
 //$usuario->Mandar();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    //$usuario = new User($_POST['usuario']);
-
-
+    $usuario = new User($_POST['usuario']);
     $errores = $usuario->validar();
     if (empty($errores)) {
         $resultado = $usuario->guardar();
         if ($resultado) {
             // Si el usuario se guarda correctamente, establecemos el mensaje
             $mensajeEstado = "success";
-            $email = $usuario->email;
-            $data = "email=$email";
-            $encryptedData = encryptData($data);
+            
         }
     }
 }
 ?>
-
 
 <div class='dashboard-content'>
     <canvas id="canvasBackground"></canvas>
@@ -72,19 +67,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
             <form id="loginForm" method="post">
-                <div class="mb-3">
+                <div class=" <?php noMostrar(); ?> mb-3">
                     <label for="email" class="form-label">Correo electrónico</label>
                     <input type="email" name="usuario[email]" class="form-control" id="email" placeholder="ejemplo@correo.com" required value="<?php echo s($usuario->email) ?>">
                     <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" name="usuario[email]" class="form-control" id="email" placeholder="2122defhol" required value="<?php echo s($usuario->email) ?>">
+                    <input type="password" name="usuario[email]" class="form-control" id="email" placeholder="tu anterior contraseña" required >
                     <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Nueva contraseña</label>
-                    <input type="password" name="usuario[email]" class="form-control" id="email" placeholder="2122defhol" required value="<?php echo s($usuario->email) ?>">
+                    <input type="password" name="usuario[email]" class="form-control" id="email" placeholder="Nueva contraseña" required >
                     <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
                 </div>
                 <div class=" <?php noMostrar(); ?> mb-3">
