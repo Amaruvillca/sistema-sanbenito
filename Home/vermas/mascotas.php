@@ -5,6 +5,7 @@ require '../template/header.php';
 
 error_reporting(0);
 
+use App\Desparacitaciones;
 use App\Mascotas;
 use App\Propietarios;
 use App\Vacunas;
@@ -32,6 +33,7 @@ if (isset($_GET['data'])) {
 $mascota = Mascotas::find($id_mascota);
 $propietario = Propietarios::find($mascota->id_propietario);
 $vacunas = Vacunas::all();
+$desparasitaciones = Desparacitaciones::all();
 $vacunas_encontradas = false;
 $desparasityacion_encontradas = false;
 $cirugia_encontradas = false;
@@ -330,6 +332,7 @@ $cirugia_encontradas = false;
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php ?>
                                         <!-- 10 filas de ejemplo -->
                                         <tr>
                                             <td>8</td>
