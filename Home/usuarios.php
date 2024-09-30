@@ -3,13 +3,8 @@ $titulo = "usuarios";
 $nombrepagina = "usuarios";
 require 'template/header.php';
 verificaAcceso();
-
 use App\User;
-
 $usuarios = User::mostrar();
-
-
-
 ?>
 
 <div class='dashboard-content'>
@@ -28,10 +23,10 @@ $usuarios = User::mostrar();
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Apellidos y Nombres</th>
+                            <th>Nombres y Apellidos</th>
+                            <th>Correo electrónico</th>
                             <th>rol</th>
-                            <th>Celular</th>
-                            <th>C.I Identidad</th>
+                            <th>C.I</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -46,22 +41,24 @@ $usuarios = User::mostrar();
                                 <tr>
                                     <td><?php echo $contador++;  ?></td>
                                     <td><?php echo $usuario['nombres'] . ' ' . $usuario['apellido_paterno'] . ' ' . $usuario['apellido_materno'] ?></td>
-                                    <td><?php echo $usuario['rol'] ?></td>
-                                    <td><?php echo $usuario['num_celular'] ?? 'no configurado' ?></td>
+                                    <td><?php echo $usuario['email'] ?></td>
+                                    <td><?php if($usuario['rol']=="Administrador") echo "Adm."; else echo "Vet." ; ?></td>
+                                   
                                     <td><?php echo $usuario['num_carnet'] ?? 'no configurado' ?></td>
 
                                     <td class="text-center">
                                         <label class="switch">
-                                            <input type="checkbox" id="estadoSwitch<?php echo $usuario['id_usuario']; ?>" <?php echo $usuario['estado'] ? 'checked' : ''; ?>>
+                                            <input type="checkbox" id="estadoSwitch<?php echo $usuario['id_usuario']; ?>" <?php echo $usuario['estado'] ? 'checked' : ''; ?> onchange="cambiarEstado(<?php echo $usuario['id_usuario']; ?>, this.checked)">
                                             <span class="slider"></span>
                                         </label>
                                     </td>
+
                                     <td><?php if ($usuario['nombres'] == null) {
-                                        $email = $usuario['email'];
-                                        $data ="email=$email"; 
-                                        $encryptedData = encryptData($data);
+                                            $email = $usuario['email'];
+                                            $data = "email=$email";
+                                            $encryptedData = encryptData($data);
                                         ?>
-                                        
+
                                             <a href="/sistema-sanbenito/home/perfil/crear.php?data=<?php echo $encryptedData; ?>" class="btn btn-danger"><i class="bi bi-file-earmark-person"></i> Crear Perfil</a>
 
 
@@ -69,10 +66,10 @@ $usuarios = User::mostrar();
                                             $id_usuario = $usuario['id_usuario'];
                                             $id_personal = $usuario['id_personal'];
                                             $data = "id_usuario=$id_usuario&id_personal=$id_personal";
-                                            
+
                                             // Encripta los parámetros
                                             $encryptedData = encryptData($data);
-                                            ?>
+                                        ?>
                                             <a href="/sistema-sanbenito/home/vermas/personal.php?data=<?php echo $encryptedData; ?>" class="btn btn-info">
                                                 <i class="bi bi-eye-fill"></i> Detalles
                                             </a>
@@ -126,6 +123,32 @@ $usuarios = User::mostrar();
             }
         });
     });
+</script>
+<script>
+    function cambiarEstado(idUsuario, nuevoEstado) {
+    const estado = nuevoEstado ? 1 : 0;
+
+    // Enviar la solicitud fetch con el método POST
+    fetch('/sistema-sanbenito/home/user/cambiarEstado.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_usuario: idUsuario, estado: estado })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            
+        } else {
+            alert('Error al actualizar el estado del usuario: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 </script>
 
 <?php

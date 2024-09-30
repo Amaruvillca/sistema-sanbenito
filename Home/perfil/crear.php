@@ -2,6 +2,7 @@
 $titulo = "usuarios";
 $nombrepagina = "crer perfil";
 require '../template/header.php';
+$conexion = conectarDb();
 verificaAcceso();
 $email = '';
 if (isset($_GET['data'])) {
@@ -61,7 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $resultado = $perfil->guardar();
         if ($resultado) {
+$contraseñahas=password_hash($perfil->num_carnet, PASSWORD_BCRYPT);
+
+$cambiarcontra= "UPDATE usuario
+SET password = '${contraseñahas}'
+WHERE email = '${email}';
+";
+$resultado = mysqli_query($conexion,$cambiarcontra);
+
             // Si el usuario se guarda correctamente, establecemos el mensaje
+
             $mensajeEstado = "success";
         }
     }

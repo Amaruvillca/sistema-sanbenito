@@ -23,7 +23,8 @@ header('Pragma: no-cache');
 <head>
     <meta charset="UTF-8">
     <title><?php echo $nombrepagina; ?></title>
-    <link rel="icon" type="image/png" href="/sistema-sanbenito/build/img/logoblanco.webp">
+    <link rel="icon" type="image/webp" href="/sistema-sanbenito/build/img/logoblanco.webp">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="/sistema-sanbenito/build/bootstrap/css/bootstrap.min.css">

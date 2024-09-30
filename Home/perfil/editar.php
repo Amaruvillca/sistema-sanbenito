@@ -2,7 +2,7 @@
 $titulo = "usuarios";
 $nombrepagina = "editar perfil";
 require '../template/header.php';
-
+error_reporting(0);
 use App\Perfil;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
@@ -29,10 +29,10 @@ if (isset($_GET['data'])) {
     // Ahora tienes acceso a los parámetros
     $b = $params['id_personal'];
     if (!$b) {
-        header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+        echo "<script>window.history.back();</script>";
     }
 } else {
-    header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
+    echo "<script>window.history.back();</script>";
 }
 $perfil = Perfil::find($b);
 
