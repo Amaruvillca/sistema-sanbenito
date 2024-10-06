@@ -5,40 +5,6 @@ require 'template/header.php';
 
 ?>
 <script src='/sistema-sanbenito/build/fullcalendar/dist/index.global.min.js'></script>
-    <script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
-
-    </script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          locale: 'es',  // Para mostrar el calendario en español
-          headerToolbar: {  // Personalización del header
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-          },
-          buttonText: {  // Personaliza los textos de los botones
-            today: 'Hoy',
-            month: 'Mes',
-            week: 'Semana',
-            day: 'Día'
-          },
-          events: [],  // Puedes agregar eventos aquí si tienes
-        });
-        calendar.render();
-    });
-</script>
-<script src='/sistema-sanbenito/build/fullcalendar/dist/index.global.min.js'></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -58,7 +24,14 @@ require 'template/header.php';
           },
           selectable: true,  // Habilitar la selección de fechas
           selectHelper: true, // Mostrar ayuda visual al seleccionar
-          events: [],  // Puedes agregar eventos aquí si tienes
+          events: [
+            {
+              title: 'Evento de prueba',
+              start: '2024-10-15',
+              end: '2024-10-15',
+              url: 'https://tupagina.com/detalle-evento',  // URL del evento
+            }
+          ],  // Agrega eventos aquí si tienes
 
           // Función para agregar un evento al seleccionar una fecha
           select: function(info) {
@@ -77,15 +50,16 @@ require 'template/header.php';
 
           // Evento cuando se hace clic en un evento existente
           eventClick: function(info) {
-            if (confirm('¿Deseas eliminar el evento "' + info.event.title + '"?')) {
-              info.event.remove(); // Eliminar evento si se confirma
-              alert('Evento eliminado');
+            if (info.event.url) {
+              window.location.href = info.event.url; // Redirigir a la URL asociada al evento
+              info.jsEvent.preventDefault(); // Previene el comportamiento predeterminado de abrir el link en una nueva ventana
             }
           }
         });
         calendar.render();
     });
 </script>
+
 
 <style>
   #calendar {

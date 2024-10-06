@@ -4,6 +4,8 @@ $titulo = "Dashboard";
 $nombrepagina = "Dashboart";
 require 'template/header.php';
 use App\User;
+use App\Desparacitaciones;
+use App\Vacunas;
 use App\Mascotas;
 use App\Perfil;
 use App\Propietarios;
@@ -11,6 +13,8 @@ $usuario=User::contarDatos();
 $perfil=Perfil::contarDatos();
 $mascotas=Mascotas::contarDatos();
 $propietario=Propietarios::contarDatos();
+$vacunas= Vacunas::all();
+$desparacitaciones= Desparacitaciones::all();
 ?>
 
 

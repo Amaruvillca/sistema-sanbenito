@@ -3,9 +3,9 @@
 require 'includes/config/db.php';
 $db = conectarDb();
 //crear un usuario y password
-$email = "amaru@gmail.com";
+$email = "76595194amaru@gmail.com";
 $password = "12345678910";
-$rol="Veterinario";
+$rol="Administrador";
 $passwordhash= password_hash($password, PASSWORD_BCRYPT);
 var_dump($passwordhash);
 

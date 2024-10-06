@@ -71,15 +71,13 @@ header('Pragma: no-cache');
                     Calendario
                 </a>
 
-                <div class='dashboard-nav-dropdown'>
-                    <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
-                            class="bi bi-hospital-fill"></i>
-                        Cirugias </a>
+                <div class='dashboard-nav-dropdown <?php if ($titulo == 'cirugias_hoy' || $titulo == 'tratamientos_hoy') echo 'show'; ?>'>
+                    <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                    <i class="bi bi-calendar-day"></i>
+                    hoy</a>
                     <div class='dashboard-nav-dropdown-menu'>
-
-                        <a href="/sistema-sanbenito/home/setting/" class="dashboard-nav-dropdown-item active">Castraciones</a>
-                        <a href="#" class="dashboard-nav-dropdown-item">Esterilisacion</a>
-                        <a href="#" class="dashboard-nav-dropdown-item"> nueva cirugia</a>
+                        <a href="/sistema-sanbenito/home/cirugias_hoy.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'cirugias_hoy') echo 'active'; ?>">cirugias</a>
+                        <a href="/sistema-sanbenito/home/tratamientos_hoy.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'tratamientos_hoy') echo 'active'; ?>">tratamientos</a>
                     </div>
                 </div>
                 <!-- <div class='dashboard-nav-dropdown'><a href="#!"

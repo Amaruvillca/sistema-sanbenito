@@ -114,16 +114,44 @@ VALUES ('Limpieza dental', 'Servicio de limpieza dental', TRUE, '2024-09-19', 1)
 
 INSERT INTO cirugias (nombre_cirugia, descripcion, estado, fecha_registro, id_personal)
 VALUES ('Esterilización', 'Cirugía para esterilizar a mascotas', TRUE, '2024-09-19', 1);
+drop table atiende_servicio;
 
-create table atiende_servicio(
-id_atencion int auto_increment primary key not null,
-observaciones varchar(255) not null,
-costo decimal(10,2) not null,
-fecha_servicio date not null,
-id_mascota int,
-id_personal int,
-id_servicio int,
-FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota) ON DELETE SET NULL,
-FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL,
-FOREIGN KEY (id_servicio) REFERENCES servicios(id_servicio) ON DELETE SET NULL
+CREATE TABLE atiende_servicio (
+    id_atencion_servicio INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    observaciones VARCHAR(255) NOT NULL,
+    costo DECIMAL(10,2) NOT NULL,
+    fecha_servicio DATE NOT NULL,
+    id_mascota INT NOT NULL,
+    id_personal INT NOT NULL,
+    id_servicio INT NOT NULL,
+    FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota) ON DELETE SET NULL,
+    FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL,
+    FOREIGN KEY (id_servicio) REFERENCES servicios(id_servicio) ON DELETE SET NULL
 );
+select * from vacuna;
+SELECT v.*, 
+       m.nombre AS nombre_mascota, 
+       m.imagen_mascota AS imagen_mascota, 
+       p.nombres AS nombre_propietario
+FROM vacuna v
+JOIN mascota m ON v.id_mascota = m.id_mascota
+JOIN propietario p ON m.id_propietario = p.id_propietario
+WHERE v.id_vacuna = 12;
+
+SELECT v.*, 
+       m.nombre AS nombre_mascota, 
+       m.imagen_mascota AS imagen_mascota, 
+       p.nombres AS nombre_propietario,
+       p.apellido_paterno AS apellidopa_propietario,
+       p.apellido_materno AS apellidoma_propietario,
+       vet.nombres AS nombre_veterinario,
+       vet.apellido_paterno AS apellidopa_veterinario,
+       vet.apellido_materno AS apellidoma_veterinario
+FROM vacuna v
+JOIN mascota m ON v.id_mascota = m.id_mascota
+JOIN propietario p ON m.id_propietario = p.id_propietario
+JOIN personal vet ON v.id_personal = vet.id_personal
+WHERE v.id_vacuna = 11;
+
+
+

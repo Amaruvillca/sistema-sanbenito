@@ -1,0 +1,29 @@
+.modal-content {
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    &:hover{
+        border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+#imagenVeterinario {
+    max-width: 80%;
+    height: auto;
+}
+
+
+.nav-link {
+    color: #005C43; 
+
+    &.active {
+        color: white; 
+        background-color: #005C43; 
+        border-radius: 15px 15px 0 0; 
+    }
+
+    &:hover {
+        color: #003c31;
+        background-color: #fff; 
+    }
+}

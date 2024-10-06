@@ -92,6 +92,9 @@ class Desparacitaciones extends ActiveRecord{
         if (!$this->id_personal) {
             self::$errores[] = 'Debes añadir al personal responsable.';
         }
+        if (!is_numeric($this->costo) || $this->costo < 0) {
+            self::$errores[] = 'El costo de la vacuna debe ser un número positivo.';
+        }
     
         return self::$errores;
     }

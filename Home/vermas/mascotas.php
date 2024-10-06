@@ -9,6 +9,8 @@ use App\Desparacitaciones;
 use App\Mascotas;
 use App\Propietarios;
 use App\Vacunas;
+use App\Atencionservicio;
+
 
 
 if (isset($_GET['data'])) {
@@ -34,6 +36,8 @@ $mascota = Mascotas::find($id_mascota);
 $propietario = Propietarios::find($mascota->id_propietario);
 $vacunas = Vacunas::all();
 $desparasitaciones = Desparacitaciones::all();
+$atencion_servicios = Atencionservicio::all();
+$atencion_servicio_encontradas= false;
 $vacunas_encontradas = false;
 $desparasityacion_encontradas = false;
 $cirugia_encontradas = false;
@@ -107,11 +111,11 @@ $cirugia_encontradas = false;
 
                                     <!-- Botón de Cirugías -->
                                     <a href="/sistema-sanbenito/home/servicios/cirugias.php" class="btn btn-outline-danger px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #dc3545; border-color: #dc3545; color: white; font-weight: 600;">
-                                        <i class="bi bi-heart-pulse"></i> Cirugías
+                                        <i class="bi bi-heart-pulse"></i> Programar cirugia
                                     </a>
 
                                     <!-- Botón de Servicios -->
-                                    <a href="/sistema-sanbenito/home/servicios/otros.php" class="btn btn-outline-primary px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #005C43; border-color: #005C43; color: white; font-weight: 600;">
+                                    <a href="/sistema-sanbenito/home/atencion_servicio/crear.php?data=<?php echo $encryptedData ?>" class="btn btn-outline-primary px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #005C43; border-color: #005C43; color: white; font-weight: 600;">
                                         <i class="bi bi-gear"></i> Otros Servicios
                                     </a>
 
@@ -174,24 +178,7 @@ $cirugia_encontradas = false;
                                             <td>Consulta general</td>
                                             <td>Ninguna observación</td>
                                         </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>2024-09-03</td>
-                                            <td>Examen físico</td>
-                                            <td>Sin problemas</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>2024-09-05</td>
-                                            <td>Consulta dental</td>
-                                            <td>Requiere limpieza dental</td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>2024-09-07</td>
-                                            <td>Consulta general</td>
-                                            <td>Ninguna observación</td>
-                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -215,48 +202,7 @@ $cirugia_encontradas = false;
                                             <td>Cirugía de rodilla</td>
                                             <td>Recuperación exitosa</td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>2024-08-20</td>
-                                            <td>Cirugía ocular</td>
-                                            <td>Sin complicaciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>2024-08-05</td>
-                                            <td>Cirugía dental</td>
-                                            <td>Todo en orden</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>2024-07-25</td>
-                                            <td>Cirugía de cadera</td>
-                                            <td>Recuperación satisfactoria</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>2024-07-15</td>
-                                            <td>Cirugía de ligamentos</td>
-                                            <td>Todo normal</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>2024-06-30</td>
-                                            <td>Cirugía de fractura</td>
-                                            <td>Recomendaciones dadas</td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>2024-06-20</td>
-                                            <td>Cirugía abdominal</td>
-                                            <td>Sin complicaciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>2024-05-25</td>
-                                            <td>Cirugía de rodilla</td>
-                                            <td>Recuperación normal</td>
-                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -267,56 +213,66 @@ $cirugia_encontradas = false;
                                     <thead class="table-dark" style="background-color: #005C43;">
                                         <tr>
                                             <th>#</th>
-                                            <th>Fecha</th>
-                                            <th>Proxima dosis</th>
                                             <th>Contra</th>
                                             <th>Nombre vacuna</th>
-                                            <th>costo</th>
+                                            <th>Fecha</th>
+                                            <th>Próxima dosis</th>
+                                            <th>Costo</th>
+                                            <th>Veterinario</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- 10 filas de ejemplo -->
                                         <?php
                                         $c = 1;
                                         $contador_registros = 0;  // Iniciar un contador para los registros
+                                        $vacunas_encontradas = false;  // Bandera para verificar si hay registros
 
                                         foreach ($vacunas as $key => $vacuna) {
-
                                             if ($vacuna->id_mascota == $id_mascota) {
                                                 $vacunas_encontradas = true;
 
-                                                // Solo mostrar los primeros 30 registros
                                                 if ($contador_registros < 30) {
                                         ?>
-
                                                     <tr>
                                                         <td><?php echo $c++ ?></td>
-                                                        <td><?php echo $vacuna->fecha_vacuna ?></td>
-                                                        <td><?php echo $vacuna->proxima_vacuna ?></td>
                                                         <td><?php echo $vacuna->contra ?></td>
                                                         <td><?php echo $vacuna->nom_vac ?></td>
-                                                        <td><?php echo $vacuna->costo. " Bs."; ?></td>
+                                                        <td><?php echo $vacuna->fecha_vacuna ?></td>
+                                                        <td><?php echo $vacuna->proxima_vacuna ?></td>
+                                                        <td><?php echo $vacuna->costo . " Bs."; ?></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesVeterinario('<?php echo $vacuna->id_personal; ?>')">
+                                                            <i class="bi bi-eye-fill"></i> Ver
+                                                            </button>
+                                                            <?php
+                                                            $id_vacuna = $vacuna->id_vacuna;
+                                                            $data = "id_vacuna=$id_vacuna";
+                                                            $encryptedData = encryptData($data);
+                                                            ?>
+                                                            <a href="/sistema-sanbenito/home/report/vacuna.php?data=<?php echo $encryptedData; ?>" class="btn btn-sm btn-danger" target="_blank">
+                                                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
-
                                         <?php
-                                                    $contador_registros++;  // Incrementar el contador después de mostrar un registro
+                                                    $contador_registros++;
                                                 } else {
-                                                    break;  // Detener el bucle cuando se han mostrado 30 registros
+                                                    break;
                                                 }
                                             }
                                         }
-                                        ?>
 
-                                        <?php
                                         if (!$vacunas_encontradas) {
-                                            $mensaje = '<tr><th colspan="6"><center>No se encontraron vacunas </center></th></tr>';
+                                            $mensaje = '<tr><th colspan="7"><center>No se encontraron vacunas</center></th></tr>';
                                             echo $mensaje;
                                         }
                                         ?>
                                     </tbody>
-
                                 </table>
                             </div>
+
+
+
 
                             <!-- Desparasitaciones -->
                             <div class="tab-pane fade" id="desparacitaciones" role="tabpanel" aria-labelledby="desparacitaciones-tab">
@@ -324,58 +280,133 @@ $cirugia_encontradas = false;
                                     <thead class="table-dark" style="background-color: #005C43;">
                                         <tr>
                                             <th>#</th>
-                                            <th>Fecha</th>
-                                            <th>Proxima dosis</th>
-                                            <th>via</th>
-                                            <th>producto</th>
-                                            <th>Observaciones</th>
+                                            <th>Producto</th>
+                                            <th>Tipo</th>
+                                            <th>Principio Activo</th>
+                                            <th>Vía</th>
+                                            <th>Fecha Aplicación</th>
+                                            <th>Próxima Dosis</th>
+                                            <th>Costo</th>
+                                            <th>Veterinario</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php ?>
                                         <!-- 10 filas de ejemplo -->
-                                        <tr>
-                                            <td>8</td>
-                                            <td>2024-03-20</td>
-                                            <td>Externa</td>
-                                            <td>Recuperación completa</td>
-                                        </tr>
-                                      
+                                        <?php
+                                        $c = 1;
+                                        $contador_registros = 0;  // Iniciar un contador para los registros
+                                        
+
+                                        foreach ($desparasitaciones as $key => $desparasitacion) {
+                                            if ($desparasitacion->id_mascota == $id_mascota) {
+                                                $desparasityacion_encontradas = true;
+
+                                                // Solo mostrar los primeros 30 registros
+                                                if ($contador_registros < 30) {
+                                        ?>
+                                                    <tr>
+                                                        <td><?php echo $c++ ?></td>
+                                                        <td><?php echo $desparasitacion->producto ?></td>
+                                                        <td><?php echo $desparasitacion->tipo_desparasitacion ?></td>
+                                                        <td><?php echo $desparasitacion->principio_activo ?></td>
+                                                        <td><?php echo $desparasitacion->via ?></td>
+                                                        <td><?php echo $desparasitacion->fecha_aplicacion ?></td>
+                                                        <td><?php echo $desparasitacion->proxima_desparasitacion ?></td>
+                                                        <td><?php echo $desparasitacion->costo . " Bs."; ?></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesVeterinario('<?php echo $desparasitacion->id_personal; ?>')">
+                                                            <i class="bi bi-eye-fill"></i> Ver
+                                                            </button>
+                                                            <?php
+                                                            $id_desparacitacion = $desparasitacion->id_desparasitacion;
+                                                            $data = "id_desparasitacion=$id_desparacitacion";
+                                                            $encryptedData = encryptData($data);
+                                                            ?>
+                                                          <a href="/sistema-sanbenito/home/report/desparasitacion.php?data=<?php echo $encryptedData; ?>" class="btn btn-sm btn-danger" target="_blank">
+                                                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                        <?php
+                                                    $contador_registros++;  // Incrementar el contador después de mostrar un registro
+                                                } else {
+                                                    break;  // Detener el bucle cuando se han mostrado 30 registros
+                                                }
+                                            }
+                                        }
+
+                                        if (!$desparasityacion_encontradas) {
+                                            $mensaje = '<tr><th colspan="9"><center>No se encontraron desparasitaciones</center></th></tr>';
+                                            echo $mensaje;
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
+
 
                             <!-- Servicios -->
                             <div class="tab-pane fade" id="servicios" role="tabpanel" aria-labelledby="servicios-tab">
                                 <table class="table table-hover table-striped table-bordered" style="font-family: 'Poppins', sans-serif;">
                                     <thead class="table-dark" style="background-color: #005C43;">
-                                        <tr>
+                                    <tr>
                                             <th>#</th>
-                                            <th>Fecha</th>
-                                            <th>Proxima dosis</th>
+                                            <th>Servico</th>
                                             <th>Observaciones</th>
+                                            <th>Fecha de servicio</th>
+                                            <th>Costo</th>
+                                            <th>Veterinario</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <!-- 10 filas de ejemplo -->
-                                        <tr>
-                                            <td>5</td>
-                                            <td>2024-07-10</td>
-                                            <td>Baño y peluquería</td>
-                                            <td>Todo en orden</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>2024-06-15</td>
-                                            <td>Chequeo general</td>
-                                            <td>Sin observaciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>2024-05-20</td>
-                                            <td>Consulta especial</td>
-                                            <td>Recomendaciones dadas</td>
-                                        </tr>
+                                        <?php
+                                        $c = 1;
+                                        $contador_registros = 0;  
+                                        
+
+                                        foreach ($atencion_servicios as $key => $atencion_servicio) {
+                                            if ($atencion_servicio->id_mascota == $id_mascota) {
+                                                $atencion_servicio_encontradas = true;
+
+                                                // Solo mostrar los primeros 30 registros
+                                                if ($contador_registros < 30) {
+                                        ?>
+                                                    <tr>
+                                                        <td><?php echo $c++ ?></td>
+                                                        <td><?php echo $atencion_servicio->id_servicio ?></td>
+                                                        <td><?php echo $atencion_servicio->observaciones ?></td>
+                                                        <td><?php echo $atencion_servicio->fecha_servicio ?></td>
+                                                        <td><?php echo $atencion_servicio->costo . " Bs."; ?></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesVeterinario('<?php echo $atencion_servicio->id_personal; ?>')">
+                                                            <i class="bi bi-eye-fill"></i> Ver
+                                                            </button>
+                                                            <?php
+                                                            $id_atencion_servicio = $atencion_servicio->id_atencion_servicio;
+                                                            $data = "id_atencion_servicion=$id_atencion_servicio";
+                                                            $encryptedData = encryptData($data);
+                                                            ?>
+                                                          <a href="/sistema-sanbenito/home/report/atencion_servicio.php?data=<?php echo $encryptedData; ?>" class="btn btn-sm btn-danger" target="_blank">
+                                                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                                                            </a>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                        <?php
+                                                    $contador_registros++;  // Incrementar el contador después de mostrar un registro
+                                                } else {
+                                                    break;  // Detener el bucle cuando se han mostrado 30 registros
+                                                }
+                                            }
+                                        }
+
+                                        if (!$atencion_servicio_encontradas) {
+                                            $mensaje = '<tr><th colspan="6"><center>No se encontraron servicios</center></th></tr>';
+                                            echo $mensaje;
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -383,33 +414,59 @@ $cirugia_encontradas = false;
                     </div>
                 </div>
             </div>
+            <!-- Modal para Ver Veterinario -->
+            <div class="modal fade" id="modalVeterinario" tabindex="-1" aria-labelledby="modalVeterinarioLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="nombreVeterinario"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-5 text-center">
+                                    <img id="imagenVeterinario" src="/sistema-sanbenito/imagepersonal/veterinario.jpg" alt="Imagen del Veterinario" class="img-fluid rounded-circle">
+                                </div>
+                                <div class="col-12 col-md-7">
 
-            <style>
-                /* Estilo para los tabs */
-                .nav-link {
-                    color: #005C43;
-                    /* Color del texto de los tabs no seleccionados */
+                                    <p><strong>Celular: </strong> <span id="celularVeterinario"></span></p>
+                                    <p><strong>Carnet: </strong> <span id="carnetVeterinario"></span></p>
+                                    <p><strong>Matrícula: </strong> <span id="matricula_profesional"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function mostrarDetallesVeterinario(idVeterinario) {
+                    // Realiza una solicitud Fetch para obtener los detalles del veterinario
+                    fetch(`/sistema-sanbenito/home/perfil/obtenerVeterinario.php?id=${idVeterinario}`)
+                        .then(response => {
+                            // Verifica si la respuesta es ok (status 200)
+                            if (!response.ok) {
+                                throw new Error('Error en la respuesta de la red');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data) {
+                                // Corrige la asignación de la src de la imagen
+                                document.getElementById("imagenVeterinario").src = data.imagen_personal ?
+                                    `/sistema-sanbenito/imagepersonal/${data.imagen_personal}` :
+                                    "/sistema-sanbenito/imagepersonal/veterinario.jpg";
+
+                                document.getElementById("nombreVeterinario").innerText = `${data.nombres} ${data.apellido_paterno} ${data.apellido_materno}`;
+                                document.getElementById("celularVeterinario").innerText = data.num_celular;
+                                document.getElementById("carnetVeterinario").innerText = data.num_carnet;
+                                document.getElementById("matricula_profesional").innerText = data.matricula_profesional;
+                            } else {
+                                console.error('No se encontraron detalles del veterinario');
+                            }
+                        })
+                        .catch(error => console.error('Error al cargar los detalles del veterinario:', error));
                 }
-
-                .nav-link.active {
-                    color: white;
-                    /* Color del texto del tab seleccionado */
-                    background-color: #005C43;
-                    /* Color de fondo del tab seleccionado */
-                    border-radius: 15px 15px 0 0;
-                    /* Borde redondeado en la parte superior */
-                }
-
-                .nav-link:hover {
-                    color: #003c31;
-                    /* Color del texto al pasar el mouse */
-                    background-color: #e0f2f1;
-                    /* Color de fondo al pasar el mouse */
-                }
-            </style>
-
-
-
+            </script>
         </div>
 
     </div>
