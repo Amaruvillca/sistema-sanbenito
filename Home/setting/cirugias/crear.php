@@ -6,6 +6,7 @@ require '../../template/header.php';
 verificaAcceso();
 
 use App\Ciruguas;
+
 $errores = Ciruguas::getErrores();
 $cirugias = new Ciruguas();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
         $resultado = $cirugias->guardar();
         if ($resultado) {
-           
+
             $mensajeEstado = "success";
         }
     }
@@ -22,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 <div class='dashboard-content'>
-<center> <?php
+    <center> <?php
 
-foreach ($errores as $error) :
-    messageError2($error);
-endforeach;
+                foreach ($errores as $error) :
+                    messageError2($error);
+                endforeach;
 
-?></center>
+                ?></center>
 
     <div class="container mt-4">
         <div class="card">
@@ -50,12 +51,21 @@ endforeach;
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <div class="form-floating">
-                                        <textarea class="form-control" id="floatingTextarea2" name="cirugias[descripcion]" style="height: 150px" value="<?php echo s($cirugias->descripcion) ?>" required></textarea>
+                                        <textarea class="form-control" id="floatingTextarea2" name="cirugias[descripcion]" style="height: 150px" required><?php echo s($cirugias->descripcion) ?></textarea>
                                         <label for="floatingTextarea2">Descripción:</label>
                                         <div class="invalid-feedback">
                                             Por favor, ingrese descripción.
                                         </div>
                                     </div>
+                                </div>
+                                <div class=" col-md-12 mb-3">
+                                    <label for="estado" class="form-label">Estado</label>
+                                    <select class="form-select" name="cirugias[frecuencia]" id="estado" required>
+                                        <option disabled value="" selected>-- Seleccione --</option>
+                                        <option <?php if ($cirugias->frecuencia == "unica_vez") echo "selected" ?> value="unica_vez">Una Vez</option>
+                                        <option <?php if ($cirugias->frecuencia == "multiples_veces") echo "selected" ?> value="multiples_veces">Múltiples Veces</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, seleccione la fecuencia</div>
                                 </div>
 
 

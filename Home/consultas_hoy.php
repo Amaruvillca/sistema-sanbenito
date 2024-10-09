@@ -1,7 +1,7 @@
 <?php
 
-$titulo = "tratamientos_hoy";
-$nombrepagina = "tratamientos programados";
+$titulo = "consultas_hoy";
+$nombrepagina = "consultas activas";
 require 'template/header.php';
 
 ?>

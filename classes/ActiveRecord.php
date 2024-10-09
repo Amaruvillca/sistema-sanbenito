@@ -19,6 +19,7 @@ class ActiveRecord
     {
         $query = 'SELECT * FROM ' . static::$tabla . ' ORDER BY ' . static::$nombreId . ' DESC';
         $resultado = self::consultarSql($query);
+        //debuguear($resultado);
         return $resultado;
     }
     public static function consultarSql($query)

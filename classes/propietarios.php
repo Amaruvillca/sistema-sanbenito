@@ -52,7 +52,7 @@ class Propietarios extends ActiveRecord{
             if ($this->verCarnet()) {
                 self::$errores[] = 'El número de carnet ya está registrado.';
             }
-            if ($this->verEmail()) {
+            if ($this->email && $this->verEmail()) {
                 self::$errores[] = 'El correo electrónico ya esta registrado.';
             }
             if ($this->verCelular()) {
@@ -88,9 +88,10 @@ class Propietarios extends ActiveRecord{
         if (!$this->num_carnet) {
             self::$errores[] = 'El número de carnet es obligatorio.';
         }
-        if (!$this->email) {
-            self::$errores[] = 'La profesión es obligatoria.';
+        if ($this->email && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            self::$errores[] = 'Si se proporciona, el correo electrónico debe ser válido.';
         }
+        
         if (!$this->direccion) {
             self::$errores[] = 'La especialidad es obligatoria.';
         }

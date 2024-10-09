@@ -11,6 +11,7 @@ class Ciruguas extends ActiveRecord{
         'descripcion',
         'estado',
         'fecha_registro',
+        'frecuencia',
         'id_personal'
     ];
 
@@ -19,6 +20,7 @@ class Ciruguas extends ActiveRecord{
     public $descripcion;
     public $estado;
     public $fecha_registro;
+    public $frecuencia;
     public $id_personal;
     public function __construct($args = [])
     {
@@ -27,6 +29,7 @@ class Ciruguas extends ActiveRecord{
         $this->descripcion = $args['descripcion'] ?? '';
         $this->estado = $args['estado'] ?? '1';
         $this->fecha_registro = $args['fecha_registro'] ?? date('Y-m-d');
+        $this->frecuencia = $args['frecuencia']?? '';
         $this->id_personal = $args['id_personal'] ?? '';
     }
     public function validar()
@@ -42,6 +45,10 @@ class Ciruguas extends ActiveRecord{
         if (!$this->descripcion) {
             self::$errores[] = 'Debes añadir un descripcion';
         }
+        if (!$this->frecuencia) {
+            self::$errores[] = 'Debes seleccionar la frecuencia';
+        }
+
     
         return self::$errores;
     }

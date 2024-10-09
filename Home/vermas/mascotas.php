@@ -3,13 +3,15 @@ $titulo = "Propietarios";
 $nombrepagina = "mas detalles";
 require '../template/header.php';
 
-error_reporting(0);
+//error_reporting(0);
 
 use App\Desparacitaciones;
 use App\Mascotas;
 use App\Propietarios;
+use App\Servicios;
 use App\Vacunas;
 use App\Atencionservicio;
+
 
 
 
@@ -32,6 +34,7 @@ if (isset($_GET['data'])) {
     echo "<script>window.history.back();</script>";
     exit;
 }
+
 $mascota = Mascotas::find($id_mascota);
 $propietario = Propietarios::find($mascota->id_propietario);
 $vacunas = Vacunas::all();
@@ -110,7 +113,7 @@ $cirugia_encontradas = false;
                                     </a>
 
                                     <!-- Botón de Cirugías -->
-                                    <a href="/sistema-sanbenito/home/servicios/cirugias.php" class="btn btn-outline-danger px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #dc3545; border-color: #dc3545; color: white; font-weight: 600;">
+                                    <a href="/sistema-sanbenito/home/cirugia/programar.php?data=<?php echo $encryptedData ?>" class="btn btn-outline-danger px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #dc3545; border-color: #dc3545; color: white; font-weight: 600;">
                                         <i class="bi bi-heart-pulse"></i> Programar cirugia
                                     </a>
 
@@ -120,7 +123,7 @@ $cirugia_encontradas = false;
                                     </a>
 
                                     <!-- Botón de Consultas -->
-                                    <a href="/sistema-sanbenito/home/servicios/consultas.php" class="btn btn-outline-info px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #17a2b8; border-color: #17a2b8; color: white; font-weight: 600;">
+                                    <a href="/sistema-sanbenito/home/consulta/crear.php?data=<?php echo $encryptedData ?>" class="btn btn-outline-info px-4 py-2 shadow-sm" style="border-radius: 25px; transition: background-color 0.3s ease; background-color: #17a2b8; border-color: #17a2b8; color: white; font-weight: 600;">
                                         <i class="bi bi-search"></i> Consultas
                                     </a>
                                 </div>
@@ -372,10 +375,11 @@ $cirugia_encontradas = false;
 
                                                 // Solo mostrar los primeros 30 registros
                                                 if ($contador_registros < 30) {
+                                                    $servicioo= Servicios::find($atencion_servicio->id_servicio);
                                         ?>
                                                     <tr>
                                                         <td><?php echo $c++ ?></td>
-                                                        <td><?php echo $atencion_servicio->id_servicio ?></td>
+                                                        <td><?php echo $servicioo->nombre_servicio ?></td>
                                                         <td><?php echo $atencion_servicio->observaciones ?></td>
                                                         <td><?php echo $atencion_servicio->fecha_servicio ?></td>
                                                         <td><?php echo $atencion_servicio->costo . " Bs."; ?></td>

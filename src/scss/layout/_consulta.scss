@@ -1,0 +1,58 @@
+$form-bg-color: #f9f9f9;
+$border-color: #ccc;
+$legend-color: #005C43; // El color que elegiste
+
+.form-consulta {
+    background-color: $form-bg-color;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    
+    fieldset {
+        border: 1px solid $border-color;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        padding: 15px;
+
+        legend {
+            font-weight: bold;
+            color: $legend-color;
+            padding: 0 10px;
+        }
+        .mb-3{
+            textarea{
+                height: 150px;
+            }
+
+        }
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-check-label {
+        margin-left: 5px;
+    }
+
+    .btn {
+        background-color: $legend-color;
+        border: none;
+
+        &:hover {
+            background-color: darken($legend-color, 10%);
+        }
+    }
+}
+@media (min-width: 750px) {
+    .form-consulta {
+        min-width: 750px;// Ajustar el ancho del formulario en pantallas grandes
+        margin: auto; // Centrar el formulario
+        padding: 30px; // Aumentar el padding
+    }
+
+    fieldset {
+        padding: 20px; // Aumentar el padding en los fieldsets
+    }
+}

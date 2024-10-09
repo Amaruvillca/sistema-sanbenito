@@ -80,6 +80,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                     </div>
                                 </div>
+                                <div class=" col-md-12 mb-3">
+                                    <label for="estado" class="form-label">Estado</label>
+                                    <select class="form-select" name="cirugias[frecuencia]" id="estado" required>
+                                        <option disabled value="" selected>-- Seleccione --</option>
+                                        <option <?php if ($cirugias->frecuencia == "unica_vez") echo "selected" ?> value="unica_vez">Una Vez</option>
+                                        <option <?php if ($cirugias->frecuencia == "multiples_veces") echo "selected" ?> value="multiples_veces">Múltiples Veces</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, seleccione la fecuencia</div>
+                                </div>
                                 <input type="hidden" name="cirugias[fecha_registro]" value="<?php echo $cirugias->fecha_registro; ?>">
                                 <input type="hidden" name="cirugias[estado]" value="<?php echo $cirugias->estado; ?>">
                                 <input type="hidden" name="cirugias[id_personal]" value="<?php echo $cirugias->id_personal; ?>">

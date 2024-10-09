@@ -81,7 +81,7 @@ endforeach;
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="email" class="form-label">Correo electrónico:</label>
-                                    <input type="email" class="form-control" name="propietario[email]" id="email" required value="<?php echo s($propietarios->email) ?>">
+                                    <input type="email" class="form-control" name="propietario[email]" id="email" value="<?php echo s($propietarios->email) ?>">
                                     <div class="invalid-feedback">
                                         Por favor, ingrese un correo electrónico válido.
                                     </div>

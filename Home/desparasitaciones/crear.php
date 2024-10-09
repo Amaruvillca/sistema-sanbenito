@@ -6,6 +6,7 @@ require '../template/header.php';
 
 use App\Desparacitaciones;
 use App\Mascotas;
+use App\Cuenta;
 
 $errores = Desparacitaciones::getErrores();
 if (isset($_GET['data'])) {
@@ -25,6 +26,16 @@ if (isset($_GET['data'])) {
 } else {
     // Si no hay 'data' en el GET, ir a la página anterior
     echo "<script>window.history.back();</script>";
+    exit;
+}
+$cuenta = Cuenta::buscarCuentaActiva($id_propietario);
+if (empty($cuenta)) {
+    messageError2("No se encontró una cuenta de pago, cree una.");
+    echo '<div style="text-align: center; margin-top: 20px;">
+            <a href="javascript:history.back()" style="text-decoration: none; background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; display: inline-block;">
+                Volver
+            </a>
+          </div>';
     exit;
 }
 $desparasitacion = new Desparacitaciones();
@@ -111,6 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <input type="hidden" name="desparasitacion[id_mascota]" value="<?php echo $id_mascota ?>">
                             <input type="hidden" name="desparasitacion[id_personal]" value="<?php echo $personal['id_personal'] ?>">
+                            <input type="hidden" name="desparasitacion[id_cuenta]" value="<?php echo $cuenta ?>">
 
 
                             <button type="submit" class="btn btn-primary w-100">Registrar Desparasitacín</button>

@@ -13,7 +13,8 @@ class Vacunas extends ActiveRecord{
         'fecha_vacuna',
         'proxima_vacuna',
         'id_mascota',
-        'id_personal'
+        'id_personal',
+        'id_cuenta'
     ];
 
     public $id_vacuna;
@@ -24,6 +25,7 @@ class Vacunas extends ActiveRecord{
     public $proxima_vacuna;
     public $id_mascota;
     public $id_personal;
+    public $id_cuenta;
 
     public function __construct($args = [])
     {
@@ -35,6 +37,7 @@ class Vacunas extends ActiveRecord{
         $this->proxima_vacuna = $args['proxima_vacuna'] ?? '';
         $this->id_mascota = $args['id_mascota'] ?? '';
         $this->id_personal = $args['id_personal'] ?? '';
+        $this->id_cuenta = $args['id_cuenta'] ?? '';
     }
     public function validar()
     {

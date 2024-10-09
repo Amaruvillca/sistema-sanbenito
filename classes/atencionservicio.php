@@ -12,7 +12,8 @@ class Atencionservicio extends ActiveRecord{
         'fecha_servicio',
         'id_mascota',
         'id_personal',
-        'id_servicio'
+        'id_servicio',
+        'id_cuenta'
     ];
     public $id_atencion_servicio;
     public $observaciones;
@@ -21,6 +22,7 @@ class Atencionservicio extends ActiveRecord{
     public $id_mascota;
     public $id_personal;
     public $id_servicio;
+    public $id_cuenta;
 
     public function __construct($args = [])
     {
@@ -31,6 +33,7 @@ class Atencionservicio extends ActiveRecord{
         $this->id_mascota = $args['id_mascota'] ?? '';
         $this->id_personal = $args['id_personal'] ?? '';
         $this->id_servicio = $args['id_servicio'] ?? '';
+        $this->id_cuenta = $args['id_cuenta'] ?? '';
     }
 
     // Getters

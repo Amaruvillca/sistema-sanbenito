@@ -16,7 +16,8 @@ class Desparacitaciones extends ActiveRecord{
         'fecha_aplicacion',
         'proxima_desparasitacion',
         'id_mascota',
-        'id_personal'
+        'id_personal',
+        'id_cuenta'
     ];
 
     public $id_desparasitacion;
@@ -29,6 +30,7 @@ class Desparacitaciones extends ActiveRecord{
     public $proxima_desparasitacion;
     public $id_mascota;
     public $id_personal;
+    public $id_cuenta;
 
     public function __construct($args = [])
     {
@@ -42,6 +44,7 @@ class Desparacitaciones extends ActiveRecord{
         $this->proxima_desparasitacion = $args['proxima_desparasitacion'] ?? '';
         $this->id_mascota = $args['id_mascota'] ?? '';
         $this->id_personal = $args['id_personal'] ?? '';
+        $this->id_cuenta = $args['id_cuenta'] ?? '';
     }
     public function validar()
     {

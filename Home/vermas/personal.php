@@ -32,6 +32,7 @@ if (isset($_GET['data'])) {
     // Ahora puedes usar los parámetros para lo que necesites
 
     $datosUsuario = User::find($id_usuario);
+
     //debuguear($datosUsuario);
     $datosPerfil = Perfil::find($id_personal);
     // debuguear($datosPerfil);
@@ -253,34 +254,35 @@ $desparasityacion_encontradas = false;
                                         $c = 1;
                                         $contador_registros = 0;  // Iniciar un contador para los registros
                                         $vacunas_encontradas = false;  // Bandera para verificar si hay registros
+                                        
+                                            foreach ($vacunas as $key => $vacuna) {
+                                                if ($vacuna->id_personal == $id_personal) {
+                                                    $vacunas_encontradas = true;
 
-                                        foreach ($vacunas as $key => $vacuna) {
-                                            if ($vacuna->id_personal == $id_personal) {
-                                                $vacunas_encontradas = true;
-
-                                                if ($contador_registros < 30) {
+                                                    if ($contador_registros < 30) {
                                         ?>
-                                                    <tr>
-                                                        <td><?php echo $c++ ?></td>
-                                                        <td><?php echo $vacuna->contra ?></td>
-                                                        <td><?php echo $vacuna->nom_vac ?></td>
-                                                        <td><?php echo $vacuna->fecha_vacuna ?></td>
-                                                        <td><?php echo $vacuna->proxima_vacuna ?></td>
-                                                        
-                                                        <td><?php echo $vacuna->costo . " Bs."; ?></td>
-                                                        <td>
-                                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesMascota('<?php echo $vacuna->id_mascota; ?>')">
-                                                            <i class="bi bi-eye-fill"></i></i> Ver
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td><?php echo $c++ ?></td>
+                                                            <td><?php echo $vacuna->contra ?></td>
+                                                            <td><?php echo $vacuna->nom_vac ?></td>
+                                                            <td><?php echo $vacuna->fecha_vacuna ?></td>
+                                                            <td><?php echo $vacuna->proxima_vacuna ?></td>
+
+                                                            <td><?php echo $vacuna->costo . " Bs."; ?></td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesMascota('<?php echo $vacuna->id_mascota; ?>')">
+                                                                    <i class="bi bi-eye-fill"></i></i> Ver
+                                                                </button>
+                                                            </td>
+                                                        </tr>
                                         <?php
-                                                    $contador_registros++;
-                                                } else {
-                                                    break;
+                                                        $contador_registros++;
+                                                    } else {
+                                                        break;
+                                                    }
                                                 }
                                             }
-                                        }
+                                        
 
                                         if (!$vacunas_encontradas) {
                                             $mensaje = '<tr><th colspan="7"><center>No se encontraron vacunas</center></th></tr>';
@@ -295,7 +297,7 @@ $desparasityacion_encontradas = false;
                             <div class="tab-pane fade" id="desparacitaciones" role="tabpanel" aria-labelledby="desparacitaciones-tab">
                                 <table class="table table-hover table-striped table-bordered" style="font-family: 'Poppins', sans-serif;">
                                     <thead class="table-dark" style="background-color: #005C43;">
-                                    <tr>
+                                        <tr>
                                             <th>#</th>
                                             <th>Producto</th>
                                             <th>Tipo</th>
@@ -313,36 +315,37 @@ $desparasityacion_encontradas = false;
                                         $c = 1;
                                         $contador_registros = 0;  // Iniciar un contador para los registros
                                         $desparasityacion_encontradas = false;  // Bandera para verificar si hay registros
+                                        
+                                            foreach ($desparasitaciones as $key => $desparasitacion) {
+                                                if ($desparasitacion->id_personal == $id_personal) {
+                                                    $desparasityacion_encontradas = true;
 
-                                        foreach ($desparasitaciones as $key => $desparasitacion) {
-                                            if ($desparasitacion->id_personal == $id_personal) {
-                                                $desparasityacion_encontradas = true;
-
-                                                // Solo mostrar los primeros 30 registros
-                                                if ($contador_registros < 30) {
+                                                    // Solo mostrar los primeros 30 registros
+                                                    if ($contador_registros < 30) {
                                         ?>
-                                                    <tr>
-                                                        <td><?php echo $c++ ?></td>
-                                                        <td><?php echo $desparasitacion->producto ?></td>
-                                                        <td><?php echo $desparasitacion->tipo_desparasitacion ?></td>
-                                                        <td><?php echo $desparasitacion->principio_activo ?></td>
-                                                        <td><?php echo $desparasitacion->via ?></td>
-                                                        <td><?php echo $desparasitacion->fecha_aplicacion ?></td>
-                                                        <td><?php echo $desparasitacion->proxima_desparasitacion ?></td>
-                                                        <td><?php echo $desparasitacion->costo . " Bs."; ?></td>
-                                                        <td>
-                                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesMascota('<?php echo $desparasitacion->id_mascota; ?>')">
-                                                            <i class="bi bi-eye-fill"></i></i> Ver
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td><?php echo $c++ ?></td>
+                                                            <td><?php echo $desparasitacion->producto ?></td>
+                                                            <td><?php echo $desparasitacion->tipo_desparasitacion ?></td>
+                                                            <td><?php echo $desparasitacion->principio_activo ?></td>
+                                                            <td><?php echo $desparasitacion->via ?></td>
+                                                            <td><?php echo $desparasitacion->fecha_aplicacion ?></td>
+                                                            <td><?php echo $desparasitacion->proxima_desparasitacion ?></td>
+                                                            <td><?php echo $desparasitacion->costo . " Bs."; ?></td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesMascota('<?php echo $desparasitacion->id_mascota; ?>')">
+                                                                    <i class="bi bi-eye-fill"></i></i> Ver
+                                                                </button>
+                                                            </td>
+                                                        </tr>
                                         <?php
-                                                    $contador_registros++;  // Incrementar el contador después de mostrar un registro
-                                                } else {
-                                                    break;  // Detener el bucle cuando se han mostrado 30 registros
+                                                        $contador_registros++;  // Incrementar el contador después de mostrar un registro
+                                                    } else {
+                                                        break;  // Detener el bucle cuando se han mostrado 30 registros
+                                                    }
                                                 }
                                             }
-                                        }
+                                        
 
                                         if (!$desparasityacion_encontradas) {
                                             $mensaje = '<tr><th colspan="9"><center>No se encontraron desparasitaciones</center></th></tr>';
@@ -395,80 +398,79 @@ $desparasityacion_encontradas = false;
 
 
             <!-- Modal para Ver Veterinario -->
-<div class="modal fade" id="modalVeterinario" tabindex="-1" aria-labelledby="modalVeterinarioLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="nombreMascota"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row g-3">
-                    <div class="col-12 col-md-5 text-center">
-                        <img id="imagenVeterinario" src="/sistema-sanbenito/imagemascota/mascota.png" alt="Imagen del Veterinario" class="img-fluid rounded-circle">
-                    </div>
-                    <div class="col-12 col-md-7">
-                        <h5 id="nombreVeterinario"></h5>
-                        <p><strong>Especie: </strong> <span id="especie"></span></p>
-                        <p><strong>Sexo: </strong> <span id="sexo"></span></p>
-                        <p><strong>Color: </strong> <span id="color"></span></p>
-                        <p><strong>Raza: </strong> <span id="raza"></span></p>
-                        <p><strong>Código: </strong> <span id="codigo"></span></p>
+            <div class="modal fade" id="modalVeterinario" tabindex="-1" aria-labelledby="modalVeterinarioLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="nombreMascota"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-5 text-center">
+                                    <img id="imagenVeterinario" src="/sistema-sanbenito/imagemascota/mascota.png" alt="Imagen del Veterinario" class="img-fluid rounded-circle">
+                                </div>
+                                <div class="col-12 col-md-7">
+                                    <h5 id="nombreVeterinario"></h5>
+                                    <p><strong>Especie: </strong> <span id="especie"></span></p>
+                                    <p><strong>Sexo: </strong> <span id="sexo"></span></p>
+                                    <p><strong>Color: </strong> <span id="color"></span></p>
+                                    <p><strong>Raza: </strong> <span id="raza"></span></p>
+                                    <p><strong>Código: </strong> <span id="codigo"></span></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
-<script>
-    function mostrarDetallesMascota(idmascota) {
-    
-    fetch(`/sistema-sanbenito/home/mascotas/obtenerMascota.php?id=${idmascota}`)
-        .then(response => {
-            
-            if (!response.ok) {
-                throw new Error('Error en la respuesta de la red');
-            }
-            return response.json();
-        })
-        .then(data => {
-       
-            if (data) {
-                
-                document.getElementById("imagenVeterinario").src = data.imagen_mascota ? 
-                    `/sistema-sanbenito/imagemascota/${data.imagen_mascota}` : 
-                    "/sistema-sanbenito/imagemascota/mascota.png";
+            <script>
+                function mostrarDetallesMascota(idmascota) {
 
-                document.getElementById("nombreMascota").textContent = data.nombre || "Nombre no disponible"; 
-                document.getElementById("especie").textContent = data.especie || "Mascota no encontrada";  
-                document.getElementById("sexo").textContent = data.sexo || "Mascota no encontrada";  
-                document.getElementById("color").textContent = data.color || "Mascota no encontrada";  
-                document.getElementById("raza").textContent = data.raza || "Mascota no encontrada"; 
-                document.getElementById("codigo").textContent = data.codigo_mascota || "Mascota no encontrada";  
-            } else {
-                
-                document.getElementById("nombreMascota").textContent = "Mascota no encontrada";
-                document.getElementById("especie").textContent = "Mascota no encontrada";
-                document.getElementById("sexo").textContent = "Mascota no encontrada";
-                document.getElementById("color").textContent = "Mascota no encontrada";
-                document.getElementById("raza").textContent = "Mascota no encontrada";
-                document.getElementById("codigo").textContent = "Mascota no encontrada";
-            }
-        })
-        .catch(error => {
-            console.error('Error al cargar los detalles del veterinario:', error);
-            
-            document.getElementById("nombreMascota").textContent = "Error al cargar datos";
-            document.getElementById("especie").textContent = "Error al cargar datos";
-            document.getElementById("sexo").textContent = "Error al cargar datos";
-            document.getElementById("color").textContent = "Error al cargar datos";
-            document.getElementById("raza").textContent = "Error al cargar datos";
-            document.getElementById("codigo").textContent = "Error al cargar datos";
-        });
-}
+                    fetch(`/sistema-sanbenito/home/mascotas/obtenerMascota.php?id=${idmascota}`)
+                        .then(response => {
 
-</script>
+                            if (!response.ok) {
+                                throw new Error('Error en la respuesta de la red');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+
+                            if (data) {
+
+                                document.getElementById("imagenVeterinario").src = data.imagen_mascota ?
+                                    `/sistema-sanbenito/imagemascota/${data.imagen_mascota}` :
+                                    "/sistema-sanbenito/imagemascota/mascota.png";
+
+                                document.getElementById("nombreMascota").textContent = data.nombre || "Nombre no disponible";
+                                document.getElementById("especie").textContent = data.especie || "Mascota no encontrada";
+                                document.getElementById("sexo").textContent = data.sexo || "Mascota no encontrada";
+                                document.getElementById("color").textContent = data.color || "Mascota no encontrada";
+                                document.getElementById("raza").textContent = data.raza || "Mascota no encontrada";
+                                document.getElementById("codigo").textContent = data.codigo_mascota || "Mascota no encontrada";
+                            } else {
+
+                                document.getElementById("nombreMascota").textContent = "Mascota no encontrada";
+                                document.getElementById("especie").textContent = "Mascota no encontrada";
+                                document.getElementById("sexo").textContent = "Mascota no encontrada";
+                                document.getElementById("color").textContent = "Mascota no encontrada";
+                                document.getElementById("raza").textContent = "Mascota no encontrada";
+                                document.getElementById("codigo").textContent = "Mascota no encontrada";
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error al cargar los detalles del veterinario:', error);
+
+                            document.getElementById("nombreMascota").textContent = "Error al cargar datos";
+                            document.getElementById("especie").textContent = "Error al cargar datos";
+                            document.getElementById("sexo").textContent = "Error al cargar datos";
+                            document.getElementById("color").textContent = "Error al cargar datos";
+                            document.getElementById("raza").textContent = "Error al cargar datos";
+                            document.getElementById("codigo").textContent = "Error al cargar datos";
+                        });
+                }
+            </script>
 
         </div>
 
