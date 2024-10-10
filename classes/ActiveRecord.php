@@ -196,4 +196,10 @@ class ActiveRecord
             return false;
         }
     }
+    public static function asociadosCuenta($id_cuenta) {
+        $query = 'SELECT * FROM ' . static::$tabla . ' WHERE id_cuenta = ' . self::$db->escape_string($id_cuenta) . ' ORDER BY ' . static::$nombreId . ' DESC';
+        $resultado = self::consultarSql($query);
+        return $resultado;
+    }
+    
 }

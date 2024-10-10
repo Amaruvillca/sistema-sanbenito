@@ -10,7 +10,7 @@ use App\Perfil;
 use App\Mascotas;
 use App\Cuenta;
 
-//error_reporting(0);
+error_reporting(0);
 if (isset($_GET['data'])) {
     $encrypted_data = $_GET['data'];
     $decrypted_data = decryptData($encrypted_data);
@@ -104,9 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <p class="card-text"><strong>Registrado por: </strong> <?php echo $perfil->nombres . " " . $perfil->apellido_paterno . " " . $perfil->apellido_materno ?></p>
                                 <?php
                                 if (!empty($cuenta)) {
-                                    $cuentas = Cuenta::find($cuenta)?? "";//aqui hay error
+                                    $cuentas = Cuenta::find($cuenta) ?? ""; //aqui hay error
 
-$saldo = Cuenta::saldoTotal($cuenta) ?? 0;
+                                    $saldo = Cuenta::saldoTotal($cuenta) ?? 0;
                                 ?>
                                     <center>
                                         <button type="button" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#pagarCuentaModal">
@@ -437,58 +437,63 @@ $saldo = Cuenta::saldoTotal($cuenta) ?? 0;
     <!-- Botón flotante -->
     <a href="/sistema-sanbenito/home/mascotas/crear.php?data=<?php echo $encryptedData; ?>" class="btn-flotante"><i class="bi bi-plus"></i></a>
 </div>
-<?php  if(!empty($cuenta)):?>
-<div class="modal fade" id="pagarCuentaModal" tabindex="-1" aria-labelledby="pagarCuentaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="pagarCuentaModalLabel">Detalles de la cuenta</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                
-                <form id="formCuenta" action="pagar.php" method="post" >
-                    <div class="mb-3">
-                        <label for="nombreCompleto" class="form-label">Nombre Completo</label>
-                        <input type="text" class="form-control" id="nombreCompleto" value="<?php echo $cuentas->nombre_completo ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="numCarnet" class="form-label">Número de Carnet</label>
-                        <input type="text" class="form-control" value="<?php echo $cuentas->num_carnet ?>" id="numCarnet">
-                    </div>
-                    <div class="mb-3">
-                        <label for="estado" class="form-label">Estado</label>
-                        <select name="atencion_servicio[id_servicio]" class="form-control" id="nom_vac" class="form-control form-select" required>
-                            <option <?php if ($cuentas->estado == "pagada") echo "selected" ?> value="pagada">Pagada</option>
-                            <option <?php if ($cuentas->estado == "adelanto") echo "selected" ?> value="adelanto">Adelanto</option>
-                            <option <?php if ($cuentas->estado == "nopagada") echo "selected" ?> value="nopagada">No Pagada</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="saldoTotal" class="form-label">Saldo Total</label>
-                        <input type="number" class="form-control" value="<?php echo $saldo ?>" id="saldoTotal" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="montoPagado" class="form-label">Monto Pagado</label>
-                        <input type="number" class="form-control" value="<?php echo $cuentas->monto_pagado ?>" id="montoPagado">
-                    </div>
-                    <div class="mb-3">
-                        <label for="cambio" class="form-label">Cambio: Bs.</label>
-                        <input type="number" class="form-control" id="cambio" value="0" readonly>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-info" id="confirmarPago">Confirmar Pago</button>
+<?php if (!empty($cuenta)): ?>
+    <div class="modal fade" id="pagarCuentaModal" tabindex="-1" aria-labelledby="pagarCuentaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pagarCuentaModalLabel">Detalles de la cuenta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="formCuenta" action="/sistema-sanbenito/home/cuenta/pagar.php" method="post">
+                        <input type="hidden" name="cuenta[id_cuenta]" value="<?php echo $cuentas->id_cuenta ?>">
+                        <div class="mb-3">
+                            <label for="nombreCompleto" class="form-label">Nombre Completo</label>
+                            <input type="text" name="cuenta[nombre_completo]" class="form-control" id="nombreCompleto" value="<?php echo $cuentas->nombre_completo ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="numCarnet" class="form-label">Número de Carnet</label>
+                            <input type="text" name="cuenta[num_carnet]" class="form-control" value="<?php echo $cuentas->num_carnet ?>" id="numCarnet">
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select name="cuenta[estado]" class="form-control" id="nom_vac" class="form-control form-select" required>
+                                <option <?php if ($cuentas->estado == "pagada") echo "selected" ?> value="pagada">Pagada</option>
+                                <option <?php if ($cuentas->estado == "adelanto") echo "selected" ?> value="adelanto">Adelanto</option>
+                                <option <?php if ($cuentas->estado == "nopagada") echo "selected" ?> value="nopagada">No Pagada</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="saldoTotal" class="form-label">Saldo Total</label>
+                            <input type="number" name="cuenta[saldo_total]" class="form-control" value="<?php echo $saldo ?>" id="saldoTotal" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="montoPagado" class="form-label">Monto Pagado</label>
+                            <input type="number" name="cuenta[monto_pagado]" class="form-control" value="<?php echo $cuentas->monto_pagado ?>" id="montoPagado">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cambio" class="form-label">Cambio: Bs.</label>
+                            <input type="number" class="form-control" id="cambio" value="0" readonly>
+                        </div>
+                        <input type="hidden" name="cuenta[fecha_apertura]" value="<?php echo $cuentas->fecha_apertura ?>">
+                        <input type="hidden" name="cuenta[id_personal]" value="<?php echo $cuentas->id_personal ?>">
+                        <input type="hidden" name="cuenta[id_propietario]" value="<?php echo $cuentas->id_propietario ?>">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-info" id="confirmarPago">Confirmar Pago</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-<?php endif;?>
+<?php endif; ?>
 <!-- Modal -->
 <div class="modal fade" id="historialPagosModal" tabindex="-1" aria-labelledby="historialPagosModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="historialPagosModalLabel">Historial de Pagos</h5>
@@ -530,7 +535,18 @@ $saldo = Cuenta::saldoTotal($cuenta) ?? 0;
                                         <td><?php echo $historial_cuentas->saldo_total . " Bs."; ?></td>
                                         <td><?php echo $historial_cuentas->monto_pagado . " Bs."; ?></td>
                                         <td>
-                                            <!-- Botón o acciones adicionales -->
+                                        <?php
+                                                            $id_cuentaaa = $historial_cuentas->id_cuenta;
+                                                            $dataaa = "id_cuenta=$id_cuentaaa";
+                                                            $encryptedDataaa = encryptData($dataaa);
+                                                            ?>
+                                            <a href="/sistema-sanbenito/home/report/comprobante.php?data=<?php echo $encryptedDataaa ?>" class="btn btn-sm btn-danger" target="_blank">
+                                                <i class="bi bi-file-earmark-pdf-fill"></i> Comprobante
+                                            </a>
+                                            <a href="/sistema-sanbenito/home/vermas/cuenta.php?id=<?php echo $encryptedDataaa ?>" class="btn btn-sm btn-info" target="_blank">
+                                                <i class="bi bi-eye-fill"></i> Ver Detalles
+                                            </a>
+
                                         </td>
                                     </tr>
                         <?php

@@ -112,5 +112,6 @@ class Cuenta extends ActiveRecord
     return $saldo;
 }
 
+
     
 }
