@@ -6,11 +6,13 @@ use App\Desparacitaciones;
 use App\Atencionservicio;
 use App\Consulta;
 use App\CirugiaRealizada;
+use App\Ciruguas;
 use App\Medicacion;
 use App\Cuenta;
 use App\Mascotas;
 use App\Propietarios;
 use App\perfil;
+use App\Servicios;
 
 // Inicializa DomPDF
 
@@ -94,16 +96,36 @@ function agregarFilas($servicios, $nombre_servicio, &$html)
 {
     foreach ($servicios as $servicio) {
         $mascota = Mascotas::find($servicio->id_mascota);
+        $des = "|";
+        if (isset($servicio->nom_vac)) {
+            $des = $servicio->contra;
+        }
+        if (isset($servicio->producto)) {
+            $des = $servicio->producto;
+        }
+        if (isset($servicio->id_atencion_servicio) && isset($servicio->id_servicio)) {
+            $servicio2 = Servicios::find($servicio->id_servicio);
+            $des = $servicio2->nombre_servicio;
+        }
+        if (isset($servicio->id_cirugia_realizada)) {
+            $cirugia2 = CirugiaRealizada::find($servicio->id_cirugia_programada);
+            $cirugia3 = Ciruguas::find($cirugia2->id_cirugia);
+            $des = $cirugia3->nombre_cirugia;
+        }
+        if (isset($servicio->id_mediacion)) {
+            $des = $servicio->nom_vac;
+        }
+
         $html .= '<div class="service">
-            <strong>' . $nombre_servicio . '</strong> - Mascota: ' . htmlspecialchars($mascota->nombre) . ' - Costo: ' . number_format($servicio->costo, 2) . ' Bs.
+            <strong>' . $nombre_servicio . '-' . $des . '</strong> - Mascota: ' . htmlspecialchars($mascota->nombre) . ' - Costo: ' . number_format($servicio->costo, 2) . ' Bs.
         </div>';
     }
 }
 
 // Agrega cada servicio al HTML
-agregarFilas($vacunas, 'Vacuna', $html);
-agregarFilas($desparacitacion, 'Desparacitacion', $html);
-agregarFilas($atencion_servicio, 'Servicio', $html);
+agregarFilas($vacunas, 'Vac', $html);
+agregarFilas($desparacitacion, 'Des', $html);
+agregarFilas($atencion_servicio, 'Ser', $html);
 agregarFilas($consulta, 'Consulta', $html);
 agregarFilas($cirugia_realizada, 'Cirugía', $html);
 agregarFilas($medicacion, 'Medicaciones', $html);
