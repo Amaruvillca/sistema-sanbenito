@@ -29,7 +29,7 @@ $desparasitacionhoy = Desparacitaciones::all();
 <div class='dashboard-content'>
     <div class='container'>
         <div class="row">
-
+<?php if($_SESSION['rol']=="Administrador"): ?>
             <!-- Tarjeta de Usuarios -->
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="unique-card unique-card-usuarios">
@@ -43,7 +43,7 @@ $desparasitacionhoy = Desparacitaciones::all();
                 </div>
             </div>
 
-
+<?php endif;?>
 
             <!-- Tarjeta de Propietarios -->
             <div class="col-md-3 col-sm-6 mb-4">

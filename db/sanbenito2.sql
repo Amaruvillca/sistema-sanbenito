@@ -150,6 +150,10 @@ CREATE TABLE cirugia_realizada (
     FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL,
     FOREIGN KEY (id_cuenta) REFERENCES cuenta(id_cuenta) ON DELETE SET NULL
 );
+ALTER TABLE cirugia_realizada
+ADD temperatura DECIMAL(11,2) NOT NULL;
+
+
 
 
 
