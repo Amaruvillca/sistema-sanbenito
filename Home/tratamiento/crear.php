@@ -1,6 +1,6 @@
 <?php
-$titulo = "Tratamientos y Medicaciones";
-$nombrepagina = "tratamiento_medicacion";
+$titulo = "consultas_hoy";
+$nombrepagina = "Tratamientos y Medicaciones";
 require '../template/header.php';
 
 use App\Tratamiento;
@@ -106,10 +106,7 @@ use App\Medicación;
                     <?php endif; ?>
                 </tbody>
             </table>
-            <br>
-            <div class="boton-formulario guardar-medicacion">
-                <input type="submit" value="Guardar Medicación">
-            </div>
+           
         </div>
        
        

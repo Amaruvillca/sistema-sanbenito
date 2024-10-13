@@ -10,6 +10,8 @@ $color-naranja-claro: #FFA726;
 $color-blanco: #fff;
 $color-gris-claro: #f4f6f9;
 $color-gris-oscuro: #333;
+$color-morado-oscuro:#8901CF;
+$color-morado-claro:#B77ECA;
 
 // Configuraciones globales
 body {
@@ -116,10 +118,42 @@ body {
 .unique-card-servicios {
     background: linear-gradient(135deg, $color-naranja, $color-naranja-claro);
 }
+.unique-card-servicios2{
+    background: linear-gradient(135deg, $color-morado-oscuro, $color-morado-claro);
+}
 
 // Diseño responsivo
 @media (max-width: 768px) {
     .unique-card {
         min-height: 140px;
     }
+}
+.icono-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+.card-vacunas-hoy {
+    border-left: 4px solid #007bff;
+}
+
+.card-desparasitaciones-hoy {
+    border-left: 4px solid #28a745;
+}
+.card-servicios-hoy {
+    border-left: 4px solid #bebc1a;
+}
+.card-cirugias-hoy{
+    border-left: 4px solid #f30928;
+}
+.card-tratamiento-hoy{
+    border-left: 4px solid #524f50;
+}
+.card-consulta-hoy{
+    border-left: 4px solid $negro;
 }

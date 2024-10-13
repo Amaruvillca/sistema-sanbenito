@@ -4,9 +4,14 @@ $nombrepagina = "calendario";
 require 'template/header.php';
 
 use App\CirugiaProgramada;
-$cirugias_programadas = CirugiaProgramada::all();
 use App\Ciruguas;
 use App\Mascotas;
+use App\Vacunas;
+use App\Desparacitaciones;
+
+$cirugias_programadas = CirugiaProgramada::all();
+$vacunas = Vacunas::all();
+$desparasitaciones= Desparacitaciones::all();
 ?>
 <script src='/sistema-sanbenito/build/fullcalendar/dist/index.global.min.js'></script>
 <script>
@@ -29,33 +34,56 @@ use App\Mascotas;
             selectable: true,  
             selectHelper: true, 
             events: <?php
-                
                 $eventos = [];
 
                 // Recorre las cirugías programadas
                 foreach ($cirugias_programadas as $cirugia) {
                     if ($cirugia->estado === 'pendiente') { // Verifica si el estado es "pendiente"
-                      $mascota =  Mascotas::find($cirugia->id_mascota);
-                      $cirugias =  Ciruguas::find($cirugia->id_cirugia);
+                        $mascota = Mascotas::find($cirugia->id_mascota);
+                        $cirugias = Ciruguas::find($cirugia->id_cirugia);
                         $eventos[] = [
                             'title' => 'Cirugía Programada de: ' . $cirugias->nombre_cirugia . ' para ' . $mascota->nombre,
-                            'start' => $cirugia->fecha_programada, // Asumiendo que fecha_programada es un DATETIME en formato ISO
-                            'url' => 'cirugias_hoy.php' // Enlace a detalles de la cirugía
+                            'start' => $cirugia->fecha_programada, 
+                            'url' => 'cirugias_hoy.php', 
+                            'color' => '#007bff', // Color para las cirugías
+                            'backgroundColor' => '#007bff', // Color verde para vacunas
+                        
                         ];
                     }
+                }
+
+                // Recorre las vacunas
+                foreach ($vacunas as $vacuna) {
+                    $mascota = Mascotas::find($vacuna->id_mascota);
+                    $eventos[] = [
+                        'title' => 'Vacuna: ' . $vacuna->nom_vac . ' para ' . $mascota->nombre,
+                        'start' => $vacuna->proxima_vacuna, // Fecha de próxima vacuna
+                        'url' => 'propietarios.php',
+                        'allDay' => true, // Se muestra como evento de todo el día
+                        'color' => '#28a745' // Color verde para vacunas
+                    ];
+                }
+
+                // Recorre las desparasitaciones
+                foreach ($desparasitaciones as $desparasitacion) {
+                    $mascota = Mascotas::find($desparasitacion->id_mascota);
+                    $eventos[] = [
+                        'title' => 'Desparasitacion: ' . $desparasitacion->producto . ' para ' . $mascota->nombre,
+                        'start' => $desparasitacion->proxima_desparasitacion, // Fecha de próxima desparasitacion
+                        'url' => 'propietarios.php',
+                        'allDay' => true, // Se muestra como evento de todo el día
+                        'color' => '#ffc107' // Color amarillo para desparasitaciones
+                    ];
                 }
 
                 // Usa json_encode() para generar el JSON correcto
                 echo json_encode($eventos);
             ?>,
 
-          
-
-            // Evento cuando se hace clic en un evento existente
             eventClick: function(info) {
                 if (info.event.url) {
-                    window.location.href = info.event.url; // Redirigir a la URL asociada al evento
-                    info.jsEvent.preventDefault(); // Previene el comportamiento predeterminado de abrir el link en una nueva ventana
+                    window.location.href = info.event.url;
+                    info.jsEvent.preventDefault(); 
                 }
             }
         });
@@ -79,7 +107,7 @@ use App\Mascotas;
     }
 
     .fc-button {
-        background-color: #28a745; /* Color verde de San Benito */
+        background-color: #28a745; 
         border: none;
         color: #fff;
         border-radius: 5px;
@@ -96,41 +124,48 @@ use App\Mascotas;
     }
 
     .fc-day-today {
-        background-color: rgba(40, 167, 69, 0.1);  /* Fondo para el día actual */
+        background-color: rgba(40, 167, 69, 0.1);  
     }
 
     .fc-event {
-        background-color: #28a745; /* Color verde de San Benito */
-        border: none;
         border-radius: 5px;
         padding: 2px 5px;
-        color: #ffffff; /* Color del texto blanco */
+        color: #ffffff;
         transition: transform 0.2s;
     }
 
     .fc-event:hover {
-        background-color: #218838;
-        color: white;
         transform: scale(1.1);
     }
+    
+    /* defecto */
+    .fc-event {
+    background-color: #007bff; /* Color verde por defecto */
+    border: none;
+    border-radius: 5px;
+    padding: 2px 5px;
+    color: #ffffff;
+    transition: transform 0.2s;
+}
+
+.fc-event:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.1);
+}
+
 </style>
 
 <div class='dashboard-content'>
     <div class='container'>
         <div class="row">
-          <br>
             <div class="col-12">
                 <div id='calendar'></div>
-            </div>
-            <div class="col-12">
-                <div style="color: white;">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi sed quos incidunt sequi quidem repellendus molestiae ratione veritatis quam, quasi qui placeat nisi corporis non recusandae! Dicta quo sint et.
-                </div>
             </div>
         </div>
     </div>
 </div>
-
+Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt, esse excepturi deleniti itaque voluptas ipsam porro corrupti ad repudiandae repellat obcaecati praesentium. Dolor, laudantium distinctio repudiandae excepturi labore et ipsum!
 <?php
 require 'template/footer.php';
 ?>

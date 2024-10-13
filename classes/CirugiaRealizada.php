@@ -14,6 +14,7 @@ class CirugiaRealizada extends ActiveRecord {
         'frecuencia_respiratoria',
         'peso',
         'pulso',
+        'temperatura',
         'observaciones',
         'costo',
         'id_cirugia_programada',
@@ -29,6 +30,7 @@ class CirugiaRealizada extends ActiveRecord {
     public $frecuencia_respiratoria;
     public $peso;
     public $pulso;
+    public $temperatura;
     public $observaciones;
     public $costo;
     public $id_cirugia_programada;
@@ -44,6 +46,7 @@ class CirugiaRealizada extends ActiveRecord {
         $this->frecuencia_respiratoria = $args['frecuencia_respiratoria'] ?? '';
         $this->peso = $args['peso'] ?? '';
         $this->pulso = $args['pulso'] ?? '';
+        $this->temperatura = $args['temperatura'] ?? '';
         $this->observaciones = $args['observaciones'] ?? '';
         $this->costo = $args['costo'] ?? '0.00';
         $this->id_cirugia_programada = $args['id_cirugia_programada'] ?? null;
@@ -92,4 +95,25 @@ class CirugiaRealizada extends ActiveRecord {
 
         return self::$errores;
     }
+    public function cambiarEstado($id_cirugia_programada, $nuevoEstado='concluida') {
+        // Escapar los valores para evitar inyecciones SQL
+        $id_cirugia_programada = self::$db->real_escape_string($id_cirugia_programada);
+        $nuevoEstado = self::$db->real_escape_string($nuevoEstado);
+    
+        // Consulta SQL para actualizar el estado
+        $query = "UPDATE cirugia_programada 
+                  SET estado = '$nuevoEstado' 
+                  WHERE id_cirugia_programada = $id_cirugia_programada";
+    
+        // Ejecutar la consulta
+        $resultado = self::$db->query($query);
+    
+        // Comprobar si la consulta fue exitosa
+        if ($resultado) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
