@@ -4,6 +4,7 @@ node_modules/
 # Ignorar imágenes subidas
 imagemascota/
 imagepersonal/
+vendor/
 
 
 

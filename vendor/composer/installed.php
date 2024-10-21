@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '76595/sistema-sanbenito',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '4d867002f2738361211b508eb8511e6689ee1b7f',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '76595/sistema-sanbenito' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '4d867002f2738361211b508eb8511e6689ee1b7f',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

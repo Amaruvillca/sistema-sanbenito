@@ -23,6 +23,8 @@ $cirugias = Ciruguas::contarDatos();
 $vacunahoy = Vacunas::all();
 $desparasitacionhoy = Desparacitaciones::all();
 
+
+
 ?>
 
 
