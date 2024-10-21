@@ -37,6 +37,7 @@ $usuarios = User::mostrar();
                         $contador = 1;
                         if (!empty($usuarios)) {
                             foreach ($usuarios as $usuario) {
+                                if(!$usuario['nombres']== ""){
                         ?>
                                 <tr>
                                     <td><?php echo $contador++;  ?></td>
@@ -80,6 +81,10 @@ $usuarios = User::mostrar();
                                 </tr>
                         <?php
                             }
+                        else{
+                            $borrar=User::borrar($usuario['id_usuario']);
+                        }
+                        }
                         } else {
                             echo "No se encontraron usuarios.";
                         }

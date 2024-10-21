@@ -105,4 +105,5 @@ class User extends ActiveRecord
         return false; // Correo no existe
     }
     
+    
 }
