@@ -73,8 +73,8 @@ header('Pragma: no-cache');
 
                 <div class='dashboard-nav-dropdown <?php if ($titulo == 'cirugias_hoy' || $titulo == 'consultas_hoy') echo 'show'; ?>'>
                     <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                    <i class="bi bi-calendar-day"></i>
-                    programadas</a>
+                        <i class="bi bi-calendar-day"></i>
+                        programadas</a>
                     <div class='dashboard-nav-dropdown-menu'>
                         <a href="/sistema-sanbenito/home/cirugias_hoy.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'cirugias_hoy') echo 'active'; ?>">cirugias</a>
                         <a href="/sistema-sanbenito/home/consultas_hoy.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'consultas_hoy') echo 'active'; ?>">consultas</a>
@@ -101,11 +101,11 @@ header('Pragma: no-cache');
                 </div>
 
                 <div class="<?php noMostrar(); ?> dashboard-nav-dropdown"><a href="#!"
-                        class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i>
-                        Ingresos </a>
-                    <div class='dashboard-nav-dropdown-menu'><a href="#" class="dashboard-nav-dropdown-item">All</a><a
-                            href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#"
-                            class="dashboard-nav-dropdown-item"> Projections</a>
+                        class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="bi bi-sticky-fill"></i>
+                        Otros </a>
+                    <div class='dashboard-nav-dropdown-menu'><a href="/sistema-sanbenito/home/ingresos.php" class="dashboard-nav-dropdown-item">Ingresos</a>
+                        <a href="/sistema-sanbenito/home/Buscar.php" class="dashboard-nav-dropdown-item">Buscar</a>
+                        <a href="/sistema-sanbenito/home/.php" class="dashboard-nav-dropdown-item">....</a>
                     </div>
                 </div>
 

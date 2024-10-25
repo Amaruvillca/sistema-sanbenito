@@ -8,10 +8,14 @@ use App\User;
 use App\Desparacitaciones;
 use App\Vacunas;
 use App\Mascotas;
+use App\CirugiaRealizada;
+use App\Consulta;
+
 
 use App\Propietarios;
 use App\Servicios;
 use App\Ciruguas;
+use App\Atencionservicio;
 
 $usuario = User::contarDatos();
 $mascotas = Mascotas::contarDatos();
@@ -22,8 +26,9 @@ $cirugias = Ciruguas::contarDatos();
 // tosas las vacunas y desparacitaciones
 $vacunahoy = Vacunas::all();
 $desparasitacionhoy = Desparacitaciones::all();
-
-
+$servicioshoy = Atencionservicio::all();
+$cirugiashoy = CirugiaRealizada::all();
+$consultashoy = Consulta:: all();
 
 ?>
 
@@ -32,14 +37,14 @@ $desparasitacionhoy = Desparacitaciones::all();
     <div class='container'>
         <div class="row">
 <?php if($_SESSION['rol']=="Administrador"): ?>
-            <!-- Tarjeta de Usuarios -->
+           
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="unique-card unique-card-usuarios">
                     <div class="card-body">
                         <h5>Usuarios</h5>
                         <p><?php echo $usuario ?></p>
                         <a href="/sistema-sanbenito/home/usuarios.php">Ver más</a>
-                        <!-- Icono de usuarios -->
+                        
                         <i class="bi bi-person-vcard-fill icono-fondo"></i>
                     </div>
                 </div>
@@ -47,55 +52,55 @@ $desparasitacionhoy = Desparacitaciones::all();
 
 <?php endif;?>
 
-            <!-- Tarjeta de Propietarios -->
+          
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="unique-card unique-card-propietarios">
                     <div class="card-body">
                         <h5>Propietarios</h5>
                         <p><?php echo $propietario ?></p>
                         <a href="/sistema-sanbenito/home/propietarios.php">Ver más</a>
-                        <!-- Icono de casa -->
+                       
                         <i class="bi bi-person-fill icono-fondo"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Tarjeta de Mascotas -->
+            
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="unique-card unique-card-servicios">
                     <div class="card-body">
                         <h5>Mascotas</h5>
                         <p><?php echo $mascotas ?></p>
                         <a href="/sistema-sanbenito/home/servicios.php">Ver más</a>
-                        <!-- Icono de herramientas -->
+                        
                         <i class="fas fa-paw icono-fondo"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Tarjeta de Servicios -->
+        
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="unique-card unique-card-servicios2">
                     <div class="card-body">
                         <h5>Servicios</h5>
                         <p><?php echo $servicios ?></p>
                         <a href="/sistema-sanbenito/home/servicios.php">Ver más</a>
-                        <!-- Icono de herramientas -->
+                        
 
                         <i class="bi bi-bookmark-fill icono-fondo"></i>
                     </div>
                 </div>
             </div>
-            <!-- Tarjeta de Cirugias -->
+           
 
-            <!-- Tarjeta de Perfiles -->
+            
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="unique-card unique-card-perfiles">
                     <div class="card-body">
                         <h5>Cirugias</h5>
                         <p><?php echo $cirugias ?></p>
                         <a href="/sistema-sanbenito/home/perfiles.php">Ver más</a>
-                        <!-- Icono de perfil de usuario -->
+                        
                         <i class="bi bi-bookmark-heart icono-fondo"></i>
                     </div>
                 </div>
@@ -106,11 +111,10 @@ $desparasitacionhoy = Desparacitaciones::all();
 
 
     </div>
-    <!-- vacunas y desparasitaciones  -->
-    <!-- vacunas y desparacitaciones  -->
+    <!-- hoy -->
     <div class="container mt-5">
         <div class="row">
-            <!-- Tarjeta de Vacunas Hoy -->
+            
             <div class="col-md-6 mb-4">
                 <div class="card card-vacunas-hoy shadow-sm">
                     <div class="card-body d-flex align-items-center">
@@ -121,14 +125,14 @@ $desparasitacionhoy = Desparacitaciones::all();
                             <h5 class="card-title">Vacunas Hoy</h5>
                             <p class="card-text">Total de vacunas aplicadas hoy: <?php echo count($vacunahoy); ?></p>
 
-                            <!-- Botón para mostrar/ocultar lista de vacunas -->
+                           
                             <button class="btn btn-info " id="toggleVacunas">
                                 <i class="fas fa-chevron-down"></i> Mostrar detalles
                             </button>
                             <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                         </div>
                     </div>
-                    <!-- Lista de detalles de vacunas -->
+                    
                     <div id="detailsVacunas" style="display: none;">
                         <h6>Detalles de Vacunas</h6>
                         <ul class="list-group mb-3">
@@ -149,7 +153,7 @@ $desparasitacionhoy = Desparacitaciones::all();
                 </div>
             </div>
 
-            <!-- Tarjeta de Desparasitaciones Hoy -->
+            
             <div class="col-md-6 mb-4">
                 <div class="card card-desparasitaciones-hoy shadow-sm">
                     <div class="card-body d-flex align-items-center">
@@ -160,25 +164,33 @@ $desparasitacionhoy = Desparacitaciones::all();
                             <h5 class="card-title">Desparasitaciones Hoy</h5>
                             <p class="card-text">Total de desparasitaciones hoy: <?php echo count($desparasitacionhoy); ?></p>
 
-                            <!-- Botón para mostrar/ocultar lista de desparasitaciones -->
+                            
                             <button class="btn btn-info " id="toggleDesparasitaciones">
                                 <i class="fas fa-chevron-down"></i> Mostrar detalles
                             </button>
                             <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                         </div>
                     </div>
-                    <!-- Lista de detalles de desparasitaciones -->
+                    
                     <div id="detailsDesparasitaciones" style="display: none;">
                         <h6>Detalles de Desparasitaciones</h6>
                         <ul class="list-group">
-                            <?php foreach ($desparasitacionhoy as $desparasitacion): ?>
+                            <?php 
+                            $desparasitacions= false;
+                            foreach ($desparasitacionhoy as $desparasitacion): 
+                                $desparacitacion= true;
+                            ?>
                                 <li class="list-group-item"><?php echo $desparasitacion->producto; ?> - <?php echo $desparasitacion->fecha_aplicacion; ?></li>
-                            <?php endforeach; ?>
+                            <?php endforeach; 
+                            if (!$desparasitacions) {
+                            ?>
+                            <li class="list-group-item">no se encontraron desparasitaciones</li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </div>
             </div>
-            <!-- Tarjeta de Servicios Hoy -->
+            
             <div class="col-md-6 mb-4">
                 <div class="card card-servicios-hoy shadow-sm">
                     <div class="card-body d-flex align-items-center">
@@ -190,26 +202,32 @@ $desparasitacionhoy = Desparacitaciones::all();
                             <p class="card-text">Total de Servicios hoy: <?php echo count($desparasitacionhoy); ?></p>
 
 
-                            <!-- Botón para mostrar/ocultar lista de desparasitaciones -->
+                           
                             <button class="btn btn-info " id="toggleServicio">
                                 <i class="fas fa-chevron-down"></i> Mostrar detalles
                             </button>
                             <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                         </div>
                     </div>
-                    <!-- Lista de detalles de desparasitaciones -->
+                    
                     <div id="detailsServicio" style="display: none;">
                         <h6>Detalles de Servicios</h6>
 
                         <ul class="list-group">
-                            <?php foreach ($desparasitacionhoy as $desparasitacion): ?>
-                                <li class="list-group-item"><?php echo $desparasitacion->producto; ?> - <?php echo $desparasitacion->fecha_aplicacion; ?></li>
-                            <?php endforeach; ?>
+                            <?php $servicioss=false; foreach ($servicioshoy as $servicios):
+                                $servicioss=true;
+                                ?>
+                                <li class="list-group-item"><?php echo $servicios->observaciones; ?> - <?php echo $servicios->id_servicio; ?></li>
+                            <?php endforeach; 
+                            if (!$servicioss) {
+                            ?>
+                            <li class="list-group-item">no se encontraron servicios</li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </div>
             </div>
-             <!-- Tarjeta de cirugias Hoy -->
+            
              <div class="col-md-6 mb-4">
                 <div class="card card-cirugias-hoy shadow-sm">
                     <div class="card-body d-flex align-items-center">
@@ -222,26 +240,26 @@ $desparasitacionhoy = Desparacitaciones::all();
                             <p class="card-text">Total de cirugias hoy: <?php echo count($desparasitacionhoy); ?></p>
 
 
-                            <!-- Botón para mostrar/ocultar lista de desparasitaciones -->
+                            
                             <button class="btn btn-info " id="toggleCirugias">
                                 <i class="fas fa-chevron-down"></i> Mostrar detalles
                             </button>
                             <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                         </div>
                     </div>
-                    <!-- Lista de detalles de desparasitaciones -->
+                   
                     <div id="detailsCirugias" style="display: none;">
-                        <h6>Detalles de Servicios</h6>
+                        <h6>Detalles</h6>
 
                         <ul class="list-group">
-                            <?php foreach ($desparasitacionhoy as $desparasitacion): ?>
-                                <li class="list-group-item"><?php echo $desparasitacion->producto; ?> - <?php echo $desparasitacion->fecha_aplicacion; ?></li>
+                            <?php foreach ($cirugiashoy as $cirugias): ?>
+                                <li class="list-group-item"><?php echo $cirugias->producto; ?> - <?php echo $cirugias->fecha_aplicacion; ?></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
             </div>
-             <!-- Tarjeta de consultas Hoy -->
+             
              <div class="col-md-6 mb-4">
                 <div class="card card-consulta-hoy shadow-sm">
                     <div class="card-body d-flex align-items-center">
@@ -255,14 +273,14 @@ $desparasitacionhoy = Desparacitaciones::all();
                             <p class="card-text">Total de Consultas hoy: <?php echo count($desparasitacionhoy); ?></p>
 
 
-                            <!-- Botón para mostrar/ocultar lista de desparasitaciones -->
+                            
                             <button class="btn btn-info " id="toggleConsultas">
                                 <i class="fas fa-chevron-down"></i> Mostrar detalles
                             </button>
                             <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                         </div>
                     </div>
-                    <!-- Lista de detalles de desparasitaciones -->
+                    
                     <div id="detailsConsultas" style="display: none;">
                         <h6>Detalles de Servicios</h6>
 
@@ -274,7 +292,7 @@ $desparasitacionhoy = Desparacitaciones::all();
                     </div>
                 </div>
             </div>
-             <!-- Tarjeta de tratamientos Hoy -->
+             
              <div class="col-md-6 mb-4">
                 <div class="card card-tratamiento-hoy shadow-sm">
                     <div class="card-body d-flex align-items-center">
@@ -287,14 +305,14 @@ $desparasitacionhoy = Desparacitaciones::all();
                             <p class="card-text">Total de tratamientos hoy: <?php echo count($desparasitacionhoy); ?></p>
 
 
-                            <!-- Botón para mostrar/ocultar lista de desparasitaciones -->
+                            
                             <button class="btn btn-info " id="toggleTratamientos">
                                 <i class="fas fa-chevron-down"></i> Mostrar detalles
                             </button>
                             <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                         </div>
                     </div>
-                    <!-- Lista de detalles de desparasitaciones -->
+                  
                     <div id="detailsTratamientos" style="display: none;">
                         <h6>Detalles de Servicios</h6>
 
@@ -310,65 +328,65 @@ $desparasitacionhoy = Desparacitaciones::all();
     </div>
 
     <script>
-        // Toggle para vacunas
+        
         document.getElementById('toggleVacunas').addEventListener('click', function() {
             const details = document.getElementById('detailsVacunas');
             const isVisible = details.style.display === 'block';
 
-            // Alternar la visibilidad
+            
             details.style.display = isVisible ? 'none' : 'block';
-            // Cambiar el texto del botón
+          
             this.innerHTML = isVisible ? '<i class="fas fa-chevron-down"></i> Mostrar detalles' : '<i class="fas fa-chevron-up"></i> Ocultar detalles';
         });
 
-        // Toggle para desparasitaciones
+
         document.getElementById('toggleDesparasitaciones').addEventListener('click', function() {
             const details = document.getElementById('detailsDesparasitaciones');
             const isVisible = details.style.display === 'block';
 
-            // Alternar la visibilidad
+           
             details.style.display = isVisible ? 'none' : 'block';
-            // Cambiar el texto del botón
+            
             this.innerHTML = isVisible ? '<i class="fas fa-chevron-down"></i> Mostrar detalles' : '<i class="fas fa-chevron-up"></i> Ocultar detalles';
         });
-        // Toggle para desparasitaciones
+      
         document.getElementById('toggleServicio').addEventListener('click', function() {
             const details = document.getElementById('detailsServicio');
             const isVisible = details.style.display === 'block';
 
-            // Alternar la visibilidad
+            
             details.style.display = isVisible ? 'none' : 'block';
-            // Cambiar el texto del botón
+            
             this.innerHTML = isVisible ? '<i class="fas fa-chevron-down"></i> Mostrar detalles' : '<i class="fas fa-chevron-up"></i> Ocultar detalles';
         });
-        // Toggle para desparasitaciones
+    
         document.getElementById('toggleCirugias').addEventListener('click', function() {
             const details = document.getElementById('detailsCirugias');
             const isVisible = details.style.display === 'block';
 
-            // Alternar la visibilidad
+            
             details.style.display = isVisible ? 'none' : 'block';
-            // Cambiar el texto del botón
+           
             this.innerHTML = isVisible ? '<i class="fas fa-chevron-down"></i> Mostrar detalles' : '<i class="fas fa-chevron-up"></i> Ocultar detalles';
         });
-        // Toggle para desparasitaciones
+       
         document.getElementById('toggleConsultas').addEventListener('click', function() {
             const details = document.getElementById('detailsConsultas');
             const isVisible = details.style.display === 'block';
 
-            // Alternar la visibilidad
+           
             details.style.display = isVisible ? 'none' : 'block';
-            // Cambiar el texto del botón
+           
             this.innerHTML = isVisible ? '<i class="fas fa-chevron-down"></i> Mostrar detalles' : '<i class="fas fa-chevron-up"></i> Ocultar detalles';
         });
-        // Toggle para desparasitaciones
+        
         document.getElementById('toggleTratamientos').addEventListener('click', function() {
             const details = document.getElementById('detailsTratamientos');
             const isVisible = details.style.display === 'block';
 
-            // Alternar la visibilidad
+          
             details.style.display = isVisible ? 'none' : 'block';
-            // Cambiar el texto del botón
+            
             this.innerHTML = isVisible ? '<i class="fas fa-chevron-down"></i> Mostrar detalles' : '<i class="fas fa-chevron-up"></i> Ocultar detalles';
         });
     </script>
