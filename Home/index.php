@@ -11,7 +11,6 @@ use App\Mascotas;
 use App\CirugiaRealizada;
 use App\Consulta;
 
-
 use App\Propietarios;
 use App\Servicios;
 use App\Ciruguas;

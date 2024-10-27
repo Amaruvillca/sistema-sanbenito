@@ -100,19 +100,14 @@ header('Pragma: no-cache');
                     </div>
                 </div>
 
-                <div class="<?php noMostrar(); ?> dashboard-nav-dropdown"><a href="#!"
+                <div class="<?php noMostrar(); ?> dashboard-nav-dropdown <?php if ($titulo == 'Ingresos' || $titulo == 'Buscar' || $titulo == 'Reportes') echo 'show'; ?>"><a href="#!"
                         class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="bi bi-sticky-fill"></i>
                         Otros </a>
-                    <div class='dashboard-nav-dropdown-menu'><a href="/sistema-sanbenito/home/ingresos.php" class="dashboard-nav-dropdown-item">Ingresos</a>
+                    <div class='dashboard-nav-dropdown-menu'><a href="/sistema-sanbenito/home/ingresos.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'Ingresos') echo 'active'; ?>">Ingresos</a>
                         <a href="/sistema-sanbenito/home/Buscar.php" class="dashboard-nav-dropdown-item">Buscar</a>
-                        <a href="/sistema-sanbenito/home/.php" class="dashboard-nav-dropdown-item">....</a>
+                        <a href="/sistema-sanbenito/home/reportes.php" class="dashboard-nav-dropdown-item">Reportes</a>
                     </div>
                 </div>
-
-
-
-
-
             </nav>
         </div>
         <div class='dashboard-app'>
@@ -146,7 +141,7 @@ header('Pragma: no-cache');
                         </div>
 
                         <div class="datos-usuario">
-                            <h4 class="nombre-usuario"><?php echo $personal['nombres']; ?></h4>
+                            <h4 class="nombre-usuario"><?php echo $personal['nomQ bres']; ?></h4>
                             <h4 class="nombre-usuario"><?php echo $personal['apellido_paterno'] . ' ' . $personal['apellido_materno']; ?></h4>
                             <p class="rol-usuario"><?php echo $_SESSION['rol']; ?></p>
                             <p class="email-usuario"><?php echo $_SESSION['email']; ?></p>
