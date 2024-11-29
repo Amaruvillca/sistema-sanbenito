@@ -49,11 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
         $resultado = $atencion_servicio->guardar();
         if ($resultado) {
-           
             $mensajeEstado = "success";
         }
     }
-
 }
 
 ?>

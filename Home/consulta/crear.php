@@ -38,7 +38,8 @@ if (empty($cuenta)) {
           </div>';
     exit;
 }
-$mascota = Mascotas::find($id_propietario);
+$mascota = Mascotas::find($id_mascota);
+
 $consulta = new Consulta();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $consulta = new Consulta($_POST['consulta']);

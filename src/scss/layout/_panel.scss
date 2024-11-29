@@ -383,7 +383,7 @@ h1,
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
-    color: #005C43;
+    color: $verdefondo;
 }
 
 .menu-toggle:hover,
@@ -408,9 +408,9 @@ h1,
     flex-direction: row;
     text-align: center;
     justify-content: center;
-    /* Alinea el contenido a la derecha */
+    
     margin-left: auto;
-    /* Empuja el menú a la derecha */
+   
 
 }
 

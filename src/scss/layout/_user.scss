@@ -16,7 +16,7 @@
 }
 
 .table thead th {
-    background-color: #005C43;
+    background-color: $verdefondo;
     color: #fff;
     font-weight: bold;
 }
@@ -35,14 +35,14 @@
 }
 
 .btn-primary {
-    background-color: #005C43;
-    border-color: #005C43;
+    background-color: $verdefondo;
+    border-color: $verdefondo;
     transition: background-color 0.3s, border-color 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #004d36;
-    border-color: #004d36;
+    background-color: $verdefondo;
+    border-color: $verdefondo;
 }
 
 @media (max-width: 767px) {
@@ -55,8 +55,8 @@
 .switch {
     position: relative;
     display: inline-block;
-    width: 50px; /* Ancho del switch reducido */
-    height: 28px; /* Alto del switch reducido */
+    width: 50px; 
+    height: 28px; 
 }
 
 /* Ocultar el input checkbox original */
@@ -76,17 +76,17 @@
     bottom: 0;
     background-color: #ccc;
     transition: 0.4s;
-    border-radius: 28px; /* Redondear los bordes */
+    border-radius: 28px; 
 }
 
 /* Círculo dentro del slider */
 .slider:before {
     position: absolute;
     content: "";
-    height: 22px; /* Altura del círculo reducido */
-    width: 22px; /* Ancho del círculo reducido */
-    left: 3px; /* Ajustar la posición del círculo */
-    bottom: 3px; /* Ajustar la posición del círculo */
+    height: 22px; 
+    width: 22px; 
+    left: 3px; 
+    bottom: 3px; 
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
@@ -94,11 +94,11 @@
 
 /* Cambiar el color cuando el switch está activado */
 input:checked + .slider {
-    background-color: #4CAF50;
+    background-color: $verdefondo;
 }
 
 /* Mover el círculo cuando el switch está activado */
 input:checked + .slider:before {
-    transform: translateX(22px); /* Ajustar el movimiento del círculo */
+    transform: translateX(22px); 
 }
 

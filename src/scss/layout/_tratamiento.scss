@@ -39,7 +39,7 @@
 
 .campo-formulario label {
     font-weight: bold;
-    color: #005C43;
+    color: $verdefondo;
 }
 
 .campo-formulario input,
@@ -53,7 +53,7 @@
 
 // Botones del formulario
 .boton-formulario input {
-    background-color: #005C43;
+    background-color:$verdefondo;
     color: #ffffff;
     padding: 0.8rem 1.5rem;
     border: none;
@@ -65,7 +65,7 @@
 }
 
 .boton-formulario input:hover {
-    background-color: #003d30;
+    background-color: $verdefondo;
 }
 
 // Estilos para la tabla de medicamentos
@@ -83,7 +83,7 @@
 }
 
 .tabla-medicamentos th {
-    background-color: #005C43;
+    background-color: $verdefondo;
     color: #ffffff;
 }
 

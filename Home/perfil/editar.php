@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Asignar la imagen al perfil
             $perfil->setImagen($nombreimagen);
         }
-
         $resultado = $perfil->actualizar($perfil->id_personal);
         if ($resultado) {
             // Si el usuario se guarda correctamente, establecemos el mensaje
@@ -71,7 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 ?>
 
 <div class="dashboard-content">

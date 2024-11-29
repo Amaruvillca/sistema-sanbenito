@@ -79,7 +79,7 @@ $s=htmlspecialchars($html);
 return $s;
 }
 function encryptData($data) {
-    $encryption_key = "sanbenito"; // Asegúrate de usar una clave segura
+    $encryption_key = "sanbenito"; 
     $cipher = "AES-128-CTR";
     $iv_length = openssl_cipher_iv_length($cipher);
     $iv = openssl_random_pseudo_bytes($iv_length);
@@ -91,7 +91,7 @@ function encryptData($data) {
     return urlencode(base64_encode($encrypted . "::" . $iv));
 }
 function decryptData($encrypted_data) {
-    $encryption_key = "sanbenito";  // Debe ser la misma clave que usaste para encriptar
+    $encryption_key = "sanbenito";  
     $cipher = "AES-128-CTR";
 
     // Separar el texto encriptado del IV

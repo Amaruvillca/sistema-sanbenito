@@ -46,10 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mascota = Mascotas::find($id);
     $rutaImagen = '../../imagemascota/';
     $resultado = Mascotas::borrar($id);
-
     if ($resultado) {
         // Si el usuario se guarda correctamente, establecemos el mensaje
-
         if ($mascota->imagen_mascota != "mascota.png") {
             //borrar imagen
             unlink($rutaImagen . $mascota->imagen_mascota);

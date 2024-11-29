@@ -23,6 +23,35 @@ CREATE TABLE personal(
     id_usuario INT unique not null,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
+INSERT INTO personal (
+    imagen_personal,
+    nombres,
+    apellido_paterno,
+    apellido_materno,
+    num_celular,
+    direccion,
+    num_carnet,
+    profesion,
+    especialidad,
+    matricula_profesional,
+    fecha_registro,
+    id_usuario
+) VALUES (
+    'veterinario.jpg',
+    'Amaru lino',
+    'Villca',
+    'Alanez',
+    '123456789',
+    'Calle Falsa 123',
+    '9874713',
+    'General',
+    'General',
+    'MAT-2023-001',
+    '2024-10-20',
+    1
+);
+select * from usuario;
+
 
 CREATE TABLE propietario(
 id_propietario int auto_increment primary key not null,
@@ -205,30 +234,38 @@ CREATE TABLE consulta (
     FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL,
     FOREIGN KEY (id_cuenta) REFERENCES cuenta(id_cuenta) ON DELETE SET NULL
 );
-
+CREATE TABLE programar_tratamiento(
+id_programacion_tratamiento INT auto_increment primary key,
+dia_tratamiento int(2) not null,
+fecha_programada datetime not null,
+id_consulta int,
+id_personal INT,
+FOREIGN KEY (id_consulta) REFERENCES consulta(id_consulta) ON DELETE SET NULL,
+FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL
+);
 CREATE TABLE tratamiento(
 	id_tratamiento INT AUTO_INCREMENT PRIMARY KEY,
-    dia_tratamiento int(1) not null,
     fecha_tratamiento date not null,
-    peso DECIMAL(5,2) not null,
-    temperatura DECIMAL(5,2) NOT NULL,
+    peso DECIMAL(11,2) not null,
+    temperatura DECIMAL(11,2) NOT NULL,
     observaciones varchar(255) not null,
-    id_consulta int,
-    id_mascota int,
-    FOREIGN KEY (id_consulta) REFERENCES consulta(id_consulta) ON DELETE SET NULL,
-    FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota) ON DELETE SET NULL
+    id_programacion_tratamiento int,
+	id_personal INT,
+	FOREIGN KEY (id_programacion_tratamiento) REFERENCES programar_tratamiento(id_programacion_tratamiento) ON DELETE SET NULL,
+	FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL
 );
-
+/*drop table tratamiento;
+drop table medicacion;
+drop table facturas;
+drop table categorias;*/
 CREATE TABLE medicacion(
 	id_mediacion INT AUTO_INCREMENT PRIMARY KEY,
     nombre_medicacion varchar(100) not null,
     via varchar(100) not null,
     costo decimal(11,2) not null,
     fecha_medicacion date not null,
-    id_personal int,
     id_tratamiento int,
     id_cuenta int,
-    FOREIGN KEY (id_personal) REFERENCES personal(id_personal) ON DELETE SET NULL,
     FOREIGN KEY (id_tratamiento) REFERENCES tratamiento(id_tratamiento) ON DELETE SET NULL,
     FOREIGN KEY (id_cuenta) REFERENCES cuenta(id_cuenta) ON DELETE SET NULL
 );

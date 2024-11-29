@@ -10,22 +10,14 @@ $id_personal = '';
 if (isset($_GET['data'])) {
     $encrypted_data = $_GET['data'];
     $decrypted_data = decryptData($encrypted_data);
-
     parse_str($decrypted_data, $params);
-
     // Ahora tienes acceso a los parámetros
     $id_usuario = $params['id_usuario'];
-    
     if (!$id_usuario) {
         header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
     }
-
     // Ahora puedes usar los parámetros para lo que necesites
-
     $usuario = User::find($id_usuario);
-    //debuguear($datosUsuario);
-    
-    // debuguear($datosPerfil);
 } else {
     header('Location:/sistema-sanbenito/error/403.php?mensaje=3');
 }

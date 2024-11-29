@@ -10,12 +10,10 @@ $errores = Servicios::getErrores();
 $servicios = new Servicios();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $servicios = new Servicios($_POST['servicios']);
-    
     $errores = $servicios->validar();
     if (empty($errores)) {
         $resultado = $servicios->guardar();
-        if ($resultado) {
-           
+        if ($resultado) {    
             $mensajeEstado = "success";
         }
     }

@@ -9,7 +9,7 @@ $secondary-color: white;
 }
 
 .card-header {
-  background-color: $primary-color;
+  background-color: $verdefondo;
   color: $secondary-color;
   padding: 15px;
   font-size: 18px;
@@ -24,7 +24,7 @@ $secondary-color: white;
 }
 
 .title {
-  color: $primary-color;
+  color: $verdefondo;
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -33,7 +33,7 @@ $secondary-color: white;
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: $primary-color;
+  background-color: $verdefondo;
   color: $secondary-color;
   border-radius: 50%;
   width: 60px;

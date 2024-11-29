@@ -41,12 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //crar objeto mascota
     $mascotas = new Mascotas($_POST['mascota']);
     $mascotas->sincronizar($_POST['mascota']);
-
-
     // validar errores
     $errores = $mascotas->validar();
-
-
     if (empty($errores)) {
         // Verificar si se ha subido un archivo de imagen
         if ($_FILES['imagen']['tmp_name']) {

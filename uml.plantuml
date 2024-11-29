@@ -1,0 +1,40 @@
+@startuml
+!define RECTANGLE package
+left to right direction
+
+actor Administrador
+
+RECTANGLE "Sistema de Gestión Veterinaria" as SGV {
+    usecase "Registrar Propietario" as UC1
+    usecase "Registrar Mascota" as UC2
+    usecase "Atender Consulta" as UC3
+    usecase "Registrar Vacuna" as UC4
+    usecase "Registrar Desparasitación" as UC5
+    usecase "Programar Tratamiento" as UC6
+    usecase "Programar Cirugía" as UC7
+    usecase "Registrar Cirugía Realizada" as UC8
+    usecase "Registrar Servicio realizado" as UC9
+    usecase "Cobrar Servicios" as UC10
+    usecase "Registrar Nuevo personal" as UC11
+    usecase "Registrar Nuevos servicios" as UC12
+    usecase "Registrar tipo Cirugía" as UC13
+    usecase "Control de Ingresos Económicos" as UC14
+    
+}
+
+Administrador --> UC1
+Administrador --> UC2
+Administrador --> UC3
+Administrador --> UC4
+Administrador --> UC5
+Administrador --> UC6
+Administrador --> UC7
+Administrador --> UC8
+Administrador --> UC9
+Administrador --> UC10
+Administrador --> UC11
+Administrador --> UC12
+Administrador --> UC13
+Administrador --> UC14
+
+@enduml

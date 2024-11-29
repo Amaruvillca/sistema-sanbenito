@@ -37,11 +37,11 @@ $legend-color: #005C43; // El color que elegiste
     }
 
     .btn {
-        background-color: $legend-color;
+        background-color: $verdefondo;
         border: none;
 
         &:hover {
-            background-color: darken($legend-color, 10%);
+            background-color: darken($verdefondo, 10%);
         }
     }
 }

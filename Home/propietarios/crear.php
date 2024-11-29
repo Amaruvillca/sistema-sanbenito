@@ -20,9 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mensajeEstado = "success";
         }
     }
-
 }
-
 ?>
 
 

@@ -14,11 +14,11 @@
 
 
 .nav-link {
-    color: #005C43; 
+    color: $verdefondo; 
 
     &.active {
         color: white; 
-        background-color: #005C43; 
+        background-color: $verdefondo; 
         border-radius: 15px 15px 0 0; 
     }
 

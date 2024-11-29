@@ -4,7 +4,6 @@ $nombrepagina = "Propietarios";
 require 'template/header.php';
 
 use App\Propietarios;
-
 $propietarios = Propietarios::all();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];

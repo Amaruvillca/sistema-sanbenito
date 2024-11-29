@@ -4,10 +4,7 @@ namespace App;
 
 require '../../includes/app.php';
 
-
 use App\Cuenta;
-
-
 
 // Verifica si se recibieron datos POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,11 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id_propietario) {
         $cuenta = new Cuenta($_POST['cuenta']);
-        
-        
         // Aquí puedes establecer otros atributos si es necesario
         // $cuenta->nombre_completo = ...;
-
         // Guardar la cuenta en la base de datos
         if ($cuenta->guardar()) {
             // Respuesta exitosa

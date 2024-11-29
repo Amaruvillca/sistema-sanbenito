@@ -3,9 +3,7 @@
 $titulo = "usuarios";
 require '../template/header.php';
 verificaAcceso();
-
 use App\User;
-
 $usuario = new User;
 $errores = User::getErrores();
 $mensajeEstado = "";
@@ -13,10 +11,7 @@ $estado = false;
 //$usuario = new User();
 //$usuario->Mandar();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $usuario = new User($_POST['usuario']);
-
-
     $errores = $usuario->validar();
     if (empty($errores)) {
         $resultado = $usuario->guardar();

@@ -1,16 +1,12 @@
 <?php
-
 namespace App;
-
 class ActiveRecord
 {
     protected static $db;
-
     protected static $nombreId = '';
     protected static $columnas_db = [];
     protected static $tabla = '';
     protected static $errores = [];
-
     public static function setDb($db)
     {
         self::$db = $db;
@@ -44,7 +40,6 @@ class ActiveRecord
                 $objeto->$key = $value;
             }
         }
-
         return $objeto;
     }
 
@@ -58,9 +53,6 @@ class ActiveRecord
         $query .= ") VALUES ('";
         $query .= join("','", array_values($atributos));
         $query .= "')";
-
-
-
         $resultado = self::$db->query($query);
         return $resultado;
     }
@@ -84,7 +76,6 @@ class ActiveRecord
         $query = "DELETE FROM " . static::$tabla . " WHERE " . static::$nombreId . " = '" . $id . "' ";
         //ejecutar query
         $resultado = self::$db->query($query);
-
         return $resultado;
     }
     public function atributos(): array

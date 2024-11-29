@@ -46,7 +46,7 @@ header('Pragma: no-cache');
         <div class="dashboard-nav">
             <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
                 <a href="#" class="brand-logo">
-                    <img class="logss" src="/sistema-sanbenito/build/img/log.jpg" alt="" height="50">
+                    <img class="logss" src="/sistema-sanbenito/build/img/log.png" alt="" height="50">
                 </a>
             </header>
             <div class="nav-item-divider"></div>
@@ -77,7 +77,7 @@ header('Pragma: no-cache');
                         programadas</a>
                     <div class='dashboard-nav-dropdown-menu'>
                         <a href="/sistema-sanbenito/home/cirugias_hoy.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'cirugias_hoy') echo 'active'; ?>">cirugias</a>
-                        <a href="/sistema-sanbenito/home/consultas_hoy.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'consultas_hoy') echo 'active'; ?>">consultas</a>
+                        <a href="/sistema-sanbenito/home/consultas_hoy.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'consultas_hoy') echo 'active'; ?>">Tratamientos</a>
                     </div>
                 </div>
                 <!-- <div class='dashboard-nav-dropdown'><a href="#!"
@@ -141,7 +141,7 @@ header('Pragma: no-cache');
                         </div>
 
                         <div class="datos-usuario">
-                            <h4 class="nombre-usuario"><?php echo $personal['nomQ bres']; ?></h4>
+                            <h4 class="nombre-usuario"><?php echo $personal['nombres']; ?></h4>
                             <h4 class="nombre-usuario"><?php echo $personal['apellido_paterno'] . ' ' . $personal['apellido_materno']; ?></h4>
                             <p class="rol-usuario"><?php echo $_SESSION['rol']; ?></p>
                             <p class="email-usuario"><?php echo $_SESSION['email']; ?></p>
