@@ -41,6 +41,7 @@ $desparacitacion = Desparacitaciones::asociadosCuenta($id_cuenta);
 $atencion_servicio = Atencionservicio::asociadosCuenta($id_cuenta);
 $consulta = Consulta::asociadosCuenta($id_cuenta);
 $cirugia_realizada = CirugiaRealizada::asociadosCuenta($id_cuenta);
+// debuguear($cirugia_realizada);
 $medicacion = Medicacion::asociadosCuenta($id_cuenta);
 $cuenta = Cuenta::find($id_cuenta);
 $personal = Perfil::find($cuenta->id_personal);

@@ -2,6 +2,8 @@
 
 namespace App;
 
+
+
 class Cuenta extends ActiveRecord
 {
 
@@ -75,43 +77,128 @@ class Cuenta extends ActiveRecord
             die('Error en la consulta SQL: ' . self::$db->error);
         }
     }
-   
+
     public static function saldoTotal($id_cuenta): int
-{
-    $saldo = 0;
+    {
+        $saldo = 0;
 
-    // Array de consultas
-    $consultas = [
-        "SELECT SUM(costo) AS total_costo FROM vacuna WHERE id_cuenta = ?",
-        "SELECT SUM(costo) AS total_costo FROM desparasitacion WHERE id_cuenta = ?",
-        "SELECT SUM(costo) AS total_costo FROM atiende_servicio WHERE id_cuenta = ?",
-        "SELECT SUM(costo) AS total_costo FROM cirugia_realizada WHERE id_cuenta = ?",
-        "SELECT SUM(costo) AS total_costo FROM consulta WHERE id_cuenta = ?",
-        "SELECT SUM(costo) AS total_costo FROM medicacion WHERE id_cuenta = ?"
-    ];
+        // Array de consultas
+        $consultas = [
+            "SELECT SUM(costo) AS total_costo FROM vacuna WHERE id_cuenta = ?",
+            "SELECT SUM(costo) AS total_costo FROM desparasitacion WHERE id_cuenta = ?",
+            "SELECT SUM(costo) AS total_costo FROM atiende_servicio WHERE id_cuenta = ?",
+            "SELECT SUM(costo) AS total_costo FROM cirugia_realizada WHERE id_cuenta = ?",
+            "SELECT SUM(costo) AS total_costo FROM consulta WHERE id_cuenta = ?",
+            "SELECT SUM(costo) AS total_costo FROM medicacion WHERE id_cuenta = ?"
+        ];
 
-    foreach ($consultas as $query) {
-        // Prepara la consulta
-        if ($stmt = self::$db->prepare($query)) {
-            // Vincula el parámetro
-            $stmt->bind_param('i', $id_cuenta); // 'i' indica que el parámetro es un entero
-            $stmt->execute();
+        foreach ($consultas as $query) {
+            // Prepara la consulta
+            if ($stmt = self::$db->prepare($query)) {
+                // Vincula el parámetro
+                $stmt->bind_param('i', $id_cuenta); // 'i' indica que el parámetro es un entero
+                $stmt->execute();
 
-            // Obtiene el resultado
-            $result = $stmt->get_result();
-            $fech = $result->fetch_assoc();
+                // Obtiene el resultado
+                $result = $stmt->get_result();
+                $fech = $result->fetch_assoc();
 
-            // Sumar el costo al saldo
-            $saldo += $fech['total_costo'] !== null ? (int)$fech['total_costo'] : 0; // Asegúrate de que sea un entero
+                // Sumar el costo al saldo
+                $saldo += $fech['total_costo'] !== null ? (int)$fech['total_costo'] : 0; // Asegúrate de que sea un entero
 
-            // Cierra la declaración
-            $stmt->close();
+                // Cierra la declaración
+                $stmt->close();
+            }
         }
+
+        return $saldo;
     }
 
-    return $saldo;
-}
-
+public function ingresoDia()
+{
+    
+    $fechaHoy = date('Y-m-d');
 
     
+    $query = "SELECT SUM(saldo_total) AS total_pagado
+              FROM cuenta
+              WHERE estado = 'pagada' AND fecha_pago = '$fechaHoy'";
+
+    $result = self::$db->query($query);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+
+        $totalPagado = isset($row['total_pagado']) ? (float)$row['total_pagado'] : 0;
+
+        
+        return number_format($totalPagado, 2, '.', '');
+    } else {
+        
+        return '0.00';
+    }
+}
+
+public function ingresoMes()
+{
+    
+    $inicioMes = date('Y-m-01'); 
+    $finMes = date('Y-m-t');
+
+    // Consulta SQL
+    $query = "SELECT SUM(saldo_total) AS total_pagado
+              FROM cuenta
+              WHERE estado = 'pagada' AND fecha_pago BETWEEN '$inicioMes' AND '$finMes'";
+
+    
+    $result = self::$db->query($query);
+
+    
+    if ($result) {
+        
+        $row = $result->fetch_assoc();
+
+        
+        $totalPagado = isset($row['total_pagado']) ? (float)$row['total_pagado'] : 0;
+
+        
+        return number_format($totalPagado, 2, '.', '');
+    } else {
+        
+        return '0.00';
+    }
+}
+
+public function ingresoDiaImprimir()
+{
+    
+    $fechaHoy = date('Y-m-d');
+
+    
+    $query = "SELECT *
+              FROM cuenta
+              WHERE estado = 'pagada' AND fecha_pago = '$fechaHoy'";
+    
+    $resultado = self::consultarSql($query);
+    //debuguear($resultado);
+    return $resultado;
+    
+}
+public function ingresoMesImprimir()
+{
+    
+    $inicioMes = date('Y-m-01'); 
+    $finMes = date('Y-m-t');
+
+    // Consulta SQL
+    $query = "SELECT *
+              FROM cuenta
+              WHERE estado = 'pagada' AND fecha_pago BETWEEN '$inicioMes' AND '$finMes'";
+    
+    $resultado = self::consultarSql($query);
+    //debuguear($resultado);
+    return $resultado;
+    
+}
+
 }
