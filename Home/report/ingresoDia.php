@@ -58,6 +58,7 @@ $html = '
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            font-size:12px;
         }
         th {
             background-color: #f2f2f2;

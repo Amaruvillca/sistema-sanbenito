@@ -227,7 +227,7 @@ $cuenta = new Cuenta();
                                 <button class="btn btn-info " id="toggleDesparasitaciones">
                                     <i class="fas fa-chevron-down"></i> Mostrar detalles
                                 </button>
-                                <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
+                                <a href="/sistema-sanbenito/home/report/hoy/desparasitaciones.php" target="_blank" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                             </div>
                         </div>
 
@@ -304,7 +304,7 @@ $cuenta = new Cuenta();
                                 <button class="btn btn-info " id="toggleServicio">
                                     <i class="fas fa-chevron-down"></i> Mostrar detalles
                                 </button>
-                                <a href="#" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
+                                <a href="/sistema-sanbenito/home/report/hoy/servicios.php" target="_blank" type="button" class="btn btn-danger"> <i class="bi bi-file-pdf-fill"></i> Imprimir</a>
                             </div>
                         </div>
 

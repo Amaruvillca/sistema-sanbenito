@@ -191,6 +191,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     });
+   
+
 </script>
 <?php
 require '../template/footer.php';

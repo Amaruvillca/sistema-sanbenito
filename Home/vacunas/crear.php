@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             
                             <input type="hidden" name="vacuna[id_cuenta]" value="<?php echo $cuenta ?>">
 
-                            <button type="submit" class="btn btn-primary w-100">Registrar Vacuna</button>
+                            <button type="submit" class="btn btn-primary w-100 mt-3">Registrar Vacuna</button>
                         </form>
                         <div id="estadoProceso" style="display: none;"><?php echo $mensajeEstado; ?></div>
                     </div>

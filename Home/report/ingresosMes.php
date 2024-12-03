@@ -58,6 +58,7 @@ $html = '
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            font-size:12px;
         }
         th {
             background-color: #f2f2f2;
@@ -70,6 +71,7 @@ $html = '
             font-weight: bold;
             color: #005C43;
             text-align: right;
+            font-size:14px;
         }
     </style>
 </head>
@@ -83,11 +85,11 @@ $html = '
             <thead>
                 <tr>
                     <th>Nro.</th>
-                    
                     <th>Cliente</th>
                     <th>Carnet</th>
                     <th>Total</th>
                     <th>Pagado</th>
+                    <th>Fecha de pago</th>
                     <th>Atendido por</th>
                 </tr>
             </thead>
@@ -103,6 +105,7 @@ foreach ($datosPagos as $pago) {
                 <td>' . s($pago->num_carnet) . '</td>
                 <td>' . number_format(s($pago->saldo_total), 2, '.', ',') . ' Bs.</td>
                 <td>' . number_format(s($pago->monto_pagado), 2, '.', ',') . ' Bs.</td>
+                <td>' . s($pago->fecha_pago) . '</td>
                 <td>' . $perfil->nombres . ' ' . $perfil->apellido_paterno . ' ' . $perfil->apellido_materno . '</td>
               </tr>';
 }

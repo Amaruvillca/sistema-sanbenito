@@ -104,6 +104,7 @@ $desparasityacion_encontradas = false;
 
             <hr>
             <hr>
+            
             <div class="col-12">
                 <div class="card shadow-lg" style="border-radius: 15px; background-color: #f8f9fa;">
                     <div class="card-header" style="border-radius: 15px 15px 0 0; background-color: #005C43; color: white;">
