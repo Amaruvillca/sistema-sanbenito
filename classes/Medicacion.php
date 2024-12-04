@@ -2,7 +2,7 @@
 namespace App;
 
 class Medicacion extends ActiveRecord {
-    protected static $tabla = "medicacion";
+    protected static $tabla = "medicacionconsulta";
     protected static $nombreId = 'id_mediacion';
 
     protected static $columnas_db = [
@@ -11,7 +11,6 @@ class Medicacion extends ActiveRecord {
         'via',
         'costo',
         'fecha_medicacion',
-        'id_personal',
         'id_tratamiento',
         'id_cuenta'
     ];
@@ -21,7 +20,7 @@ class Medicacion extends ActiveRecord {
     public $via;
     public $costo;
     public $fecha_medicacion;
-    public $id_personal;
+
     public $id_tratamiento;
     public $id_cuenta;
 
@@ -31,7 +30,7 @@ class Medicacion extends ActiveRecord {
         $this->via = $args['via'] ?? '';
         $this->costo = $args['costo'] ?? '0.00';
         $this->fecha_medicacion = $args['fecha_medicacion'] ?? date('Y-m-d');
-        $this->id_personal = $args['id_personal'] ?? null;
+        
         $this->id_tratamiento = $args['id_tratamiento'] ?? null;
         $this->id_cuenta = $args['id_cuenta'] ?? null;
     }

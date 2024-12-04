@@ -1,7 +1,9 @@
 <?php
+
 namespace App;
 
-class Consulta extends ActiveRecord {
+class Consulta extends ActiveRecord
+{
 
     protected static $tabla = "consulta";
     protected static $nombreId = 'id_consulta';
@@ -60,7 +62,8 @@ class Consulta extends ActiveRecord {
     public $id_personal;
     public $id_cuenta;
 
-    public function __construct($args = []) {
+    public function __construct($args = [])
+    {
         $this->id_consulta = $args['id_consulta'] ?? '';
         $this->motivo_consulta = $args['motivo_consulta'] ?? '';
         $this->vac_polivalentes = $args['vac_polivalentes'] ?? '0';
@@ -89,7 +92,8 @@ class Consulta extends ActiveRecord {
     }
 
     // Función para buscar consultas pendientes por id de mascota
-    public static function buscarConsultasPendientes($id_mascota) {
+    public static function buscarConsultasPendientes($id_mascota)
+    {
         $query = "SELECT * FROM " . static::$tabla . " WHERE id_mascota = ? AND estado = 'pendiente'";
         if ($stmt = self::$db->prepare($query)) {
             $stmt->bind_param('i', $id_mascota);
@@ -106,7 +110,8 @@ class Consulta extends ActiveRecord {
     }
 
     // Función para actualizar el estado de la consulta
-    public static function completarConsulta($id_consulta) {
+    public static function completarConsulta($id_consulta)
+    {
         $query = "UPDATE " . static::$tabla . " SET estado = 'completada' WHERE id_consulta = ?";
         if ($stmt = self::$db->prepare($query)) {
             $stmt->bind_param('i', $id_consulta);
@@ -115,10 +120,11 @@ class Consulta extends ActiveRecord {
             die('Error en la consulta SQL: ' . self::$db->error);
         }
     }
-    public function validar() {
-        
+    public function validar()
+    {
 
-        
+
+
         // Validar campos obligatorios
         if (!$this->motivo_consulta) {
             self::$errores[] = 'El motivo de la consulta es obligatorio.';
@@ -164,12 +170,26 @@ class Consulta extends ActiveRecord {
         if (!in_array($this->esterelizado, ['0', '1'])) {
             self::$errores[] = 'El valor de Esterilización debe ser 0 o 1.';
         }
-        
+
         // Puedes agregar más validaciones según sea necesario
         if (!$this->actitud) {
             self::$errores[] = 'La actitud es obligatoria.';
         }
 
         return self::$errores;
+    }
+    public static function buscarConsulta($id_cuenta, $id_mascota)
+    {
+        $query = "SELECT * 
+FROM consulta 
+WHERE id_mascota = $id_mascota and id_cuenta= $id_cuenta
+ORDER BY id_consulta DESC 
+LIMIT 1";
+//debuguear($query);
+        $resultado = self::consultarSql($query);
+        
+        
+        //debuguear($resultado);
+        return $resultado;
     }
 }

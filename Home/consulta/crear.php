@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 <?php
 
-$data = "id_propietario=$id_propietario&id_mascota=$id_mascota";
+$data = "id_propietario=$id_propietario&id_mascota=$id_mascota&id_cuenta=$cuenta";
 $encryptedData = encryptData($data);
 ?>
 <script>
@@ -205,7 +205,7 @@ $encryptedData = encryptData($data);
                 icon: "success",
                 confirmButtonText: "De acuerdo",
             }).then(function() {
-                window.location.href = '/sistema-sanbenito/home/tratamineto/crear.php?data?=<?php echo $encryptedData ?>';
+                window.location.href = '/sistema-sanbenito/home/medicacion/medicacionConsulta.php?data=<?php echo $encryptedData ?>';
             });
         }
     });
