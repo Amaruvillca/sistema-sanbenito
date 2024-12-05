@@ -100,14 +100,17 @@ header('Pragma: no-cache');
                     </div>
                 </div>
 
-                <div class="<?php noMostrar(); ?> dashboard-nav-dropdown <?php if ($titulo == 'Ingresos' || $titulo == 'Buscar' || $titulo == 'Reportes') echo 'show'; ?>"><a href="#!"
+                <!-- <div class="<?php noMostrar(); ?> dashboard-nav-dropdown <?php if ($titulo == 'Ingresos' || $titulo == 'Buscar' || $titulo == 'Reportes') echo 'show'; ?>"><a href="#!"
                         class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="bi bi-sticky-fill"></i>
                         Otros </a>
                     <div class='dashboard-nav-dropdown-menu'><a href="/sistema-sanbenito/home/ingresos.php" class="dashboard-nav-dropdown-item <?php if ($titulo == 'Ingresos') echo 'active'; ?>">Ingresos</a>
                         <a href="/sistema-sanbenito/home/Buscar.php" class="dashboard-nav-dropdown-item">Buscar</a>
                         <a href="/sistema-sanbenito/home/reportes.php" class="dashboard-nav-dropdown-item">Reportes</a>
                     </div>
-                </div>
+                </div> -->
+                <a href="/sistema-sanbenito/Home/buscar.php" class="dashboard-nav-item <?php if ($titulo == 'Buscar') echo 'active'; ?> "><i class="bi bi-search"></i>
+                    Buscar
+                </a>
             </nav>
         </div>
         <div class='dashboard-app'>

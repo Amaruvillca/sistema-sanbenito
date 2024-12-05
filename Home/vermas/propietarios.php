@@ -541,9 +541,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <a href="/sistema-sanbenito/home/report/comprobante.php?data=<?php echo $encryptedDataaa ?>" class="btn btn-sm btn-danger" target="_blank">
                                                 <i class="bi bi-file-earmark-pdf-fill"></i> Comprobante
                                             </a>
-                                            <a href="/sistema-sanbenito/home/vermas/cuenta.php?id=<?php echo $encryptedDataaa ?>" class="btn btn-sm btn-info" target="_blank">
-                                                <i class="bi bi-eye-fill"></i> Ver Detalles
-                                            </a>
+                                            
 
                                         </td>
                                     </tr>

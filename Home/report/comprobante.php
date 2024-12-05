@@ -8,8 +8,12 @@ use App\Consulta;
 use App\CirugiaRealizada;
 use App\Ciruguas;
 use App\Medicacion;
+use  App\CirugiaProgramada;
+use App\Medicaciontrat;
+
 use App\Cuenta;
 use App\Mascotas;
+
 use App\Propietarios;
 use App\perfil;
 use App\Servicios;
@@ -41,8 +45,10 @@ $desparacitacion = Desparacitaciones::asociadosCuenta($id_cuenta);
 $atencion_servicio = Atencionservicio::asociadosCuenta($id_cuenta);
 $consulta = Consulta::asociadosCuenta($id_cuenta);
 $cirugia_realizada = CirugiaRealizada::asociadosCuenta($id_cuenta);
+$medicaciontratamiento = Medicacion::asociadosCuenta($id_cuenta);
 // debuguear($cirugia_realizada);
-$medicacion = Medicacion::asociadosCuenta($id_cuenta);
+//$medicacion = Medicaciontrat::asociadosCuenta($id_cuenta);
+
 $cuenta = Cuenta::find($id_cuenta);
 $personal = Perfil::find($cuenta->id_personal);
 $propietario = Propietarios::find($cuenta->id_propietario);
@@ -96,7 +102,9 @@ $html = '
 function agregarFilas($servicios, $nombre_servicio, &$html)
 {
     foreach ($servicios as $servicio) {
-        $mascota = Mascotas::find($servicio->id_mascota);
+
+        $mascota = Mascotas::find($servicio->id_mascota??"0");
+        $mascota = $mascota->nombre ?? "";
         $des = "|";
         if (isset($servicio->nom_vac)) {
             $des = $servicio->contra;
@@ -109,16 +117,16 @@ function agregarFilas($servicios, $nombre_servicio, &$html)
             $des = $servicio2->nombre_servicio;
         }
         if (isset($servicio->id_cirugia_realizada)) {
-            $cirugia2 = CirugiaRealizada::find($servicio->id_cirugia_programada);
+            $cirugia2 = CirugiaProgramada::find($servicio->id_cirugia_programada);
             $cirugia3 = Ciruguas::find($cirugia2->id_cirugia);
             $des = $cirugia3->nombre_cirugia;
         }
         if (isset($servicio->id_mediacion)) {
-            $des = $servicio->nom_vac;
+            $des = $servicio->nombre_medicacion;
         }
-
+        //debuguear($des);
         $html .= '<div class="service">
-            <strong>' . $nombre_servicio . '-' . $des . '</strong> - Mascota: ' . htmlspecialchars($mascota->nombre) . ' - Costo: ' . number_format($servicio->costo, 2) . ' Bs.
+            <strong>' . $nombre_servicio . '-' . $des . '</strong> - Mascota: ' . htmlspecialchars($mascota) . ' - Costo: ' . number_format($servicio->costo, 2) . ' Bs.
         </div>';
     }
 }
@@ -129,7 +137,8 @@ agregarFilas($desparacitacion, 'Des', $html);
 agregarFilas($atencion_servicio, 'Ser', $html);
 agregarFilas($consulta, 'Consulta', $html);
 agregarFilas($cirugia_realizada, 'Cirugía', $html);
-agregarFilas($medicacion, 'Medicaciones', $html);
+agregarFilas($medicaciontratamiento, 'Medicaciones', $html);
+//agregarFilas($medicacion, 'Medicaciones', $html);
 
 // Calcula el total de los servicios
 $total = 0;
@@ -142,13 +151,13 @@ foreach ([$vacunas, $desparacitacion, $atencion_servicio, $consulta, $cirugia_re
 // Agrega el total al HTML
 $html .= '
         <div class="total">
-            <strong>Total:</strong> ' . number_format($total, 2) . ' Bs.
+            <strong>Total:</strong> ' . number_format($cuenta->saldo_total, 2) . ' Bs.
         </div>
         <div class="total">
             <strong>Pagado:</strong> ' . number_format($cuenta->monto_pagado, 2) . ' Bs.
         </div>
         <div class="total">
-            <strong>Cambio:</strong> ' . number_format($cuenta->monto_pagado - $total, 2) . ' Bs.
+            <strong>Cambio:</strong> ' . number_format($cuenta->monto_pagado - $cuenta->saldo_total, 2) . ' Bs.
         </div>
 
     <!-- Pie de página -->

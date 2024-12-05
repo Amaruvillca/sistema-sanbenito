@@ -5,13 +5,17 @@ require 'template/header.php';
 
 use App\CirugiaProgramada;
 use App\Ciruguas;
+use App\Consulta;
 use App\Mascotas;
 use App\Vacunas;
 use App\Desparacitaciones;
+use App\programarTratamiento;
 
 $cirugias_programadas = CirugiaProgramada::all();
 $vacunas = Vacunas::all();
 $desparasitaciones= Desparacitaciones::all();
+$tratamientoprogramadas = programarTratamiento::all();
+
 ?>
 <script src='/sistema-sanbenito/build/fullcalendar/dist/index.global.min.js'></script>
 <script>
@@ -47,6 +51,21 @@ $desparasitaciones= Desparacitaciones::all();
                             'url' => 'cirugias_hoy.php', 
                             'color' => '#007bff', // Color para las cirugías
                             'backgroundColor' => '#007bff', // Color verde para vacunas
+                        
+                        ];
+                    }
+                }
+                foreach ($tratamientoprogramadas as $tratamiento) {
+                    if ($tratamiento->estado === 'pendiente') { // Verifica si el estado es "pendiente"
+                        $consulta = Consulta::find($tratamiento->id_consulta);
+                        $mascota = Mascotas::find($consulta->id_mascota);
+                        
+                        $eventos[] = [
+                            'title' => 'Tratamiento Programada ' . $mascota->nombre,
+                            'start' => $tratamiento->fecha_programada, 
+                            'url' => 'consultas_hoy.php', 
+                            'color' => '#6c757d', // Color para las cirugías
+                            'backgroundColor' => '#6c757d', // Color verde para vacunas
                         
                         ];
                     }

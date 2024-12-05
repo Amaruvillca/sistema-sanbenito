@@ -11,6 +11,10 @@ use App\Propietarios;
 use App\Servicios;
 use App\Vacunas;
 use App\Atencionservicio;
+use App\Consulta;
+use App\CirugiaProgramada;
+use App\CirugiaRealizada;
+use App\Ciruguas;
 
 
 
@@ -40,6 +44,11 @@ $propietario = Propietarios::find($mascota->id_propietario);
 $vacunas = Vacunas::all();
 $desparasitaciones = Desparacitaciones::all();
 $atencion_servicios = Atencionservicio::all();
+$atencionConsulta = Consulta::all();
+$cirugiaprogramadas = CirugiaProgramada::all();
+
+
+$atencionConsultaencontrados = false;
 $atencion_servicio_encontradas= false;
 $vacunas_encontradas = false;
 $desparasityacion_encontradas = false;
@@ -170,18 +179,58 @@ $cirugia_encontradas = false;
                                             <th>#</th>
                                             <th>Fecha</th>
                                             <th>Motivo</th>
-                                            <th>Observaciones</th>
+                                            <th>Diagnostico</th>
+                                            <th>Costo</th>
+                                            <th>Acciones</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Añadimos 10 filas de ejemplo -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-08-01</td>
-                                            <td>Consulta general</td>
-                                            <td>Ninguna observación</td>
-                                        </tr>
+                                        <?php
+                                        $c = 1;
+                                        $contador_registros = 0;  // Iniciar un contador para los registros
+                                        $vacunas_encontradas = false;  // Bandera para verificar si hay registros
 
+                                        foreach ($atencionConsulta as $key => $consulta) {
+                                            if ($consulta->id_mascota == $id_mascota) {
+                                                $vacunas_encontradas = true;
+
+                                                if ($contador_registros < 30) {
+                                        ?>
+                                                    <tr>
+                                                        <td><?php echo $c++ ?></td>
+                                                        <td><?php echo $consulta->fecha_consulta ?></td>
+                                                        <td><?php echo $consulta->motivo_consulta ?></td>
+                                                        <td><?php echo $consulta->Diagnostico_presuntivo ?></td>
+                                                        
+                                                        <td><?php echo $consulta->costo . " Bs."; ?></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesVeterinario('<?php echo $consulta->id_personal; ?>')">
+                                                            <i class="bi bi-eye-fill"></i> Ver
+                                                            </button>
+                                                            <?php
+                                                            $id_consulta = $consulta->id_consulta;
+                                                            $data = "id_consulta=$id_consulta";
+                                                            $encryptedData = encryptData($data);
+                                                            ?>
+                                                            <a href="/sistema-sanbenito/home/report/consulta.php?data=<?php echo $encryptedData; ?>" class="btn btn-sm btn-danger" target="_blank">
+                                                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                        <?php
+                                                    $contador_registros++;
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!$vacunas_encontradas) {
+                                            $mensaje = '<tr><th colspan="7"><center>No se encontraron consultas</center></th></tr>';
+                                            echo $mensaje;
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -193,19 +242,51 @@ $cirugia_encontradas = false;
                                         <tr>
                                             <th>#</th>
                                             <th>Fecha</th>
-                                            <th>Procedimiento</th>
-                                            <th>Observaciones</th>
+                                            <th>Cirugia</th>
+                                            <th>Veteinario</th>
+
+                                            
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- 10 filas de ejemplo -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-09-01</td>
-                                            <td>Cirugía de rodilla</td>
-                                            <td>Recuperación exitosa</td>
-                                        </tr>
+                                    <?php
+                                        $c = 1;
+                                        $contador_registros = 0;  // Iniciar un contador para los registros
+                                        $vacunas_encontradas = false;  // Bandera para verificar si hay registros
 
+                                        foreach ($cirugiaprogramadas as $key => $cirugiapro) {
+                                            if ($cirugiapro->id_mascota == $id_mascota && $cirugiapro->estado === "concluida") {
+                                                $vacunas_encontradas = true;
+$cirugia = Ciruguas::find($cirugiapro->id_cirugia);
+                                                if ($contador_registros < 30) {
+                                        ?>
+                                                    <tr>
+                                                        <td><?php echo $c++ ?></td>
+                                                        <td><?php echo $cirugiapro->fecha_programada ?></td>
+                                                        <td><?php echo $cirugia->nombre_cirugia ?></td>
+                                                        
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVeterinario" onclick="mostrarDetallesVeterinario('<?php echo $cirugiapro->id_personal; ?>')">
+                                                            <i class="bi bi-eye-fill"></i> Ver
+                                                            </button>
+                                                            
+                                                           
+                                                        </td>
+                                                    </tr>
+                                        <?php
+                                                    $contador_registros++;
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!$vacunas_encontradas) {
+                                            $mensaje = '<tr><th colspan="4"><center>No se encontraron cirugias</center></th></tr>';
+                                            echo $mensaje;
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

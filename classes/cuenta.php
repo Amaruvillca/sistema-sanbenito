@@ -89,7 +89,8 @@ class Cuenta extends ActiveRecord
             "SELECT SUM(costo) AS total_costo FROM atiende_servicio WHERE id_cuenta = ?",
             "SELECT SUM(costo) AS total_costo FROM cirugia_realizada WHERE id_cuenta = ?",
             "SELECT SUM(costo) AS total_costo FROM consulta WHERE id_cuenta = ?",
-            "SELECT SUM(costo) AS total_costo FROM medicacion WHERE id_cuenta = ?"
+            "SELECT SUM(costo) AS total_costo FROM medicacion WHERE id_cuenta = ?",
+            "SELECT SUM(costo) AS total_costo FROM medicacionconsulta WHERE id_cuenta = ?"
         ];
 
         foreach ($consultas as $query) {

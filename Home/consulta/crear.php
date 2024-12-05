@@ -166,19 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </fieldset>
 
         <fieldset>
-            <legend>Costo y Estado de la Consulta</legend>
+            <legend>Costo</legend>
             <div class="mb-3">
                 <label for="costo" class="form-label">Costo</label>
                 <input type="number" name="consulta[costo]" step="0.01" class="form-control" id="costo" required value="<?php echo s($consulta->costo); ?>">
             </div>
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select class="form-select" name="consulta[estado]" id="estado" required>
-                    <option  disabled value="" selected>-- Seleccione --</option>
-                    <option <?php if ($consulta->estado == "pendiente") echo "selected" ?> value="pendiente">Pendiente</option>
-                    <option <?php if ($consulta->estado == "completada") echo "selected" ?> value="completada">Completada</option>
-                </select>
-            </div>
+            
         </fieldset>
         <input type="hidden" name="consulta[id_mascota]" value="<?php echo $id_mascota ?>">
         <input type="hidden" name="consulta[id_personal]" value="<?php echo $personal['id_personal'] ?>">

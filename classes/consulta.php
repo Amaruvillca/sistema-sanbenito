@@ -29,7 +29,6 @@ class Consulta extends ActiveRecord
         'hidratacion',
         'Diagnostico_presuntivo',
         'costo',
-        'estado',
         'fecha_consulta',
         'id_mascota',
         'id_personal',
@@ -56,7 +55,7 @@ class Consulta extends ActiveRecord
     public $hidratacion;
     public $Diagnostico_presuntivo;
     public $costo;
-    public $estado;
+   
     public $fecha_consulta;
     public $id_mascota;
     public $id_personal;
@@ -84,7 +83,7 @@ class Consulta extends ActiveRecord
         $this->hidratacion = $args['hidratacion'] ?? '';
         $this->Diagnostico_presuntivo = $args['Diagnostico_presuntivo'] ?? '';
         $this->costo = $args['costo'] ?? '';
-        $this->estado = $args['estado'] ?? ''; // Estado por defecto
+         // Estado por defecto
         $this->fecha_consulta = $args['fecha_consulta'] ?? date('Y-m-d');
         $this->id_mascota = $args['id_mascota'] ?? '';
         $this->id_personal = $args['id_personal'] ?? '';

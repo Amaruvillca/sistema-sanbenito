@@ -1,8 +1,8 @@
 <?php 
 namespace App;
 
-class Medicacion extends ActiveRecord {
-    protected static $tabla = "medicacionconsulta";
+class Medicaciontrat extends ActiveRecord {
+    protected static $tabla = "medicacion";
     protected static $nombreId = 'id_mediacion';
 
     protected static $columnas_db = [
@@ -11,7 +11,7 @@ class Medicacion extends ActiveRecord {
         'via',
         'costo',
         'fecha_medicacion',
-        'id_consulta',
+        'id_tratamiento',
         'id_cuenta'
     ];
 
@@ -21,7 +21,7 @@ class Medicacion extends ActiveRecord {
     public $costo;
     public $fecha_medicacion;
 
-    public $id_consulta;
+    public $id_tratamiento;
     public $id_cuenta;
 
     public function __construct($args = []) {
@@ -31,7 +31,7 @@ class Medicacion extends ActiveRecord {
         $this->costo = $args['costo'] ?? '0.00';
         $this->fecha_medicacion = $args['fecha_medicacion'] ?? date('Y-m-d');
         
-        $this->id_consulta = $args['id_consulta'] ?? null;
+        $this->id_tratamiento = $args['id_tratamiento'] ?? null;
         $this->id_cuenta = $args['id_cuenta'] ?? null;
     }
 

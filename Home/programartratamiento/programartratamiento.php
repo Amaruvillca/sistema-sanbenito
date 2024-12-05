@@ -80,41 +80,65 @@ $mascotacon = Mascotas::find($id_mascota);
 
     // Agregar tratamiento al localStorage y tabla
     function agregarTratamiento() {
-        const fechaProgramada = document.getElementById('fecha_programada').value;
-        const id_consulta = document.getElementById('id_consulta').value;
-        const id_personal = document.getElementById('id_personal').value;
+    const fechaProgramada = document.getElementById('fecha_programada').value;
+    const id_consulta = document.getElementById('id_consulta').value;
+    const id_personal = document.getElementById('id_personal').value;
 
-        // Validación
-        if (!fechaProgramada) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Todos los campos son obligatorios',
-            });
-            return;
-        }
-
-        // Crear objeto de tratamiento
-        const tratamiento = {
-            diaTratamiento,
-            fechaProgramada,
-            id_consulta,
-            id_personal
-        };
-
-        // Guardar en localStorage
-        const tratamientos = JSON.parse(localStorage.getItem('tratamientos')) || [];
-        tratamientos.push(tratamiento);
-        localStorage.setItem('tratamientos', JSON.stringify(tratamientos));
-
-        // Agregar fila a la tabla
-        agregarFilaTabla(tratamiento);
-
-        // Incrementar el día del tratamiento
-        diaTratamiento++;
-
-        // Limpiar formulario
-        document.getElementById('form-medicacion').reset();
+    // Validación de campos vacíos
+    if (!fechaProgramada) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Todos los campos son obligatorios',
+        });
+        return;
     }
+
+    // Recuperar tratamientos existentes
+    const tratamientos = JSON.parse(localStorage.getItem('tratamientos')) || [];
+
+    // Verificar si la fecha ya existe
+    const fechaRepetida = tratamientos.some(trat => trat.fechaProgramada === fechaProgramada);
+    if (fechaRepetida) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Esta fecha ya está programada',
+        });
+        return;
+    }
+
+    // Verificar si es el mismo día (opcional: dependiendo de tu lógica de negocio)
+    const fechaIngresada = new Date(fechaProgramada).toDateString();
+    const mismoDia = tratamientos.some(trat => new Date(trat.fechaProgramada).toDateString() === fechaIngresada);
+    if (mismoDia) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Ya existe un tratamiento programado para este día',
+        });
+        return;
+    }
+
+    // Crear objeto de tratamiento
+    const tratamiento = {
+        diaTratamiento,
+        fechaProgramada,
+        id_consulta,
+        id_personal
+    };
+
+    // Guardar en localStorage
+    tratamientos.push(tratamiento);
+    localStorage.setItem('tratamientos', JSON.stringify(tratamientos));
+
+    // Agregar fila a la tabla
+    agregarFilaTabla(tratamiento);
+
+    // Incrementar el día del tratamiento
+    diaTratamiento++;
+
+    // Limpiar formulario
+    document.getElementById('form-medicacion').reset();
+}
+
 
     // Mostrar fila en la tabla
     function agregarFilaTabla(tratamiento) {
